@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StarterGame
+namespace Ascension
 {
-    interface Interfaces
+    enum Personality
     {
+        COWARD, AGRESSIVE, KIND, BRAVE
     }
 }

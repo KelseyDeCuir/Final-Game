@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StarterGame
+namespace Ascension
 {
-    class Monster
+    class Dialogue
     {
     }
 }

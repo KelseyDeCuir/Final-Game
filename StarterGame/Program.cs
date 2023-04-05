@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StarterGame
+namespace Ascension
 {
     /*
      * Spring 2023

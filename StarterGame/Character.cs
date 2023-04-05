@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using System;
 
-namespace StarterGame
+namespace Ascension
 {
     /*
      * Spring 2023
      */
-    public class Character
+    struct Skills
+    {
+        int strength;
+        int health;
+        int speed;
+        int intelligence;
+        int magic;
+    }
+    public class Character : ICharacter
     {
         private Room _currentRoom = null;
         public Room CurrentRoom { get { return _currentRoom; } set { _currentRoom = value; } }
@@ -30,6 +38,18 @@ namespace StarterGame
                 ErrorMessage("\nThere is no door on " + direction);
             }
         }
+        //WIP
+        public String Name { set; get; }
+        public String Description { get; }
+        public Item[] Inventory { set; get; }
+        public Double Health { set; get; }
+        public Double Attack { set; get; }
+        public Double Evasiveness { set; get; }
+        public Boolean CanMove { set; get; }
+        public Boolean Alive { set; get; }
+        public Skills skillName { set; get; }
+        //Thinking about what to do with this
+        public Command[] actions { set; get; }
 
         public void OutputMessage(string message)
         {
