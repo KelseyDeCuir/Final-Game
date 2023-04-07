@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ascension
 {
-    class Weapon
+    public class Weapon
     {
     }
 }

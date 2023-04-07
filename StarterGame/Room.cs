@@ -48,7 +48,7 @@ namespace Ascension
 
         public string Description()
         {
-            return "You are " + this.Tag + ".\n *** " + this.GetExits();
+            return "You are in " + this.Tag + ".\n *** " + this.GetExits();
         }
     }
 }

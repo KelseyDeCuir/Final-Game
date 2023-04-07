@@ -5,7 +5,7 @@ namespace Ascension
     /*
      * Spring 2023
      */
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {

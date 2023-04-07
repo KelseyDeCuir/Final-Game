@@ -9,7 +9,7 @@ namespace Ascension
     //Floor has rooms 
     interface IFloor
     {
-        Room[,] FloorMap { get; }
+        Room[,] FloorMap { set;  get; }
     }
     interface IRoom
     {

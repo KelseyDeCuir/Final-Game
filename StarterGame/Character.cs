@@ -7,7 +7,7 @@ namespace Ascension
     /*
      * Spring 2023
      */
-    struct Skills
+    public struct Skills
     {
         int strength;
         int health;
