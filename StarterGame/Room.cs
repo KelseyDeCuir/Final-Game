@@ -18,7 +18,7 @@ namespace Ascension
         public Room() : this("No Tag", "No Description"){}
 
         // Designated Constructor
-        public Room(string tag, string description)
+        public Room(String tag, String description)
         {
             _exits = new Dictionary<string, Room>();
             this.Tag = tag;
