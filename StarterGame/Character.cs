@@ -34,7 +34,7 @@ namespace Ascension
             switch (direction)
             {
                 case "north":
-                    if (_currentRoom[1] == 0)
+                    if (_currentRoom[1] != 0)
                     {
                         return new int[] {_currentRoom[0], _currentRoom[1] -1};
                     }
@@ -43,16 +43,16 @@ namespace Ascension
                         return null;
                     }
                 case "east":
-                    if (_currentRoom[0] == 1)
+                    if (_currentRoom[0] != 1)
                     {
-                        return new int[] {_currentRoom[0] -1 , _currentRoom[1]};
+                        return new int[] {_currentRoom[0] +1 , _currentRoom[1]};
                     }
                     else
                     {
                         return null;
                     }
                 case "south":
-                    if (_currentRoom[1] == 2)
+                    if (_currentRoom[1] != 2)
                     {
                         return new int[] {_currentRoom[0], _currentRoom[1] +1};
                     }
@@ -61,9 +61,9 @@ namespace Ascension
                         return null;
                     }
                 case "west":
-                    if (_currentRoom[0] == 0)
+                    if (_currentRoom[0] != 0)
                     {
-                        return new int[] {_currentRoom[0]+1, _currentRoom[1]};
+                        return new int[] {_currentRoom[0] -1, _currentRoom[1]};
                     }
                     else
                     {
@@ -83,7 +83,7 @@ namespace Ascension
             }
             else
             {
-                ErrorMessage("\nThere is no door to the " + direction);
+                ErrorMessage("\nThere is no door to the " + direction + ".");
             }
         }
         //WIP
