@@ -6,5 +6,9 @@ namespace Ascension
 {
     public class Weapon
     {
+        public Weapon()
+        {
+
+        }
     }
 }
