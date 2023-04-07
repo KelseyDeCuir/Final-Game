@@ -22,6 +22,7 @@ namespace Ascension
         }
         private Room _entrance; 
         public Room Entrance { get { return _entrance; } }
+        private Room[] Floor1Rooms = { new Room("1A", "Description 1"), new Room("1B", "Description 2"), new Room ("Hallway", "Description 3"), new Room("1C", "Description 4"), new Room("ER", "Description 5" ), new Room("1H", "Description 6"), new Room("OGBYN", "Description 7"), new Room("Rad5", "Description 8"), new Room("X-ray Exam 3", "Description 9"), new Room("Pediactrics", " Description 10") };
         private GameWorld()
         {
             _entrance = CreateWorld();
@@ -29,10 +30,10 @@ namespace Ascension
 
         private Room CreateWorld()
         {
-            Floor abandonedHospital = new Floor(new string[] {"1A", "1B", "Hallway", "1C", "ER", "1H", "OGBYN", "OR1", "Rad5", "X-ray Exam 3", "Pediactrics" });
+            Floor abandonedHospital = new Floor(Floor1Rooms);
             return abandonedHospital.FloorMap[0,0];
         }
-    }
+    } //{ "1A", "1B", "Hallway", "1C", "ER", "1H", "OGBYN", "OR1", "Rad5", "X-ray Exam 3", "Pediactrics" 
 
     }
             /*
