@@ -6,5 +6,6 @@ namespace Ascension
 {
    public class Boss
     {
+        //comment
     }
 }
