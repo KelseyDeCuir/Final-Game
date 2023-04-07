@@ -17,25 +17,73 @@ namespace Ascension
     }
     public class Character : ICharacter
     {
-        private Room _currentRoom = null;
-        public Room CurrentRoom { get { return _currentRoom; } set { _currentRoom = value; } }
+        private Floor _currentFloor = null; //rooms are separated by floors so that is stored instead
+        public Floor CurrentFloor { get { return _currentFloor;} set { _currentFloor = value;} }
+        private int[] _currentRoom = null;
+        public Room CurrentRoom { get { return CurrentFloor.FloorMap[_currentRoom[0],_currentRoom[1]]; } }
 
-        public Character(Room room)
+        public Character(Floor floor)
         {
-            _currentRoom = room;
+            _currentFloor = floor;
+            _currentRoom = new int[] {0,0};
         }
 
+        // gets the room position for the matrix if it is a valid room
+        public int[] validRoomPos(string direction)
+        {
+            switch (direction)
+            {
+                case "north":
+                    if (_currentRoom[1] == 0)
+                    {
+                        return new int[] {_currentRoom[0], _currentRoom[1] -1};
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                case "east":
+                    if (_currentRoom[0] == 1)
+                    {
+                        return new int[] {_currentRoom[0] -1 , _currentRoom[1]};
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                case "south":
+                    if (_currentRoom[1] == 2)
+                    {
+                        return new int[] {_currentRoom[0], _currentRoom[1] +1};
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                case "west":
+                    if (_currentRoom[0] == 0)
+                    {
+                        return new int[] {_currentRoom[0]+1, _currentRoom[1]};
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                default:
+                    return null;
+            }
+        }
         public void WalkTo(string direction)
         {
-            Room nextRoom = this.CurrentRoom.GetExit(direction);
-            if (nextRoom != null)
+            int[] newPos = validRoomPos(direction);
+            if (newPos != null)
             {
-                CurrentRoom = nextRoom; //Move rooms
+                _currentRoom = newPos; //Move rooms
                 NormalMessage("\n" + this.CurrentRoom.Description());
             }
             else
             {
-                ErrorMessage("\nThere is no door on " + direction);
+                ErrorMessage("\nThere is no door to the " + direction);
             }
         }
         //WIP
