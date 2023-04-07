@@ -11,15 +11,19 @@ namespace Ascension
     {
         private Dictionary<string, Room> _exits;
         private string _tag;
+        private string _generaldescription;
         public string Tag { get { return _tag; } set { _tag = value; } }
+        public string GeneralDescription { get { return _generaldescription; } set { _generaldescription = value; } }
 
-        public Room() : this("No Tag"){}
+        public Room() : this("No Tag", "No Description"){}
 
         // Designated Constructor
-        public Room(string tag)
+        public Room(string tag, string description)
         {
             _exits = new Dictionary<string, Room>();
             this.Tag = tag;
+            this.GeneralDescription = description;
+
         }
 
         public void SetExit(string exitName, Room room)
@@ -48,7 +52,11 @@ namespace Ascension
 
         public string Description()
         {
-            return "You are in " + this.Tag + ".\n *** " + this.GetExits();
+            return "You are in " + this.Tag +". " + this.GeneralDescription + ".";
+        }
+        public string BaseDescription()
+        {
+            return "You are in " + this.Tag + ".\n ";
         }
     }
 }
