@@ -6,7 +6,7 @@ namespace Ascension
 {
     //Singleton design pattern
     //The game world is a singleton becasue it is the checkpoint for when the player dies
-    class GameWorld
+    public class GameWorld
     {
         //These static lists are utilized to randomly generate items in the rooms on each floor
         public static List<Item> Floor1Items = new List<Item>();
