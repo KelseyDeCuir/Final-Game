@@ -8,7 +8,7 @@ namespace StarterGame
 {
     public class NotificationCenter
     {
-        private Dictionary<String, EventContainer> observers;
+        private Dictionary<string, EventContainer> observers;
         private static NotificationCenter _instance;
         public static NotificationCenter Instance
         {
@@ -23,7 +23,7 @@ namespace StarterGame
         }
         public NotificationCenter()
         {
-            observers = new Dictionary<String, EventContainer>();
+            observers = new Dictionary<string, EventContainer>();
         }
 
         private class EventContainer
@@ -54,7 +54,7 @@ namespace StarterGame
             }
         }
 
-        public void AddObserver(String notificationName, Action<Notification> observer)
+        public void AddObserver(string notificationName, Action<Notification> observer)
         {
             if(!observers.ContainsKey(notificationName))
             {
@@ -63,7 +63,7 @@ namespace StarterGame
             observers[notificationName].AddObserver(observer);
         }
 
-        public void RemoveObserver(String notificationName, Action<Notification> observer)
+        public void RemoveObserver(string notificationName, Action<Notification> observer)
         {
             if(observers.ContainsKey(notificationName))
             {

@@ -21,8 +21,8 @@ namespace Ascension
     }
     interface ICharacter
     {
-        String Name { set; get; }
-        String Description { get; }
+        string Name { set; get; }
+        string Description { get; }
         Item[] Inventory { set; get; }
         Double Health { set; get; }
         Double Attack { set; get; }
@@ -36,8 +36,8 @@ namespace Ascension
     }
     interface iItems
     {
-        String Name { set; get; }
-        String Description { get; }
+        string Name { set; get; }
+        string Description { get; }
         int Value { set; get; }
         int Weight { set; get; }
         int Volume { set; get; }

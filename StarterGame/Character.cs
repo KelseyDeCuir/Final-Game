@@ -87,8 +87,8 @@ namespace Ascension
             }
         }
         //WIP
-        public String Name { set; get; }
-        public String Description { get; }
+        public string Name { set; get; }
+        public string Description { get; }
         public Item[] Inventory { set; get; }
         public Double Health { set; get; }
         public Double Attack { set; get; }

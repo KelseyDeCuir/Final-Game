@@ -14,7 +14,7 @@ namespace Ascension
 
         /*Constructor takes an array of names for the rooms and changes that into a list
          * which is used to randomly name each of the generated rooms that are added to the matrix */
-        public Floor(Room[] rooms)
+        public Floor(Room[] rooms, List<Item> items)
         {
             List<Room> roomList = rooms.ToList<Room>();
             FloorMap[0, 0] = elevator;
