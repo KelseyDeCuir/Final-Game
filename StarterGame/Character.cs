@@ -34,6 +34,8 @@ namespace Ascension
         public Floor CurrentFloor { get { return _currentFloor;} set { _currentFloor = value;} }
         private int[] _currentRoom = null;
         public Room CurrentRoom { get { return CurrentFloor.FloorMap[_currentRoom[0],_currentRoom[1]]; } }
+        public Weapon EquippedWeapon { set; get; }
+        public Armor EquippedArmor { set; get; }
 
         public Character(Floor floor, string name, string desc)
         {

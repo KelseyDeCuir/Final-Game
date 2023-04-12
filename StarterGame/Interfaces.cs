@@ -24,6 +24,8 @@ namespace Ascension
         string Name { get; }
         string Description { get; }
         List<Item> Inventory { set; get; }
+        Weapon EquippedWeapon { set; get; }
+        Armor EquippedArmor { set; get; }
         Double Health { set; get; }
         Double Attack { set; get; }
         Double Evasiveness { set; get; }
