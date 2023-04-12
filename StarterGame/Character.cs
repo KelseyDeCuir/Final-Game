@@ -117,6 +117,27 @@ namespace Ascension
             }
             return "Nothing!";
         }
+        public string GetEquipped()
+        {
+            string equipped = "";
+            if (EquippedWeapon != null)
+            {
+                equipped += "Weapon: " + EquippedWeapon.Name;
+            }
+            else
+            {
+                equipped += "No Weapon Equipped!";
+            }
+            if (EquippedArmor != null)
+            {
+                equipped += "\nArmor: " + EquippedArmor.Name;
+            }
+            else
+            {
+                equipped += "\nNo Armor Equipped!";
+            }
+            return equipped;
+        }
         public void OutputMessage(string message)
         {
             Console.WriteLine(message);

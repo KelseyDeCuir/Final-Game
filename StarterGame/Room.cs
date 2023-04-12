@@ -29,7 +29,7 @@ namespace Ascension
 
         public string GetExits()
         {
-            string exitNames = "Exits:";
+            string exitNames = "Exits:"; // Changed to get the exits based on rooms position on the map because the movement system was changed.
             List<string> exits = new List<string>();
             if (pos[1] != 0)
             {
@@ -54,7 +54,7 @@ namespace Ascension
 
             return exitNames;
         }
-        public string GetItems()
+        public string GetItems() //grabs names of the items in the room
         {
             string itemNames = "Items:";
             foreach( Item item in items)
