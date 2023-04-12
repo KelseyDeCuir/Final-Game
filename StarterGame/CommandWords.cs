@@ -10,7 +10,7 @@ namespace Ascension
     public class CommandWords
     {
         private Dictionary<string, Command> _commands;
-        private static Command[] _commandArray = { new GoCommand(), new QuitCommand() };
+        private static Command[] _commandArray = { new GoCommand(), new QuitCommand(), new ReflectCommand() };
 
         public CommandWords() : this(_commandArray) {}
 

@@ -21,9 +21,9 @@ namespace Ascension
     }
     interface ICharacter
     {
-        string Name { set; get; }
+        string Name { get; }
         string Description { get; }
-        Item[] Inventory { set; get; }
+        List<Item> Inventory { set; get; }
         Double Health { set; get; }
         Double Attack { set; get; }
         Double Evasiveness { set; get; }

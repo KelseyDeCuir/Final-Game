@@ -17,15 +17,31 @@ namespace Ascension
     }
     public class Character : ICharacter
     {
+        public List<Item> Inventory { set; get; }
+        public Double Health { set; get; }
+        public Double Attack { set; get; }
+        public Double Evasiveness { set; get; }
+        public Boolean CanMove { set; get; }
+        public Boolean Alive { set; get; }
+        public Skills skillName { set; get; }
+        //Thinking about what to do with this
+        public Command[] actions { set; get; }
+        private string _name = null;
+        private string _description = null;
+        public string Name { get { return _name; } }
+        public string Description { get { return _description; } }
         private Floor _currentFloor = null; //rooms are separated by floors so that is stored instead
         public Floor CurrentFloor { get { return _currentFloor;} set { _currentFloor = value;} }
         private int[] _currentRoom = null;
         public Room CurrentRoom { get { return CurrentFloor.FloorMap[_currentRoom[0],_currentRoom[1]]; } }
 
-        public Character(Floor floor)
+        public Character(Floor floor, string name, string desc)
         {
             _currentFloor = floor;
             _currentRoom = new int[] {0,0};
+            _name = name;
+            _description = desc;
+            Inventory = new List<Item>();
         }
 
         // gets the room position for the matrix if it is a valid room
@@ -86,19 +102,19 @@ namespace Ascension
                 ErrorMessage("\nThere is no door to the " + direction + ".");
             }
         }
-        //WIP
-        public string Name { set; get; }
-        public string Description { get; }
-        public Item[] Inventory { set; get; }
-        public Double Health { set; get; }
-        public Double Attack { set; get; }
-        public Double Evasiveness { set; get; }
-        public Boolean CanMove { set; get; }
-        public Boolean Alive { set; get; }
-        public Skills skillName { set; get; }
-        //Thinking about what to do with this
-        public Command[] actions { set; get; }
-
+        public string GetInventory()
+        {
+            if (Inventory.Count > 0)
+            {
+                string itemNames = "Items:";
+                foreach (Item item in Inventory)
+                {
+                    itemNames += " " + item.Name;
+                }
+                return itemNames;
+            }
+            return "Nothing!";
+        }
         public void OutputMessage(string message)
         {
             Console.WriteLine(message);
@@ -119,12 +135,12 @@ namespace Ascension
 
         public void InfoMessage(string message)
         {
-            ColoredMessage(message, ConsoleColor.Blue);
+            ColoredMessage(message, ConsoleColor.Cyan);
         }
 
         public void WarningMessage(string message)
         {
-            ColoredMessage(message, ConsoleColor.DarkYellow);
+            ColoredMessage(message, ConsoleColor.Yellow);
         }
 
         public void ErrorMessage(string message)

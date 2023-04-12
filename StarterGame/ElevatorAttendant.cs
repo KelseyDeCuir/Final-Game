@@ -17,7 +17,7 @@ namespace Ascension
         public Skills skillName { set; get; }
         //Thinking about what to do with this
         public Command[] actions { set; get; }
-        ElevatorAttendant(Floor floor) : base(floor)
+        ElevatorAttendant(Floor floor, string name, string desc) : base(floor, name, desc)
         {
 
         }

@@ -17,10 +17,17 @@ namespace Ascension
         {
             _playing = false;
             _parser = new Parser(new CommandWords());
-            _player = new Character(GameWorld.Instance.Entrance);
+            SetPlayer(); 
         }
 
-            
+        public void SetPlayer() // ASK IF BREAKS COMMAND STRUCTURE
+        {
+            Console.Write("\nEnter Character Name\n=> ");
+            string name = Console.ReadLine();
+            Console.Write("\nEnter Character's Physical Descriptions\n=> ");
+            string desc = Console.ReadLine();
+            _player = new Player(GameWorld.Instance.Entrance, name, desc);
+        }
 
         /**
      *  Main play routine.  Loops until end of play.
@@ -34,8 +41,8 @@ namespace Ascension
             bool finished = false;
             while (!finished)
             {
-                Console.Write("\n>");
-                Command command = _parser.ParseCommand(Console.ReadLine());
+                Console.Write("\n=> ");
+                Command command = _parser.ParseCommand(Console.ReadLine().ToLower());
                 if (command == null)
                 {
                     _player.ErrorMessage("I don't understand...");
