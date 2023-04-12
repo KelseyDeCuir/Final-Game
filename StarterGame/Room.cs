@@ -9,9 +9,9 @@ namespace Ascension
      */
     public class Room
     {
-        private Dictionary<string, Room> _exits;
         private string _tag;
         private string _generaldescription;
+        public int [] pos { get; set; }
         public string Tag { get { return _tag; } set { _tag = value; } }
         public string GeneralDescription { get { return _generaldescription; } set { _generaldescription = value; } }
         public List<Item> items = new List<Item>();
@@ -20,7 +20,6 @@ namespace Ascension
         // Designated Constructor
         public Room(string tag, string description, List<Item> floorItems)
         {
-            _exits = new Dictionary<string, Room>();
             this.Tag = tag;
             this.GeneralDescription = description;
             Random rnd = new Random();
@@ -28,23 +27,27 @@ namespace Ascension
             this.items.Add(floorItems[index]);
         }
 
-        public void SetExit(string exitName, Room room)
-        {
-            _exits[exitName] = room;
-        }
-
-        public Room GetExit(string exitName)
-        {
-            Room room = null;
-            _exits.TryGetValue(exitName, out room);
-            return room;
-        }
-
         public string GetExits()
         {
-            string exitNames = "Exits: ";
-            Dictionary<string, Room>.KeyCollection keys = _exits.Keys;
-            foreach (string exitName in keys)
+            string exitNames = "Exits:";
+            List<string> exits = new List<string>();
+            if (pos[1] != 0)
+            {
+                exits.Add("north");
+            }
+            if (pos[0] != 1)
+            {
+                exits.Add("east");
+            }
+            if (pos[1] != 2)
+            {
+                exits.Add("south");
+            }
+            if (pos[0] != 0)
+            {
+                exits.Add("west");
+            }
+            foreach (string exitName in exits)
             {
                 exitNames += " " + exitName;
             }
@@ -63,7 +66,7 @@ namespace Ascension
 
         public string Description()
         {
-            return "You are in " + this.Tag +". " + this.GeneralDescription + ". " + ItemDescription() + ".";
+            return "You are in " + this.Tag +". " + this.GeneralDescription + ". " + ItemDescription() + ".\nYou can go through the following exits\n\n" + GetExits();
         }
         public string BaseDescription()
         {
@@ -71,7 +74,7 @@ namespace Ascension
         }
         public string ItemDescription()
         {
-            return "There are currently the following items in this room " + GetItems();
+            return "There are currently the following items in this room\n\n" + GetItems();
         }
     }
 }
