@@ -15,18 +15,25 @@ namespace Ascension
         public string Tag { get { return _tag; } set { _tag = value; } }
         public string GeneralDescription { get { return _generaldescription; } set { _generaldescription = value; } }
         public List<Item> items = new List<Item>();
-        public Room() : this("No Tag", "No Description", null){}
+        public Room() : this("No Tag", "No Description", new List<Item>()){}
 
         // Designated Constructor
         public Room(string tag, string description, List<Item> floorItems)
         {
             this.Tag = tag;
             this.GeneralDescription = description;
-            Random rnd = new Random();
-            int index = rnd.Next(0, floorItems.Count);
-            this.items.Add(floorItems[index]);
+            if (floorItems.Count > 0)
+            {
+                Random rnd = new Random();
+                int rem;
+                int itemsToGen = rnd.Next(0, Math.DivRem(floorItems.Count, 3, out rem) + 1);
+                for (int i = 0; i < itemsToGen; i++)
+                {
+                    int index = rnd.Next(0, floorItems.Count);
+                    this.items.Add(floorItems[index]);
+                }
+            }
         }
-
         public string GetExits()
         {
             string exitNames = "Exits:"; // Changed to get the exits based on rooms position on the map because the movement system was changed.
@@ -51,22 +58,30 @@ namespace Ascension
             {
                 exitNames += " " + exitName;
             }
-
+            exitNames += "\n";
             return exitNames;
         }
         public string GetItems() //grabs names of the items in the room
         {
             string itemNames = "Items:";
-            foreach( Item item in items)
+            if (items.Count > 0)
             {
-                itemNames += " " + item.Name; 
+                foreach (Item item in items)
+                {
+                    itemNames += " " + item.Name;
+                }
+                itemNames += ".";
+            }
+            else
+            {
+                itemNames = "No items in this room.";
             }
             return itemNames;
         }
 
-        public string Description()
+        public virtual string Description()
         {
-            return "You are in " + this.Tag +". " + this.GeneralDescription + ". " + ItemDescription() + ".\nYou can go through the following exits\n\n" + GetExits();
+            return "You are in " + this.Tag +". " + this.GeneralDescription + ". " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
         }
         public string BaseDescription()
         {
@@ -74,7 +89,7 @@ namespace Ascension
         }
         public string ItemDescription()
         {
-            return "There are currently the following items in this room\n\n" + GetItems();
+            return "There are currently the following items in this room:\n\n" + GetItems();
         }
     }
 }
