@@ -6,6 +6,8 @@ namespace Ascension
 {
     //Singleton design pattern
     //The elevator class needs to be a singleton because it is a constant throughout the entire game
+    //Should elevator store all floors?
+    //Elevator needs GoUp command
     public class Elevator : Room
     {
         private static Elevator _instance = null;

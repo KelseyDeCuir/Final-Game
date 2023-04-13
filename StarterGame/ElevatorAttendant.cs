@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ascension
 {
-   public class ElevatorAttendant : Character
+   public class ElevatorAttendant : Character //Should inherit from boss?
     {
         ElevatorAttendant(Floor floor, string name, string desc) : base(floor, name, desc)
         {
