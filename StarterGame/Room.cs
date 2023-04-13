@@ -79,7 +79,7 @@ namespace Ascension
             return itemNames;
         }
 
-        public virtual string Description()
+        public virtual string Description() //virtual so elevator can override it
         {
             return "You are in " + this.Tag +". " + this.GeneralDescription + ". " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
         }

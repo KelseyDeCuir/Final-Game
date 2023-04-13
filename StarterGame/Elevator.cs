@@ -24,7 +24,7 @@ namespace Ascension
         {
             pos = new int[] { 0, 0 };
         }
-        public override string Description()
+        public override string Description() //overrides because there are never any items in the elevator save for the shop
         {
             return "You are in " + this.Tag + ". " + this.GeneralDescription + ". " + "\n\nYou can go through the following exits\n" + GetExits();
         }
