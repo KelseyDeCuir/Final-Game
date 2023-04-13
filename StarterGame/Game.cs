@@ -20,7 +20,12 @@ namespace Ascension
             SetPlayer(); 
         }
 
-        public void SetPlayer() // ASK IF BREAKS COMMAND STRUCTURE
+        /*Have a command that 
+         * have set player active only when in a cartain state (ie menu, or on death),
+         * use obsever to have parser subscribe to it
+         * Make SetPlayer() a command
+         */ 
+        public void SetPlayer() //BREAKS COMMAND STRUCTURE
         {
             Console.Write("\nEnter Character Name\n=> ");
             string name = Console.ReadLine();

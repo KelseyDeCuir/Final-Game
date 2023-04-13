@@ -11,7 +11,7 @@ namespace Ascension
         {
             this.Name = "reflect";
         }
-        public override bool Execute(Character player)
+        public override bool Execute(Character player) //ASK IF BREAKS COMMAND PATTERN
         {
             player.InfoMessage("You are " + player.Name + "\nYou look like " + player.Description + "\nYou currently have equipped:\n" + player.GetEquipped() + "\nYour Inventory currently contains:\n" + player.GetInventory());
             return false;
