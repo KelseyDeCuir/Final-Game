@@ -17,21 +17,7 @@ namespace Ascension
         {
             _playing = false;
             _parser = new Parser(new CommandWords());
-            SetPlayer(); 
-        }
-
-        /*Have a command that 
-         * have set player active only when in a cartain state (ie menu, or on death),
-         * use obsever to have parser subscribe to it
-         * Make SetPlayer() a command
-         */ 
-        public void SetPlayer() //BREAKS COMMAND STRUCTURE
-        {
-            Console.Write("\nEnter Character Name\n=> ");
-            string name = Console.ReadLine();
-            Console.Write("\nEnter Character's Physical Descriptions\n=> ");
-            string desc = Console.ReadLine();
-            _player = new Player(GameWorld.Instance.Entrance, name, desc);
+            _player = new Player(GameWorld.Instance.Entrance);
         }
 
         /**

@@ -10,12 +10,11 @@ namespace Ascension
         public double WeightLimit { get { return _weightLimit; }}
         private double _volumeLimit;
         public double VolumeLimit { get { return _volumeLimit; }}
-        public Player(Floor floor, string name, string desc) : base(floor, name, desc)
+        public Player(Floor floor) : base(floor, "player", "yourself")
         {
             _volumeLimit = 40;
             _weightLimit = 30;
         }
-
 
     }
 }

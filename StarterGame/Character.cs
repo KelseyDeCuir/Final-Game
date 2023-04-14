@@ -127,6 +127,12 @@ namespace Ascension
 
 
         }
+
+        public void SetName(string name)
+        {
+            _name = name;
+        }
+
         public string GetInventory()
         {
             if (Inventory.Count > 0)

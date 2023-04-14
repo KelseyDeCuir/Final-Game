@@ -9,7 +9,7 @@ namespace Ascension
      */
     public class CommandWords
     {
-        private static Command[] _commandArrayInMenu = { new QuitCommand() };
+        private static Command[] _commandArrayInMenu = { new QuitCommand(), new CharNameCommand(), new ReflectCommand() };
         private static Command[] _commandArrayInGame = { new GoCommand(), new QuitCommand(), new ReflectCommand(), new BackCommand(), new MenuCommand() };
         private static Command[] _commandArrayInCombat = { new QuitCommand() };
         private static Command[] _commandArrayInDialogue = { new QuitCommand() };
