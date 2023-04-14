@@ -19,13 +19,13 @@ namespace Ascension
             _commands = newCommands;
         }
 
-        public Command ParseCommand(string commandString)
+        public Command ParseCommand(States state, string commandString)
         {
             Command command = null;
             string[] words = commandString.Split(' ');
             if (words.Length > 0)
             {
-                command = _commands.Get(words[0]);
+                command = _commands.Get(state, words[0]);
                 if (command != null)
                 {
                     if (words.Length > 1)
@@ -59,10 +59,10 @@ namespace Ascension
             }
             return command;
         }
-
+        /*
         public string Description()
         {
             return _commands.Description();
-        }
+        }*/
     }
 }

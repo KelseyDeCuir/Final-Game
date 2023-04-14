@@ -17,6 +17,7 @@ namespace Ascension
     }
     public class Character : ICharacter
     {
+        public States State;
         public List<Item> Inventory { set; get; }
         public Double Health { set; get; }
         public Double Attack { set; get; }
@@ -24,7 +25,9 @@ namespace Ascension
         public Boolean CanMove { set; get; }
         public Boolean Alive { set; get; }
         public Skills skillName { set; get; }
-        //Thinking about what to do with this
+        //actions currently do not store or do anything
+        //the intended purpose for actions is to store
+        //comamands for npcs based on their personality
         public Command[] actions { set; get; }
         private string _name = null;
         private string _description = null;
@@ -47,6 +50,7 @@ namespace Ascension
             _name = name;
             _description = desc;
             Inventory = new List<Item>();
+            State = States.GAME;
         }
 
         // gets the room position for the matrix if it is a valid room

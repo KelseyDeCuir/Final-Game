@@ -28,7 +28,7 @@ namespace Ascension
             }
             else
             {
-                player.InfoMessage("\nYou are lost. You are alone. You wander around the university, \n\nYour available commands are " + _words.Description());
+                player.InfoMessage("\nYou are lost. You are alone. You wander around, \n\nYour available commands are " + _words.Description(player.State));
             }
             return false;
         }

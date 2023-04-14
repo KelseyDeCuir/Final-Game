@@ -47,7 +47,7 @@ namespace Ascension
             while (!finished)
             {
                 Console.Write("\n=> ");
-                Command command = _parser.ParseCommand(Console.ReadLine().ToLower());
+                Command command = _parser.ParseCommand(_player.State, Console.ReadLine().ToLower());
                 if (command == null)
                 {
                     _player.ErrorMessage("I don't understand...");
