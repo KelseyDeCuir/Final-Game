@@ -34,6 +34,9 @@ namespace Ascension
         public Floor CurrentFloor { get { return _currentFloor;} set { _currentFloor = value;} }
         private int[] _currentRoom = null;
         public Room CurrentRoom { get { return CurrentFloor.FloorMap[_currentRoom[0],_currentRoom[1]]; } }
+        //PastRoom Locations, 
+        public Stack<Room> PastRooms = new Stack<Room>();
+
         public Weapon EquippedWeapon { set; get; }
         public Armor EquippedArmor { set; get; }
 
@@ -96,6 +99,7 @@ namespace Ascension
             int[] newPos = validRoomPos(direction);
             if (newPos != null)
             {
+                PastRooms.Push(CurrentRoom); //stores current room as a past room
                 _currentRoom = newPos; //Move rooms
                 NormalMessage("\n" + this.CurrentRoom.Description());
             }
@@ -103,6 +107,21 @@ namespace Ascension
             {
                 ErrorMessage("\nThere is no door to the " + direction + ".");
             }
+        }
+        public void Backto()
+        {
+            if (PastRooms.Count != 0 ) 
+            {
+              
+                _currentRoom = PastRooms.Pop().pos;//gets pos of most recent past room
+                NormalMessage("\n" + this.CurrentRoom.Description());
+            }
+            else 
+            {
+                ErrorMessage("\nCan't go Back!");
+            }
+
+
         }
         public string GetInventory()
         {
