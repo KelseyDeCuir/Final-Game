@@ -9,8 +9,8 @@ namespace Ascension
      */
     public class CommandWords
     {
-        private static Command[] _commandArrayInMenu = { new QuitCommand(), new CharNameCommand(), new ReflectCommand() };
-        private static Command[] _commandArrayInGame = { new GoCommand(), new QuitCommand(), new ReflectCommand(), new BackCommand(), new MenuCommand() };
+        private static Command[] _commandArrayInMenu = { new QuitCommand(), new CharNameCommand(), new ReflectCommand(), new PlayCommand() };
+        private static Command[] _commandArrayInGame = { new GoCommand(), new QuitCommand(), new ReflectCommand(), new BackCommand(), new MenuCommand(), new TakeCommand() };
         private static Command[] _commandArrayInCombat = { new QuitCommand() };
         private static Command[] _commandArrayInDialogue = { new QuitCommand() };
         private static Dictionary<States, Command[]> _commandArrays = new Dictionary<States, Command[]>() { { States.MENU, _commandArrayInMenu }, { States.GAME, _commandArrayInGame }, { States.COMBAT, _commandArrayInCombat }, { States.DIALOGUE, _commandArrayInDialogue } };
@@ -18,7 +18,7 @@ namespace Ascension
 
         public CommandWords() : this(_commandArrays) {}
 
-        // Designated Constructor
+        // State machine based Designated Constructor
         public CommandWords(Dictionary<States, Command[]> commandlist)
         {
             _commands = new Dictionary<States, Dictionary<string, Command>>();

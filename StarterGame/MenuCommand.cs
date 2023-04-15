@@ -6,6 +6,7 @@ namespace Ascension
 {
     class MenuCommand : Command
     {
+        // Switches player to MENU state
         public MenuCommand() : base()
         {
             this.Name = "menu";
