@@ -14,6 +14,8 @@ namespace Ascension
         public int [] pos { get; set; }
         public string Tag { get { return _tag; } set { _tag = value; } }
         public string GeneralDescription { get { return _generaldescription; } set { _generaldescription = value; } }
+        //room needs to store characters
+        public List<Character> Characters = new List<Character>();
         public List<Item> items = new List<Item>();
         public Room() : this("No Tag", "No Description", new List<Item>()){}
 

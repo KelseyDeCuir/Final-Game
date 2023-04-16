@@ -46,6 +46,7 @@ namespace Ascension
         public Character(Floor floor, string name, string desc)
         {
             _currentFloor = floor;
+            //current default pos for all chars is in elevator
             _currentRoom = new int[] {0,0};
             _name = name;
             _description = desc;

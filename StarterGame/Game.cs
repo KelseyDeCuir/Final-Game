@@ -15,8 +15,12 @@ namespace Ascension
 
         public Game()
         {
+            //TODO: EDIT GAME() TO IMPLEMENT MENUS
             _playing = false;
             _parser = new Parser(new CommandWords());
+            //_player creates a new game however, if we want to have a save and load system 
+            // the player should only be able to create a new game if they type create new game
+            //therefore Game() will likely have to change
             _player = new Player(GameWorld.Instance.Entrance);
         }
 
@@ -55,6 +59,9 @@ namespace Ascension
         public void End()
         {
             _playing = false;
+            //TODO: remove code here, this is temporary for the sake of testing
+            SaveSystem a = new SaveSystem(GameWorld.Instance);
+            a.SaveGameWorld();  
             _player.InfoMessage(Goodbye());
         }
 
