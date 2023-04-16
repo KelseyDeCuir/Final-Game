@@ -9,11 +9,13 @@ namespace Ascension
      */
     public class CommandWords
     {
-        private static Command[] _commandArrayInMenu = { new QuitCommand(), new CharNameCommand(), new ReflectCommand(), new PlayCommand() };
-        private static Command[] _commandArrayInGame = { new GoCommand(), new QuitCommand(), new ReflectCommand(), new BackCommand(), new MenuCommand(), new TakeCommand() };
+        private static Command[] _commandArrayInCreation = { new CharNameCommand(), new QuitCommand() };
+        private static Command[] _commandArrayInMenu = { new ReflectCommand(), new PlayCommand(), new QuitCommand()};
+        private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new BackCommand(), new TakeCommand(), new MenuCommand(), new QuitCommand() };
         private static Command[] _commandArrayInCombat = { new QuitCommand() };
         private static Command[] _commandArrayInDialogue = { new QuitCommand() };
-        private static Dictionary<States, Command[]> _commandArrays = new Dictionary<States, Command[]>() { { States.MENU, _commandArrayInMenu }, { States.GAME, _commandArrayInGame }, { States.COMBAT, _commandArrayInCombat }, { States.DIALOGUE, _commandArrayInDialogue } };
+        private static Command[] _commandArrayInElevator = { new GoCommand(), new LookCommand(), new ReflectCommand(), new BackCommand(), new MenuCommand(), new QuitCommand() };
+        private static Dictionary<States, Command[]> _commandArrays = new Dictionary<States, Command[]>() { {States.CHARCREATION, _commandArrayInCreation }, {States.ELEVATOR, _commandArrayInElevator },{ States.MENU, _commandArrayInMenu }, { States.GAME, _commandArrayInGame }, { States.COMBAT, _commandArrayInCombat }, { States.DIALOGUE, _commandArrayInDialogue } };
         private Dictionary<States, Dictionary<string, Command>> _commands;
 
         public CommandWords() : this(_commandArrays) {}
@@ -26,6 +28,8 @@ namespace Ascension
             _commands[States.GAME] = new Dictionary<string, Command>();
             _commands[States.COMBAT] = new Dictionary<string, Command>();
             _commands[States.DIALOGUE] = new Dictionary<string, Command>();
+            _commands[States.ELEVATOR] = new Dictionary<string, Command>();
+            _commands[States.CHARCREATION] = new Dictionary<string, Command>();
             foreach (States state in Enum.GetValues(typeof(States))) {
                 foreach (Command command in commandlist[state])
                 {

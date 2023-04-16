@@ -15,6 +15,7 @@ namespace Ascension
             if (this.HasSecondWord())
             {
                 player.SetName(SecondWord);
+                player.State = States.ELEVATOR;
                 Command reflect = new ReflectCommand(); // Check with Prof Obando
                 reflect.Execute(player);
             }

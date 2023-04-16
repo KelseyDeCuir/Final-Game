@@ -6,6 +6,6 @@ namespace Ascension
 {
     public enum States
     {
-        MENU,GAME,COMBAT,DIALOGUE
+        CHARCREATION,MENU,GAME,COMBAT,DIALOGUE,ELEVATOR
     }
 }

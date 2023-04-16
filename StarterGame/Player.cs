@@ -14,7 +14,30 @@ namespace Ascension
         {
             _volumeLimit = 40;
             _weightLimit = 30;
+            this.State = States.CHARCREATION; // so only the player starts in character creation
         }
 
+        public override void WalkTo(string direction) 
+        {
+            int[] newPos = validRoomPos(direction);
+            if (newPos != null)
+            {
+                PastRooms.Push(CurrentRoom); //stores current room as a past room
+                _currentRoom = newPos; //Move rooms
+                if (_currentRoom[0] == 0 && _currentRoom[1] == 0)
+                {
+                    State = States.ELEVATOR;
+                }
+                else if (State == States.ELEVATOR)
+                {
+                    State = States.GAME;
+                }
+                NormalMessage("\n" + this.CurrentRoom.Description());
+            }
+            else
+            {
+                ErrorMessage("\nThere is no door to the " + direction + ".");
+            }
+        }
     }
 }

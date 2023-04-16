@@ -35,7 +35,7 @@ namespace Ascension
         public string Description { get { return _description; } }
         private Floor _currentFloor = null; //rooms are separated by floors so that is stored instead
         public Floor CurrentFloor { get { return _currentFloor;} set { _currentFloor = value;} }
-        private int[] _currentRoom = null;
+        protected int[] _currentRoom = null;
         public Room CurrentRoom { get { return CurrentFloor.FloorMap[_currentRoom[0],_currentRoom[1]]; } }
         //PastRoom Locations, 
         public Stack<Room> PastRooms = new Stack<Room>();
@@ -98,10 +98,10 @@ namespace Ascension
                     return null;
             }
         }
-        public void WalkTo(string direction)
+        public virtual void WalkTo(string direction) //virtual so that it can be overridden because no characters but the player and elevator attendant can be in the 0,0 position
         {
             int[] newPos = validRoomPos(direction);
-            if (newPos != null)
+            if (newPos != null && !(newPos[0] == 0 && newPos[1] == 0))
             {
                 PastRooms.Push(CurrentRoom); //stores current room as a past room
                 _currentRoom = newPos; //Move rooms
