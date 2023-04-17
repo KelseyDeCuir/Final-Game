@@ -27,12 +27,9 @@ namespace Ascension
     {
         public States State;
         public List<Item> Inventory { set; get; }
-        public Double Health { set; get; }
-        public Double Attack { set; get; }
-        public Double Evasiveness { set; get; }
         public Boolean CanMove { set; get; }
         public Boolean Alive { set; get; }
-        public Skills skillName { set; get; }
+        public Skills aptitudeLvl { set; get; }
         //actions currently do not store or do anything
         //the intended purpose for actions is to store
         //comamands for npcs based on their personality
@@ -60,7 +57,7 @@ namespace Ascension
             _description = desc;
             Inventory = new List<Item>();
             State = States.GAME;
-            skillName = new Skills(10, 100, 10, 10, 10);
+            aptitudeLvl = new Skills(10, 100, 10, 10, 10);
         }
 
         // gets the room position for the matrix if it is a valid room
@@ -146,11 +143,11 @@ namespace Ascension
         public string GetStats()
         {
             string rtnString = "";
-            rtnString += "Health: " + skillName.health;
-            rtnString += "\nStrength: " + skillName.strength;
-            rtnString += "\nSpeed: " + skillName.speed;
-            rtnString += "\nIntelligence: " + skillName.intelligence;
-            rtnString += "\nMagic: " + skillName.magic;
+            rtnString += "Health: " + aptitudeLvl.health;
+            rtnString += "\nStrength: " + aptitudeLvl.strength;
+            rtnString += "\nSpeed: " + aptitudeLvl.speed;
+            rtnString += "\nIntelligence: " + aptitudeLvl.intelligence;
+            rtnString += "\nMagic: " + aptitudeLvl.magic;
             return rtnString;
         }
 

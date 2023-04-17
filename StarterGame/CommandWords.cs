@@ -11,10 +11,10 @@ namespace Ascension
     {
         private static Command[] _commandArrayInCreation = { new CharNameCommand(), new QuitCommand() };
         private static Command[] _commandArrayInMenu = { new ReflectCommand(), new PlayCommand(), new QuitCommand()};
-        private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new BackCommand(), new TakeCommand(), new MenuCommand(), new QuitCommand() };
+        private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new LevelCommand(), new BackCommand(), new TakeCommand(), new MenuCommand(), new QuitCommand() };
         private static Command[] _commandArrayInCombat = { new QuitCommand() };
         private static Command[] _commandArrayInDialogue = { new QuitCommand() };
-        private static Command[] _commandArrayInElevator = { new GoCommand(), new LookCommand(), new ReflectCommand(), new BackCommand(), new MenuCommand(), new QuitCommand() };
+        private static Command[] _commandArrayInElevator = { new GoCommand(), new LookCommand(), new ReflectCommand(), new LevelCommand(), new BackCommand(), new MenuCommand(), new QuitCommand() };
         private static Dictionary<States, Command[]> _commandArrays = new Dictionary<States, Command[]>() { {States.CHARCREATION, _commandArrayInCreation }, {States.ELEVATOR, _commandArrayInElevator },{ States.MENU, _commandArrayInMenu }, { States.GAME, _commandArrayInGame }, { States.COMBAT, _commandArrayInCombat }, { States.DIALOGUE, _commandArrayInDialogue } };
         private Dictionary<States, Dictionary<string, Command>> _commands;
 
