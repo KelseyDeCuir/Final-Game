@@ -49,11 +49,11 @@ namespace Ascension
         public Armor EquippedArmor { set; get; }
         public int aptPoints;
 
-        public Character(Floor floor, string name, string desc)
+        public Character(Floor floor, string name, string desc, int[]pos)
         {
             _currentFloor = floor;
             //current default pos for all chars is in elevator
-            _currentRoom = new int[] {0,0};
+            _currentRoom = pos;
             _name = name;
             _description = desc;
             Inventory = new List<Item>();
