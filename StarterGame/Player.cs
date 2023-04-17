@@ -8,16 +8,19 @@ namespace Ascension
 {
     [Serializable]
     public class Player : Character
-
     {
-        private GameWorld World;
         private double _weightLimit;
         public double WeightLimit { get { return _weightLimit; } }
         private double _volumeLimit;
         public double VolumeLimit { get { return _volumeLimit; } }
+        private int _exp;
+        public int Exp {get {return _exp; } }
+        public Player(Floor floor) : base(floor, "player", "yourself")
+        public double VolumeLimit { get { return _volumeLimit; } }
     
         public Player(GameWorld world) : base(world.Entrance, "player", "yourself", new int[] { 0, 0 })
         {
+           
             _volumeLimit = 40;
             _weightLimit = 30;
             this.State = States.CHARCREATION; // so only the player starts in character creation
@@ -28,6 +31,11 @@ namespace Ascension
             //Simpleton for now
             SaveSystem sv = new SaveSystem(this);
             sv.SavePlayerinfo();
+        }
+
+        public void XpUp(int exp)
+        {
+            _exp += exp;
         }
 
         public override void WalkTo(string direction) 
