@@ -13,24 +13,25 @@ namespace Ascension
         //WILL BECOME STATIC POSSIBLY
     {
         String PlayerSave;
-        String GameW;
-        /* NOTE:
-         * Because gameworld contains floors and floors store rooms
-         * we just need to write gameworld onto a file in order to access a players game session
-         * 
-         * 
-         * **/
+        //Simpleton for now
    
-        public SaveSystem(GameWorld game) {
-            GameW = JsonConvert.SerializeObject(game, Formatting.Indented);
+        public SaveSystem(Character player) {
+            PlayerSave = JsonConvert.SerializeObject(player, Formatting.Indented);
+        }
+        public void SavePlayerinfo()
+        {
+            String path = "saveGame.json"; //needs to save in a specfic path
+            //also eventually have it so player can name file
+            //and check if player is overwriting file
+            StreamWriter writer = new StreamWriter(path, false); //ture appends onto file
+            writer.Write(PlayerSave);
+            writer.Close(); 
         }
 
-        public void SaveGameWorld()
+        public void LoadPlayerinfo()
         {
-            String path = "saveGame.Json"; // its possible for the player to create mulitple save files but lets keep it like this for now
-            StreamWriter writer = new StreamWriter(path, false);
-            writer.Write(GameW);
-            writer.Close();
+
+
         }
 
         //TODO: load gameworld

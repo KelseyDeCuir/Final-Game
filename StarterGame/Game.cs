@@ -21,7 +21,7 @@ namespace Ascension
             //_player creates a new game however, if we want to have a save and load system 
             // the player should only be able to create a new game if they type create new game
             //therefore Game() will likely have to change
-            _player = new Player(GameWorld.Instance.Entrance);
+            _player = new Player(GameWorld.Instance);
         }
 
         /**
@@ -60,8 +60,9 @@ namespace Ascension
         {
             _playing = false;
             //TODO: remove code here, this is temporary for the sake of testing
-            SaveSystem a = new SaveSystem(GameWorld.Instance);
-            a.SaveGameWorld();  
+            SaveSystem a = new SaveSystem(_player);
+    
+            a.SavePlayerinfo();
             _player.InfoMessage(Goodbye());
         }
 
