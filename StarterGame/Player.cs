@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Ascension
 {
+    [Serializable]
     public class Player : Character
     {
         private double _weightLimit;
@@ -14,6 +15,7 @@ namespace Ascension
         public int Exp {get {return _exp; } }
         public Player(Floor floor) : base(floor, "player", "yourself")
         {
+           
             _volumeLimit = 40;
             _weightLimit = 30;
             this.State = States.CHARCREATION; // so only the player starts in character creation
