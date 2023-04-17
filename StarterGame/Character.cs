@@ -9,22 +9,27 @@ namespace Ascension
      */
     public struct Skills
     {
-        int strength;
-        int health;
-        int speed;
-        int intelligence;
-        int magic;
+        public int strength;
+        public int health;
+        public int speed;
+        public int intelligence;
+        public int magic;
+        public Skills(int str, int hlt, int spd, int itl, int mag)
+        {
+            this.strength = str;
+            this.health = hlt;
+            this.speed = spd;
+            this.intelligence = itl;
+            this.magic = mag;
+        }
     }
     public class Character : ICharacter
     {
         public States State;
         public List<Item> Inventory { set; get; }
-        public Double Health { set; get; }
-        public Double Attack { set; get; }
-        public Double Evasiveness { set; get; }
         public Boolean CanMove { set; get; }
         public Boolean Alive { set; get; }
-        public Skills skillName { set; get; }
+        public Skills aptitudeLvl { set; get; }
         //actions currently do not store or do anything
         //the intended purpose for actions is to store
         //comamands for npcs based on their personality
@@ -42,6 +47,7 @@ namespace Ascension
 
         public Weapon EquippedWeapon { set; get; }
         public Armor EquippedArmor { set; get; }
+        public int aptPoints;
 
         public Character(Floor floor, string name, string desc)
         {
@@ -52,6 +58,8 @@ namespace Ascension
             _description = desc;
             Inventory = new List<Item>();
             State = States.GAME;
+            aptitudeLvl = new Skills(10, 100, 10, 10, 10);
+            aptPoints = 1;
         }
 
         // gets the room position for the matrix if it is a valid room
@@ -132,6 +140,17 @@ namespace Ascension
         public void SetName(string name)
         {
             _name = name;
+        }
+
+        public string GetStats()
+        {
+            string rtnString = "";
+            rtnString += "Health: " + aptitudeLvl.health;
+            rtnString += "\nStrength: " + aptitudeLvl.strength;
+            rtnString += "\nSpeed: " + aptitudeLvl.speed;
+            rtnString += "\nIntelligence: " + aptitudeLvl.intelligence;
+            rtnString += "\nMagic: " + aptitudeLvl.magic;
+            return rtnString;
         }
 
         public string GetInventory()

@@ -14,9 +14,9 @@ namespace Ascension
         private double _volumeLimit;
         public double VolumeLimit { get { return _volumeLimit; } }
         private int _exp;
+        private GameWorld World;
         public int Exp {get {return _exp; } }
-        public Player(Floor floor) : base(floor, "player", "yourself")
-        public double VolumeLimit { get { return _volumeLimit; } }
+       
     
         public Player(GameWorld world) : base(world.Entrance, "player", "yourself", new int[] { 0, 0 })
         {

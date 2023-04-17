@@ -13,7 +13,8 @@ namespace Ascension
         }
         public override bool Execute(Character player) //ASK IF BREAKS COMMAND PATTERN
         {
-            player.InfoMessage("You are " + player.Name + "\nYou look like " + player.Description + "\nYou currently have equipped:\n" + player.GetEquipped() + "\nYour Inventory currently contains:\n" + player.GetInventory());
+            Player pl = (Player)player;
+            player.InfoMessage("You are " + player.Name + "\nYou look like " + player.Description + "\nYou currently have equipped:\n" + player.GetEquipped() + "\nYou have " + pl.Exp + " EXP." + "\nYour Aptitude Levels are:\n" + player.GetStats() + "\nYour Inventory currently contains:\n" + player.GetInventory());
             return false;
         }
     }

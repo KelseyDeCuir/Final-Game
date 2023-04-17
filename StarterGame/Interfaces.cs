@@ -26,12 +26,9 @@ namespace Ascension
         List<Item> Inventory { set; get; }
         Weapon EquippedWeapon { set; get; }
         Armor EquippedArmor { set; get; }
-        Double Health { set; get; }
-        Double Attack { set; get; }
-        Double Evasiveness { set; get; }
         Boolean CanMove { set; get; }
         Boolean Alive { set; get; }
-        Skills skillName { set; get; }
+        Skills aptitudeLvl { set; get; }
         //Thinking about what to do with this
         Command[] actions { set; get; }
         

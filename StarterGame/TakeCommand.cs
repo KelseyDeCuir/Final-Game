@@ -19,6 +19,12 @@ namespace Ascension
                 {
                     foreach (Item item in player.CurrentRoom.items)
                     {
+                        if(item.Found != true)
+                        {
+                            Player pl = (Player)player;
+                            pl.XpUp(2);
+                            item.Found = true;
+                        }
                         player.Inventory.Add(item);
                         player.InfoMessage("You picked up " + item.Name);
                     }
@@ -32,6 +38,12 @@ namespace Ascension
             else if (player.CurrentRoom.items.Exists(item => item.Name.ToLower().Equals(this.SecondWord)))
             {
                 Item item = player.CurrentRoom.items.Find(item => item.Name.ToLower().Equals(this.SecondWord));
+                if (item.Found != true)
+                {
+                    Player pl = (Player)player;
+                    pl.XpUp(2);
+                    item.Found = true;
+                }
                 player.Inventory.Add(item);
                 player.InfoMessage("You picked up " + item.Name);
                 player.CurrentRoom.items.Remove(item);
