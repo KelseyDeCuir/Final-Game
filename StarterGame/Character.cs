@@ -47,6 +47,7 @@ namespace Ascension
 
         public Weapon EquippedWeapon { set; get; }
         public Armor EquippedArmor { set; get; }
+        public int aptPoints;
 
         public Character(Floor floor, string name, string desc)
         {
@@ -58,6 +59,7 @@ namespace Ascension
             Inventory = new List<Item>();
             State = States.GAME;
             aptitudeLvl = new Skills(10, 100, 10, 10, 10);
+            aptPoints = 1;
         }
 
         // gets the room position for the matrix if it is a valid room
