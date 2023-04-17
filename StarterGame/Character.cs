@@ -9,11 +9,19 @@ namespace Ascension
      */
     public struct Skills
     {
-        int strength;
-        int health;
-        int speed;
-        int intelligence;
-        int magic;
+        public int strength;
+        public int health;
+        public int speed;
+        public int intelligence;
+        public int magic;
+        public Skills(int str, int hlt, int spd, int itl, int mag)
+        {
+            this.strength = str;
+            this.health = hlt;
+            this.speed = spd;
+            this.intelligence = itl;
+            this.magic = mag;
+        }
     }
     public class Character : ICharacter
     {
@@ -51,6 +59,7 @@ namespace Ascension
             _description = desc;
             Inventory = new List<Item>();
             State = States.GAME;
+            skillName = new Skills(10, 100, 10, 10, 10);
         }
 
         // gets the room position for the matrix if it is a valid room
@@ -131,6 +140,17 @@ namespace Ascension
         public void SetName(string name)
         {
             _name = name;
+        }
+
+        public string GetStats()
+        {
+            string rtnString = "";
+            rtnString += "Health: " + skillName.health;
+            rtnString += "\nStrength: " + skillName.strength;
+            rtnString += "\nSpeed: " + skillName.speed;
+            rtnString += "\nIntelligence: " + skillName.intelligence;
+            rtnString += "\nMagic: " + skillName.magic;
+            return rtnString;
         }
 
         public string GetInventory()
