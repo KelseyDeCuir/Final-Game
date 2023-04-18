@@ -145,11 +145,11 @@ namespace Ascension
         public string GetStats()
         {
             string rtnString = "";
-            rtnString += "Health: " + aptitudeLvl.health;
-            rtnString += "\nStrength: " + aptitudeLvl.strength;
-            rtnString += "\nSpeed: " + aptitudeLvl.speed;
-            rtnString += "\nIntelligence: " + aptitudeLvl.intelligence;
-            rtnString += "\nMagic: " + aptitudeLvl.magic;
+            rtnString += "\tHealth: " + aptitudeLvl.health;
+            rtnString += "\n\tStrength: " + aptitudeLvl.strength;
+            rtnString += "\n\tSpeed: " + aptitudeLvl.speed;
+            rtnString += "\n\tIntelligence: " + aptitudeLvl.intelligence;
+            rtnString += "\n\tMagic: " + aptitudeLvl.magic;
             return rtnString;
         }
 
@@ -160,16 +160,16 @@ namespace Ascension
                 string itemNames = "Items:";
                 foreach (Item item in Inventory)
                 {
-                    itemNames += "\n" + item.Name;
+                    itemNames += "\n\t" + item.Name;
                     var weapon = item as Weapon;
                     var armor = item as Armor;
                     if (weapon != null)
                     {
-                        itemNames += " (weapon)";
+                        itemNames += " (weapon -> " + weapon.damage + " Damage)";
                     }
                     else if (armor != null)
                     {
-                        itemNames += " (armor)";
+                        itemNames += " (armor -> " + armor.defense + " Defense)";
                     }
                     itemNames += ": " + item.Description;
                 }
@@ -182,7 +182,7 @@ namespace Ascension
             string equipped = "";
             if (EquippedWeapon != null)
             {
-                equipped += "Weapon: " + EquippedWeapon.Name;
+                equipped += "Weapon: " + EquippedWeapon.Name + " -> " + EquippedWeapon.damage + " Damage";
             }
             else
             {
@@ -190,7 +190,7 @@ namespace Ascension
             }
             if (EquippedArmor != null)
             {
-                equipped += "\nArmor: " + EquippedArmor.Name;
+                equipped += "\nArmor: " + EquippedArmor.Name + " -> " + EquippedArmor.defense + " Defense";
             }
             else
             {

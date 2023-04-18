@@ -16,19 +16,25 @@ namespace Ascension
         private int _exp;
         private GameWorld World;
         public int Exp {get {return _exp; } }
+        private int _aptReq;
+        public int AptReq { get { return _aptReq; } }
+        private int _prevAptReq;
         Weapon stick;
         Armor jacket;
 
         public Player(GameWorld world) : base(world.Entrance, "player", "yourself", new int[] { 0, 0 })
         {
-           
+            _aptReq = 2;
+            _prevAptReq = 1;
             _volumeLimit = 40;
             _weightLimit = 30;
             this.State = States.CHARCREATION; // so only the player starts in character creation
             World = world;
             stick = new Weapon("stick", "A plain stick", 0, 1, 3, 2, Inventory);
+            stick.Found = true;
             EquippedWeapon = stick;
             jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 1, Inventory);
+            jacket.Found = true;
             EquippedArmor = jacket;
             Inventory.Remove(stick);
             Inventory.Remove(jacket);
@@ -43,6 +49,16 @@ namespace Ascension
         public void XpUp(int exp)
         {
             _exp += exp;
+            this.InfoMessage("+" + exp + " EXP.\nYou now have " + this.Exp + " EXP.");
+            int i = 0;
+            while (_exp >= _aptReq)
+            {
+                aptPoints += 1;
+                _aptReq += _prevAptReq;
+                _prevAptReq = _aptReq - _prevAptReq;
+                i++;
+            }
+            this.InfoMessage("+" + i + " Aptitude Points.\nYou now have " + this.aptPoints + " Aptitude Points.You get your next Aptitude point at " + _aptReq + " EXP.");
         }
 
         public override void WalkTo(string direction) 
