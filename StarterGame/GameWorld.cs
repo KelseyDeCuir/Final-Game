@@ -8,14 +8,16 @@ namespace Ascension
     //The game world is a singleton becasue it is the checkpoint for when the player dies
     public class GameWorld
     {
-        //Defined global floor variable
+        //These static character lists are utilized to randomly generate characters in the rooms on each floor
         public static Floor abandonedHospital = new Floor(null, null);
         public static Floor abandonedSchool = new Floor(null, null);
         public static Floor hell = new Floor(null, null);
+        //Defined global floor variable
         //These static lists are utilized to randomly generate items in the rooms on each floor
         public static List<Item> Floor1Items = new List<Item>();
         public static List<Item> Floor2Items = new List<Item>();
         public static List<Item> Floor3Items = new List<Item>();
+        //These lists are utilized to generate characters 
         public List<Character> A_hospitalCharacters = new List<Character>();
         public List<Character> U_hospitalCharacters = new List<Character>();
         public List<Character> A_schoolCharacters = new List<Character>();

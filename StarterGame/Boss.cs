@@ -4,8 +4,10 @@ using System.Text;
 
 namespace Ascension
 {
-   public class Boss
+   public class Boss : Character
     {
-        //comment
+        //Implements character along with some special 
+        
+
     }
 }
