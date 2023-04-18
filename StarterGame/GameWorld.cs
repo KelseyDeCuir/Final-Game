@@ -93,7 +93,7 @@ namespace Ascension
             A_hospitalCharacters.Add(IJ);
             A_hospitalCharacters.Add(JK);
             GenCharacters(A_hospitalCharacters, U_hospitalCharacters);
-            Floor abandonedHospital = new Floor(Floor1Rooms, Floor1Items);
+            abandonedHospital = new Floor(Floor1Rooms, Floor1Items);
             return abandonedHospital;
         }
 
