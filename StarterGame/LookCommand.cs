@@ -15,7 +15,69 @@ namespace Ascension
         }
         public override bool Execute(Character player)
         {
-            player.NormalMessage("\n" + player.CurrentRoom.Description());
+            if (this.HasSecondWord())
+            {
+                if (this.SecondWord.Equals("room"))
+                {
+                    if (this.HasThirdWord())
+                    {
+                        if (player.CurrentRoom.items.Exists(item => item.Name.ToLower().Equals(this.Thirdword)))
+                        {
+                            Item item = player.CurrentRoom.items.Find(item => item.Name.ToLower().Equals(this.Thirdword));
+                            player.NormalMessage("\nItem in Room:\n" + item.Name + ": " + item.Description);
+                        }
+                        else
+                        {
+                            player.WarningMessage("Could not find " + this.Thirdword);
+                        }
+                    }
+                    else
+                    {
+                        player.NormalMessage("\n" + player.CurrentRoom.Description());
+                    }
+
+                }
+                else if (this.SecondWord.Equals("inventory"))
+                {
+                    if (this.HasThirdWord())
+                    {
+                        if (player.Inventory.Exists(item => item.Name.ToLower().Equals(this.Thirdword)))
+                        {
+                            Item item = player.Inventory.Find(item => item.Name.ToLower().Equals(this.Thirdword));
+                            player.NormalMessage("\nItem in Inventory:\n" + item.Name + ": " + item.Description);
+                        }
+                        else
+                        {
+                            player.WarningMessage("Could not find " + this.Thirdword);
+                        }
+                    }
+                    else
+                    {
+                        player.NormalMessage("Inventory:\n" + player.GetInventory());
+                    }
+                }
+                else
+                {
+                    if (player.Inventory.Exists(item => item.Name.ToLower().Equals(this.SecondWord)))
+                    {
+                        Item item = player.Inventory.Find(item => item.Name.ToLower().Equals(this.SecondWord));
+                        player.NormalMessage("\nItem in Inventory:\n" + item.Name + ": " + item.Description);
+                    }
+                    else if (player.CurrentRoom.items.Exists(item => item.Name.ToLower().Equals(this.SecondWord)))
+                    {
+                        Item item = player.CurrentRoom.items.Find(item => item.Name.ToLower().Equals(this.SecondWord));
+                        player.NormalMessage("\nItem in Room:\n" + item.Name + ": " + item.Description);
+                    }
+                    else
+                    {
+                        player.WarningMessage("Could not find " + this.SecondWord);
+                    }
+                }
+            }
+            else
+            {
+                player.NormalMessage("\n" + player.CurrentRoom.Description());
+            }
             return false;
         }
     }
