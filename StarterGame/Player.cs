@@ -16,8 +16,9 @@ namespace Ascension
         private int _exp;
         private GameWorld World;
         public int Exp {get {return _exp; } }
-       
-    
+        Weapon stick;
+        Armor shirt;
+
         public Player(GameWorld world) : base(world.Entrance, "player", "yourself", new int[] { 0, 0 })
         {
            
@@ -25,6 +26,9 @@ namespace Ascension
             _weightLimit = 30;
             this.State = States.CHARCREATION; // so only the player starts in character creation
             World = world;
+            stick = new Weapon("stick", "A plain stick", 0, 1, 3, 2, Inventory);
+            EquippedWeapon = stick;
+            Inventory.Remove(stick);
         }
 
         public void Saveinfo() { //really cheap way to save ask teacher about it

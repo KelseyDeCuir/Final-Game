@@ -9,21 +9,14 @@ namespace Ascension
     public class GameWorld
     {
         //These static character lists are utilized to randomly generate characters in the rooms on each floor
-        public static Floor abandonedHospital = new Floor(null, null);
-        public static Floor abandonedSchool = new Floor(null, null);
-        public static Floor hell = new Floor(null, null);
+        public static Floor abandonedHospital;
+        public static Floor abandonedSchool;
+        public static Floor hell;
         //Defined global floor variable
         //These static lists are utilized to randomly generate items in the rooms on each floor
         public static List<Item> Floor1Items = new List<Item>();
         public static List<Item> Floor2Items = new List<Item>();
         public static List<Item> Floor3Items = new List<Item>();
-        //These lists are utilized to generate characters 
-        public List<Character> A_hospitalCharacters = new List<Character>();
-        public List<Character> U_hospitalCharacters = new List<Character>();
-        public List<Character> A_schoolCharacters = new List<Character>();
-        public List<Character> U_schoolCharacters = new List<Character>();
-        public List<Character> A_hellCharacters = new List<Character>();
-        public List<Character> U_hellCharacters = new List<Character>();
 
         Character AB = new Character(abandonedHospital, "A", "B", new int[] { 0, 1 });
         Character BC = new Character(abandonedHospital, "B", "C", new int[] { 0, 2 });
@@ -35,6 +28,13 @@ namespace Ascension
         Character HI = new Character(abandonedHospital, "H", "I", new int[] { 0, 2 });
         Character IJ = new Character(abandonedHospital, "I", "J", new int[] { 1, 1 });
         Character JK = new Character(abandonedHospital, "J", "K", new int[] { 1, 2 });
+        //These lists are utilized to generate characters 
+        public List<Character> A_hospitalCharacters = new List<Character>();
+        public List<Character> U_hospitalCharacters = new List<Character>();
+        public List<Character> A_schoolCharacters = new List<Character>();
+        public List<Character> U_schoolCharacters = new List<Character>();
+        public List<Character> A_hellCharacters = new List<Character>();
+        public List<Character> U_hellCharacters = new List<Character>();
 
         public void GenCharacters(List<Character> A, List<Character> U)
         {
@@ -82,6 +82,16 @@ namespace Ascension
 
         private Floor CreateWorld()
         {
+            A_hospitalCharacters.Add(AB);
+            A_hospitalCharacters.Add(BC);
+            A_hospitalCharacters.Add(CD);
+            A_hospitalCharacters.Add(DE);
+            A_hospitalCharacters.Add(EF);
+            A_hospitalCharacters.Add(FG);
+            A_hospitalCharacters.Add(GH);
+            A_hospitalCharacters.Add(HI);
+            A_hospitalCharacters.Add(IJ);
+            A_hospitalCharacters.Add(JK);
             GenCharacters(A_hospitalCharacters, U_hospitalCharacters);
             Floor abandonedHospital = new Floor(Floor1Rooms, Floor1Items);
             return abandonedHospital;
