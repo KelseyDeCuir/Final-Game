@@ -47,7 +47,7 @@ namespace Ascension
             }
             else
             {
-                player.WarningMessage("Cannot Unequip emptyness...");
+                player.WarningMessage("Cannot Unequip the emptyness you feel...");
             }
             return false;
         }

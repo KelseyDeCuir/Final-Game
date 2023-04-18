@@ -160,7 +160,18 @@ namespace Ascension
                 string itemNames = "Items:";
                 foreach (Item item in Inventory)
                 {
-                    itemNames += " " + item.Name;
+                    itemNames += "\n" + item.Name;
+                    var weapon = item as Weapon;
+                    var armor = item as Armor;
+                    if (weapon != null)
+                    {
+                        itemNames += " (weapon)";
+                    }
+                    else if (armor != null)
+                    {
+                        itemNames += " (armor)";
+                    }
+                    itemNames += ": " + item.Description;
                 }
                 return itemNames;
             }

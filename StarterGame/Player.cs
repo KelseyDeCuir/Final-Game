@@ -17,7 +17,7 @@ namespace Ascension
         private GameWorld World;
         public int Exp {get {return _exp; } }
         Weapon stick;
-        Armor shirt;
+        Armor jacket;
 
         public Player(GameWorld world) : base(world.Entrance, "player", "yourself", new int[] { 0, 0 })
         {
@@ -28,7 +28,10 @@ namespace Ascension
             World = world;
             stick = new Weapon("stick", "A plain stick", 0, 1, 3, 2, Inventory);
             EquippedWeapon = stick;
+            jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 1, Inventory);
+            EquippedArmor = jacket;
             Inventory.Remove(stick);
+            Inventory.Remove(jacket);
         }
 
         public void Saveinfo() { //really cheap way to save ask teacher about it
