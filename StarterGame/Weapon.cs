@@ -11,5 +11,9 @@ namespace Ascension
         {
             damage = dmg;
         }
+        public override string GetDescription()
+        {
+            return "Weapon -> " + this.damage + " " + this.Description + " W: " + this.Weight + " V: " + this.Volume + ".";
+        }
     }
 }

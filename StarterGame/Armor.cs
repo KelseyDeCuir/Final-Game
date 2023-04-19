@@ -11,6 +11,10 @@ namespace Ascension
         {
             this.defense = defense;
         }
-}
+        public override string GetDescription()
+        {
+            return "Armor -> " + this.defense + " " + this.Description + "W: " + this.Weight + " V: " + this.Volume + ".";
+        }
+    }
     // aaa
 }
