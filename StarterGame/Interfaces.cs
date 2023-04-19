@@ -14,7 +14,6 @@ namespace Ascension
     interface IRoom
     {
         Character[] characters { set; get; }
-        Boss boss { set; get; }
         Item[] item { set; get; }
         Weapon weapon { set; get; }
         Armor armor { set; get; }
