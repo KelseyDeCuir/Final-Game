@@ -10,7 +10,7 @@ namespace Ascension
     public class CommandWords
     {
         private static Command[] _commandArrayInCreation = { new CharNameCommand(), new QuitCommand() };
-        private static Command[] _commandArrayInMenu = { new ReflectCommand(), new SaveCommand(), new PlayCommand(), new QuitCommand() }; //command does not recognize save >:(
+        private static Command[] _commandArrayInMenu = { new ReflectCommand(), new SaveCommand(), new PlayCommand(), new QuitCommand() };
         private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new LevelCommand(), new BackCommand(), new TakeCommand(), new MenuCommand(), new QuitCommand() };
         private static Command[] _commandArrayInCombat = { new QuitCommand() };
         private static Command[] _commandArrayInDialogue = { new QuitCommand() };
