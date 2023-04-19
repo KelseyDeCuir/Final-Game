@@ -13,6 +13,8 @@ namespace Ascension
         public double WeightLimit { get { return _weightLimit; } }
         private double _volumeLimit;
         public double VolumeLimit { get { return _volumeLimit; } }
+        public double heldVolume;
+        public double heldWeight;
         private int _exp;
         private GameWorld World;
         public int Exp {get {return _exp; } }
@@ -28,6 +30,8 @@ namespace Ascension
             _prevAptReq = 1;
             _volumeLimit = 40;
             _weightLimit = 30;
+            heldVolume = 0;
+            heldWeight = 0;
             this.State = States.CHARCREATION; // so only the player starts in character creation
             World = world;
             stick = new Weapon("stick", "A plain stick", 0, 1, 3, 2, Inventory);

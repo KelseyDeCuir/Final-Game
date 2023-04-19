@@ -161,17 +161,7 @@ namespace Ascension
                 foreach (Item item in Inventory)
                 {
                     itemNames += "\n\t" + item.Name;
-                    var weapon = item as Weapon;
-                    var armor = item as Armor;
-                    if (weapon != null)
-                    {
-                        itemNames += " (weapon -> " + weapon.damage + " Damage)";
-                    }
-                    else if (armor != null)
-                    {
-                        itemNames += " (armor -> " + armor.defense + " Defense)";
-                    }
-                    itemNames += ": " + item.Description;
+                    itemNames += ": " + item.GetDescription();
                 }
                 return itemNames;
             }

@@ -25,5 +25,9 @@ namespace Ascension
             this._found = false;
             items.Add(this);
         }
+        public string GetDescription()
+        {
+            return this.Description + "W: " + this.Weight + " V: " + this.Volume + ".";
+        }
     }
 }
