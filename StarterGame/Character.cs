@@ -145,11 +145,11 @@ namespace Ascension
         public string GetStats()
         {
             string rtnString = "";
-            rtnString += "Health: " + aptitudeLvl.health;
-            rtnString += "\nStrength: " + aptitudeLvl.strength;
-            rtnString += "\nSpeed: " + aptitudeLvl.speed;
-            rtnString += "\nIntelligence: " + aptitudeLvl.intelligence;
-            rtnString += "\nMagic: " + aptitudeLvl.magic;
+            rtnString += "\tHealth: " + aptitudeLvl.health;
+            rtnString += "\n\tStrength: " + aptitudeLvl.strength;
+            rtnString += "\n\tSpeed: " + aptitudeLvl.speed;
+            rtnString += "\n\tIntelligence: " + aptitudeLvl.intelligence;
+            rtnString += "\n\tMagic: " + aptitudeLvl.magic;
             return rtnString;
         }
 
@@ -160,7 +160,8 @@ namespace Ascension
                 string itemNames = "Items:";
                 foreach (Item item in Inventory)
                 {
-                    itemNames += " " + item.Name;
+                    itemNames += "\n\t" + item.Name;
+                    itemNames += ": " + item.GetDescription();
                 }
                 return itemNames;
             }
@@ -171,7 +172,7 @@ namespace Ascension
             string equipped = "";
             if (EquippedWeapon != null)
             {
-                equipped += "Weapon: " + EquippedWeapon.Name;
+                equipped += "Weapon: " + EquippedWeapon.Name + " -> " + EquippedWeapon.damage + " Damage";
             }
             else
             {
@@ -179,7 +180,7 @@ namespace Ascension
             }
             if (EquippedArmor != null)
             {
-                equipped += "\nArmor: " + EquippedArmor.Name;
+                equipped += "\nArmor: " + EquippedArmor.Name + " -> " + EquippedArmor.defense + " Defense";
             }
             else
             {

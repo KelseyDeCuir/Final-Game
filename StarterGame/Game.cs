@@ -64,7 +64,7 @@ namespace Ascension
 
         public string Welcome()
         {
-            return "You wake up alone. You seem to be in an elevator that you do not recognize.\n\nYou have no recollection of how you ended up there.\n\nType 'help' if you need help. " + _player.CurrentRoom.Description();
+            return "You wake up alone. You seem to be in an elevator that you do not recognize.\n\nYou have no recollection of how you ended up there.\n\nType 'help' if you need help. " + _player.CurrentRoom.Description() + "\n(You must enter a name or load a save to continue)";
         }
 
         public string Goodbye()

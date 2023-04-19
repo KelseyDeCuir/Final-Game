@@ -13,20 +13,29 @@ namespace Ascension
         }
         public override bool Execute(Character player)
         {
+            Player pl = (Player)player;
             if (!this.HasSecondWord() || this.SecondWord.Equals("all"))
             {
                 if (player.CurrentRoom.items.Count > 0)
                 {
                     foreach (Item item in player.CurrentRoom.items)
                     {
-                        if(item.Found != true)
+                        if (pl.heldWeight + item.Weight <= pl.WeightLimit && pl.heldVolume + item.Volume <= pl.VolumeLimit)
                         {
-                            Player pl = (Player)player;
-                            pl.XpUp(2);
-                            item.Found = true;
+                            player.InfoMessage("You picked up " + item.Name);
+                            if (item.Found != true)
+                            {
+                                pl.XpUp(2);
+                                item.Found = true;
+                            }
+                            player.Inventory.Add(item);
+                            pl.heldWeight += item.Weight;
+                            pl.heldVolume += item.Volume;
                         }
-                        player.Inventory.Add(item);
-                        player.InfoMessage("You picked up " + item.Name);
+                        else
+                        {
+                            player.WarningMessage("Cannot fit " + item.Name + " into your inventory.");
+                        }
                     }
                     player.CurrentRoom.items.Clear();
                 }
@@ -38,16 +47,23 @@ namespace Ascension
             else if (player.CurrentRoom.items.Exists(item => item.Name.ToLower().Equals(this.SecondWord)))
             {
                 Item item = player.CurrentRoom.items.Find(item => item.Name.ToLower().Equals(this.SecondWord));
+                if (pl.heldWeight + item.Weight <= pl.WeightLimit && pl.heldVolume + item.Volume <= pl.VolumeLimit) {
+                player.InfoMessage("You picked up " + item.Name);
                 if (item.Found != true)
                 {
-                    Player pl = (Player)player;
                     pl.XpUp(2);
                     item.Found = true;
                 }
                 player.Inventory.Add(item);
-                player.InfoMessage("You picked up " + item.Name);
                 player.CurrentRoom.items.Remove(item);
+                pl.heldWeight += item.Weight;
+                pl.heldVolume += item.Volume;
             }
+            else
+            {
+                player.WarningMessage("Cannot fit " + item.Name + " into your inventory.");
+            }
+        }
             else
             {
                 player.WarningMessage("Cannot pick up " + this.SecondWord);

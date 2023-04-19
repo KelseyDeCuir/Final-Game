@@ -4,8 +4,13 @@ using System.Text;
 
 namespace Ascension
 {
-   public class Boss
+   public class Boss : Character
     {
-        //comment
+        //Implements character along with some special 
+        public Boss(Floor floor, string name, string desc, int[]pos) : base(floor, name, desc, pos)
+        {
+
+        }
+
     }
 }
