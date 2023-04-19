@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Ascension
 {
+    //Yay Armor
    public class Armor : Item
     {
         public int defense;
