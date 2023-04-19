@@ -59,10 +59,6 @@ namespace Ascension
         public void End()
         {
             _playing = false;
-            //TODO: remove code here, this is temporary for the sake of testing
-            SaveSystem a = new SaveSystem(_player);
-    
-            a.SavePlayerinfo();
             _player.InfoMessage(Goodbye());
         }
 
