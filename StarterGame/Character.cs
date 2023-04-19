@@ -48,6 +48,7 @@ namespace Ascension
         public Weapon EquippedWeapon { set; get; }
         public Armor EquippedArmor { set; get; }
         public int aptPoints;
+        BossDelegate bossDelegate;
 
         public Character(Floor floor, string name, string desc, int[]pos)
         {
@@ -188,6 +189,13 @@ namespace Ascension
             }
             return equipped;
         }
+
+        public void MakeBoss(Floor floor)
+        {
+            var obj = new Boss(floor);
+            bossDelegate = new BossDelegate(obj.UnlockFloor);
+        }
+
         public void OutputMessage(string message)
         {
             Console.WriteLine(message);
@@ -199,6 +207,14 @@ namespace Ascension
             Console.ForegroundColor = newColor;
             OutputMessage(message);
             Console.ForegroundColor = oldColor;
+        }
+        public void Die()
+        {
+            this.Alive = false;
+            if(bossDelegate != null)
+            {
+                bossDelegate();
+            }
         }
 
         public void NormalMessage(string message)
@@ -219,6 +235,24 @@ namespace Ascension
         public void ErrorMessage(string message)
         {
             ColoredMessage(message, ConsoleColor.Red);
+        }
+    }
+
+    public delegate void BossDelegate();
+    public class Boss
+    {
+        public Floor nextFloor;
+        public Boss(Floor nxtFlr)
+        {
+            nextFloor = nxtFlr;
+        }
+        public void UnlockFloor()
+        {
+            
+            if (nextFloor != null)
+            {
+                nextFloor.Unlocked = true;
+            }
         }
     }
 

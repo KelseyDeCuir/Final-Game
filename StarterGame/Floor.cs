@@ -10,7 +10,7 @@ namespace Ascension
         // 2-D array to simulate rooms in floor
         // Create a matrix to simulate a map of rooms
         public Room[,] FloorMap = new Room[2, 3];
-        
+        public bool Unlocked = false;
 
         /*Constructor takes an array of names for the rooms and changes that into a list
          * which is used to randomly name each of the generated rooms that are added to the matrix */
