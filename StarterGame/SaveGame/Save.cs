@@ -20,10 +20,11 @@ namespace Ascension
         }
         public void SavePlayerinfo()
         {
-            String path = "saveGame.json"; //needs to save in a specfic path
+            String path = "SaveGame\\saveGame.json"; //needs to save in a specfic path
             //also eventually have it so player can name file
             //and check if player is overwriting file
-            StreamWriter writer = new StreamWriter(path, false); //ture appends onto file
+            Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
+            StreamWriter writer = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), false); //ture appends onto file
             writer.Write(PlayerSave);
             writer.Close(); 
         }

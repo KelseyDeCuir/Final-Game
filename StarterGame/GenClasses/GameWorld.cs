@@ -19,16 +19,6 @@ namespace Ascension
         public static List<Item> Floor2Items = new List<Item>();
         public static List<Item> Floor3Items = new List<Item>();
 
-        Character AB = new Character(abandonedHospital, "A", "B", new int[] { 0, 1 });
-        Character BC = new Character(abandonedHospital, "B", "C", new int[] { 0, 2 });
-        Character CD = new Character(abandonedHospital, "C", "D", new int[] { 1, 1 });
-        Character DE = new Character(abandonedHospital, "D", "E", new int[] { 1, 2 });
-        Character EF = new Character(abandonedHospital, "E", "F", new int[] { 2, 1 });
-        Character FG = new Character(abandonedHospital, "F", "G", new int[] { 2, 2 });
-        Character GH = new Character(abandonedHospital, "G", "H", new int[] { 0, 1 });
-        Character HI = new Character(abandonedHospital, "H", "I", new int[] { 0, 2 });
-        Character IJ = new Character(abandonedHospital, "I", "J", new int[] { 1, 1 });
-        Character JK = new Character(abandonedHospital, "J", "K", new int[] { 1, 2 });
         //These lists are utilized to generate characters 
         public List<Character> A_hospitalCharacters = new List<Character>();
         public List<Character> U_hospitalCharacters = new List<Character>();
@@ -37,7 +27,7 @@ namespace Ascension
         public List<Character> A_hellCharacters = new List<Character>();
         public List<Character> U_hellCharacters = new List<Character>();
 
-        public void GenCharacters(List<Character> A, List<Character> U)
+        public void GenCharacters(Floor floor, List<Character> A, List<Character> U)
         {
             Random rnd = new Random();
             int charsToGen = rnd.Next(1, 7);
@@ -45,6 +35,14 @@ namespace Ascension
             {
                 int index = rnd.Next(0, A.Count);
                 U.Add(A[index]);
+                int rpos1 = rnd.Next(0, 2);
+                int rpos2 = rnd.Next(0, 3);
+                while(rpos1 == 0 && rpos2 == 0)
+                {
+                    rpos1 = rnd.Next(0, 2);
+                    rpos2 = rnd.Next(0, 3);
+                }
+                A[index].CurrentRoom = floor.FloorMap[rpos1, rpos2];
             }
         }
         
@@ -83,6 +81,18 @@ namespace Ascension
 
         private Floor CreateWorld()
         {
+            abandonedHospital = new Floor(Floor1Rooms, Floor1Items);
+            abandonedHospital.Unlocked = true;
+            Character AB = new Character(abandonedHospital, "A", "B");
+            Character BC = new Character(abandonedHospital, "B", "C");
+            Character CD = new Character(abandonedHospital, "C", "D");
+            Character DE = new Character(abandonedHospital, "D", "E");
+            Character EF = new Character(abandonedHospital, "E", "F");
+            Character FG = new Character(abandonedHospital, "F", "G");
+            Character GH = new Character(abandonedHospital, "G", "H");
+            Character HI = new Character(abandonedHospital, "H", "I");
+            Character IJ = new Character(abandonedHospital, "I", "J");
+            Character JK = new Character(abandonedHospital, "J", "K");
             A_hospitalCharacters.Add(AB);
             A_hospitalCharacters.Add(BC);
             A_hospitalCharacters.Add(CD);
@@ -93,9 +103,7 @@ namespace Ascension
             A_hospitalCharacters.Add(HI);
             A_hospitalCharacters.Add(IJ);
             A_hospitalCharacters.Add(JK);
-            GenCharacters(A_hospitalCharacters, U_hospitalCharacters);
-            abandonedHospital = new Floor(Floor1Rooms, Floor1Items);
-            abandonedHospital.Unlocked = true;
+            GenCharacters(abandonedHospital, A_hospitalCharacters, U_hospitalCharacters);
             floors = new List<Floor>();
             floors.Add(abandonedHospital);
             floors.Add(abandonedSchool);

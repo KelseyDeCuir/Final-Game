@@ -9,6 +9,7 @@ namespace Ascension
     [Serializable]
     public class Player : Character
     {
+        public bool genocide;
         private double _weightLimit;
         public double WeightLimit { get { return _weightLimit; } }
         private double _volumeLimit;
@@ -16,7 +17,7 @@ namespace Ascension
         public double heldVolume;
         public double heldWeight;
         private int _exp;
-        private GameWorld World;
+        public GameWorld World;
         public int Exp {get {return _exp; } }
         private int _aptReq;
         public int AptReq { get { return _aptReq; } }
@@ -24,7 +25,7 @@ namespace Ascension
         Weapon stick;
         Armor jacket;
 
-        public Player(GameWorld world) : base(world.Entrance, "player", "yourself", new int[] { 0, 0 })
+        public Player(GameWorld world) : base(world.Entrance, "player", "yourself")
         {
             Character me = this;
             _aptReq = 2;
@@ -34,14 +35,13 @@ namespace Ascension
             heldVolume = 0;
             heldWeight = 0;
             this.State = States.CHARCREATION; // so only the player starts in character creation
+            CurrentRoom = Elevator.Instance;
             World = world;
-            stick = new Weapon("stick", "A plain stick", 0, 1, 3, 2, Inventory);
+            stick = new Weapon("stick", "A plain stick", 0, 1, 3, 5, Inventory);
             stick.Found = true;
-            stick.SetWielder(ref me);
             EquippedWeapon = stick;
-            jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 1, Inventory);
+            jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 2, Inventory);
             jacket.Found = true;
-            jacket.SetWearer(ref me);
             EquippedArmor = jacket;
             Inventory.Remove(stick);
             Inventory.Remove(jacket);
@@ -79,8 +79,8 @@ namespace Ascension
             if (newPos != null)
             {
                 PastRooms.Push(CurrentRoom); //stores current room as a past room
-                _currentRoom = newPos; //Move rooms
-                if (_currentRoom[0] == 0 && _currentRoom[1] == 0)
+                _currentRoom = CurrentFloor.FloorMap[newPos[0], newPos[1]]; //Move rooms
+                if (_currentRoom.pos[0] == 0 && _currentRoom.pos[1] == 0)
                 {
                     State = States.ELEVATOR;
                 }
@@ -94,6 +94,10 @@ namespace Ascension
             {
                 ErrorMessage("\nThere is no door to the " + direction + ".");
             }
+        }
+        public void WhenYouWin()
+        {
+
         }
     }
 }
