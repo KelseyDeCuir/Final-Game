@@ -30,6 +30,7 @@ namespace Ascension
         Skills aptitudeLvl { set; get; }
         //Thinking about what to do with this
         Command[] actions { set; get; }
+        int Eyriskel { set; get; }
         
     }
     interface iItems

@@ -19,7 +19,7 @@ namespace Ascension
             return "Weapon -> " + this.GetDamage() + " " + this.Description + " W: " + this.Weight + " V: " + this.Volume + " E: " + this.enchanted + ".";
         }
 
-        public void SetWielder(Character character)
+        public void SetWielder(ref Character character)
         {
             wielder = character;
         }
@@ -41,12 +41,12 @@ namespace Ascension
             int damageDone = 0;
             if (enchanted)
             {
-                damageDone = target.TakeDamage(wielder, (double)damage * ((double)wielder.aptitudeLvl.magic/100 + 1));
+                damageDone = target.TakeDamage(ref wielder, (double)damage * ((double)wielder.aptitudeLvl.magic/100 + 1));
                 enchanted = false;
             }
             else
             {
-                damageDone = target.TakeDamage(damage);
+                damageDone = target.TakeDamage(ref wielder,damage);
             }
             return "Damage done: " + damageDone;
         }

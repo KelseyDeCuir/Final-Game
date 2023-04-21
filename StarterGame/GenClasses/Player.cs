@@ -26,6 +26,7 @@ namespace Ascension
 
         public Player(GameWorld world) : base(world.Entrance, "player", "yourself", new int[] { 0, 0 })
         {
+            Character me = this;
             _aptReq = 2;
             _prevAptReq = 1;
             _volumeLimit = 40;
@@ -36,14 +37,19 @@ namespace Ascension
             World = world;
             stick = new Weapon("stick", "A plain stick", 0, 1, 3, 2, Inventory);
             stick.Found = true;
-            stick.SetWielder(this);
+            stick.SetWielder(ref me);
             EquippedWeapon = stick;
             jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 1, Inventory);
             jacket.Found = true;
-            jacket.SetWearer(this);
+            jacket.SetWearer(ref me);
             EquippedArmor = jacket;
             Inventory.Remove(stick);
             Inventory.Remove(jacket);
+            Eyriskel = 0;
+        }
+        public Player SelfRef()
+        {
+            return this;
         }
 
         public void Saveinfo() { //really cheap way to save ask teacher about it

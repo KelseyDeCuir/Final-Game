@@ -18,7 +18,7 @@ namespace Ascension
         {
             return "Armor -> " + this.GetDefense() + " " + this.Description + " W: " + this.Weight + " V: " + this.Volume + " E: " + this.enchanted + ".";
         }
-        public void SetWearer(Character character)
+        public void SetWearer(ref Character character)
         {
             wearer = character;
         }

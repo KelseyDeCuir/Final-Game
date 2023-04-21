@@ -48,6 +48,7 @@ namespace Ascension
 
         public Weapon EquippedWeapon { set; get; }
         public Armor EquippedArmor { set; get; }
+        public int Eyriskel { set; get; }
         public int aptPoints;
         BossDelegate bossDelegate;
 
@@ -63,6 +64,7 @@ namespace Ascension
             aptitudeLvl = new Skills(10, 100, 10, 10, 10);
             aptPoints = 1;
             CurrentHealth = aptitudeLvl.health;
+            Eyriskel = 5;
         }
 
         // gets the room position for the matrix if it is a valid room
@@ -201,7 +203,8 @@ namespace Ascension
             EquippedWeapon = weapon;
             Inventory.Remove(weapon);
             InfoMessage("You Equipped the weapon " + weapon.Name);
-            EquippedWeapon.SetWielder(this);
+            Character me = this;
+            EquippedWeapon.SetWielder(ref me);
         }
 
         public void EquipArmor(Armor armor)
@@ -213,10 +216,11 @@ namespace Ascension
             EquippedArmor = armor;
             Inventory.Remove(armor);
             InfoMessage("You Equipped the weapon " + armor.Name);
-            EquippedArmor.SetWearer(this);
+            Character me = this;
+            EquippedArmor.SetWearer(ref me);
         }
 
-        public int TakeDamage(Character attacker, double damage)
+        public int TakeDamage(ref Character attacker, double damage)
         {
             int damagetoTake = 0;
             if (EquippedArmor != null)
@@ -247,11 +251,11 @@ namespace Ascension
         }
         public virtual void Die(Character killer)
         {
+            var plForXp = killer as Player;
             this.Alive = false;
             if (bossDelegate != null)
             {
                 bossDelegate();
-                var plForXp = killer as Player;
                 if (plForXp != null)
                 {
                     plForXp.XpUp(15);
@@ -259,11 +263,14 @@ namespace Ascension
             }
             else
             {
-                var plForXp = killer as Player;
                 if (plForXp != null)
                 {
                     plForXp.XpUp(5);
                 }
+            }
+            if (plForXp != null)
+            {
+                plForXp.Eyriskel += this.Eyriskel;
             }
         }
         public void MakeBoss(Floor floor)
