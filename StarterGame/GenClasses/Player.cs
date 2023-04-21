@@ -74,8 +74,12 @@ namespace Ascension
             {
                 PastRooms.Push(CurrentRoom); //stores current room as a past room
                 _currentRoom = newPos; //Move rooms
+                Notification notification = new Notification("PlayerMovedRooms", this);
+                NotificationCenter.Instance.PostNotification(notification);
                 if (_currentRoom[0] == 0 && _currentRoom[1] == 0)
                 {
+                    notification = new Notification("PlayerEnteredElevator", this);
+                    NotificationCenter.Instance.PostNotification(notification);
                     State = States.ELEVATOR;
                 }
                 else if (State == States.ELEVATOR)

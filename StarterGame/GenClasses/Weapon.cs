@@ -46,7 +46,7 @@ namespace Ascension
             }
             else
             {
-                damageDone = target.TakeDamage(damage);
+                damageDone = target.TakeDamage(wielder, damage);
             }
             return "Damage done: " + damageDone;
         }

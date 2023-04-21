@@ -79,6 +79,35 @@ namespace Ascension
         private GameWorld()
         {
             _entrance = CreateWorld();
+            NotificationCenter.Instance.AddObserver("PlayerMovedRooms", PlayerMovedRooms);
+            NotificationCenter.Instance.AddObserver("PlayerEnteredElevator", PlayerEnteredElevator);
+            //NotificationCenter.Instance.AddObserver("PlayerCreated", )
+            //NotificationCenter.Instance.AddObserver("PlayerEnteredBossRoom", PlayerEnteredBossRoom);
+        }
+        public void PlayerMovedRooms(Notification notification)
+        {
+            Player player = (Player)notification.Object;
+            if (player != null)
+            {
+                player.NormalMessage("\n" + "Player moved rooms.");
+            }
+            else
+            {
+                player.ErrorMessage("\n" + "Player did not move!");
+            }
+        }
+
+        public void PlayerEnteredElevator(Notification notification)
+        {
+            Player player = (Player)notification.Object;
+            if (player != null)
+            {
+                player.NormalMessage("\n" + "Player entered elevator.");
+            }
+            else
+            {
+                player.ErrorMessage("\n" + "Player has not entered the elevator");
+            }
         }
 
         private Floor CreateWorld()
