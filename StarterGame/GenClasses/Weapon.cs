@@ -41,7 +41,7 @@ namespace Ascension
             int damageDone = 0;
             if (enchanted)
             {
-                damageDone = target.TakeDamage((double)damage * ((double)wielder.aptitudeLvl.magic/100 + 1));
+                damageDone = target.TakeDamage(wielder, (double)damage * ((double)wielder.aptitudeLvl.magic/100 + 1));
                 enchanted = false;
             }
             else

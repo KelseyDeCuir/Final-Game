@@ -216,7 +216,7 @@ namespace Ascension
             EquippedArmor.SetWearer(this);
         }
 
-        public int TakeDamage(double damage)
+        public int TakeDamage(Character attacker, double damage)
         {
             int damagetoTake = 0;
             if (EquippedArmor != null)
@@ -236,7 +236,7 @@ namespace Ascension
                 this.InfoMessage(this.Name + " health: " + CurrentHealth);
                 if(CurrentHealth == 0)
                 {
-                    Die();
+                    Die(attacker);
                 }
                 return damagetoTake;
             }
@@ -245,12 +245,25 @@ namespace Ascension
                 return 0;
             }
         }
-        public virtual void Die()
+        public virtual void Die(Character killer)
         {
             this.Alive = false;
             if (bossDelegate != null)
             {
                 bossDelegate();
+                var plForXp = killer as Player;
+                if (plForXp != null)
+                {
+                    plForXp.XpUp(15);
+                }
+            }
+            else
+            {
+                var plForXp = killer as Player;
+                if (plForXp != null)
+                {
+                    plForXp.XpUp(5);
+                }
             }
         }
         public void MakeBoss(Floor floor)
