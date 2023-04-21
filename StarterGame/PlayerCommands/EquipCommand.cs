@@ -20,17 +20,11 @@ namespace Ascension
                     var armor = item as Armor;
                     if (weapon != null)
                     {
-                        player.Inventory.Add(player.EquippedWeapon);
-                        player.EquippedWeapon = weapon;
-                        player.Inventory.Remove(item);
-                        player.InfoMessage("You Equipped the weapon " + weapon.Name);
+                        player.EquipWeapon(weapon);
                     }
                     else if (armor != null)
                     {
-                        player.Inventory.Add(player.EquippedArmor);
-                        player.EquippedArmor = armor;
-                        player.Inventory.Remove(item);
-                        player.InfoMessage("You Equipped the weapon " + armor.Name);
+                        player.EquipArmor(armor);
                     }
                     else
                     {

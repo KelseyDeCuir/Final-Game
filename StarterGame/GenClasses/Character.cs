@@ -30,6 +30,7 @@ namespace Ascension
         public Boolean CanMove { set; get; }
         public Boolean Alive { set; get; }
         public Skills aptitudeLvl { set; get; }
+        protected int CurrentHealth; // stores current health, automatically goes to max health on level
         //actions currently do not store or do anything
         //the intended purpose for actions is to store
         //comamands for npcs based on their personality
@@ -61,6 +62,7 @@ namespace Ascension
             State = States.GAME;
             aptitudeLvl = new Skills(10, 100, 10, 10, 10);
             aptPoints = 1;
+            CurrentHealth = aptitudeLvl.health;
         }
 
         // gets the room position for the matrix if it is a valid room
@@ -115,11 +117,11 @@ namespace Ascension
             {
                 PastRooms.Push(CurrentRoom); //stores current room as a past room
                 _currentRoom = newPos; //Move rooms
-                NormalMessage("\n" + this.CurrentRoom.Description());
+                //NormalMessage("\n" + this.CurrentRoom.Description());
             }
             else
             {
-                ErrorMessage("\nThere is no door to the " + direction + ".");
+                //ErrorMessage("\nThere is no door to the " + direction + ".");
             }
         }
         public void Backto()
@@ -173,7 +175,7 @@ namespace Ascension
             string equipped = "";
             if (EquippedWeapon != null)
             {
-                equipped += "Weapon: " + EquippedWeapon.Name + " -> " + EquippedWeapon.damage + " Damage";
+                equipped += "Weapon: " + EquippedWeapon.GetDescription();
             }
             else
             {
@@ -181,7 +183,7 @@ namespace Ascension
             }
             if (EquippedArmor != null)
             {
-                equipped += "\nArmor: " + EquippedArmor.Name + " -> " + EquippedArmor.defense + " Defense";
+                equipped += "\nArmor: " + EquippedArmor.GetDescription();
             }
             else
             {
@@ -190,6 +192,67 @@ namespace Ascension
             return equipped;
         }
 
+        public void EquipWeapon(Weapon weapon)
+        {
+            if (EquippedWeapon != null)
+            {
+                Inventory.Add(EquippedWeapon);
+            }
+            EquippedWeapon = weapon;
+            Inventory.Remove(weapon);
+            InfoMessage("You Equipped the weapon " + weapon.Name);
+            EquippedWeapon.SetWielder(this);
+        }
+
+        public void EquipArmor(Armor armor)
+        {
+            if (EquippedArmor != null)
+            {
+                Inventory.Add(EquippedArmor);
+            }
+            EquippedArmor = armor;
+            Inventory.Remove(armor);
+            InfoMessage("You Equipped the weapon " + armor.Name);
+            EquippedArmor.SetWearer(this);
+        }
+
+        public int TakeDamage(double damage)
+        {
+            int damagetoTake = 0;
+            if (EquippedArmor != null)
+            {
+                damagetoTake = (int)Math.Ceiling((double)damage * (1 - (double)aptitudeLvl.speed / 100) - EquippedArmor.GetDefense());
+            }
+            else
+            {
+                damagetoTake = (int)Math.Ceiling((double)damage * (1 - (double)aptitudeLvl.speed / 100));
+            }
+            if (damagetoTake > 0) {
+                CurrentHealth -= damagetoTake;
+                if(CurrentHealth < 0)
+                {
+                    CurrentHealth = 0;
+                }
+                this.InfoMessage(this.Name + " health: " + CurrentHealth);
+                if(CurrentHealth == 0)
+                {
+                    Die();
+                }
+                return damagetoTake;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public virtual void Die()
+        {
+            this.Alive = false;
+            if (bossDelegate != null)
+            {
+                bossDelegate();
+            }
+        }
         public void MakeBoss(Floor floor)
         {
             var obj = new Boss(floor);
@@ -207,14 +270,6 @@ namespace Ascension
             Console.ForegroundColor = newColor;
             OutputMessage(message);
             Console.ForegroundColor = oldColor;
-        }
-        public void Die()
-        {
-            this.Alive = false;
-            if(bossDelegate != null)
-            {
-                bossDelegate();
-            }
         }
 
         public void NormalMessage(string message)

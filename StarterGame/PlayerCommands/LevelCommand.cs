@@ -21,31 +21,31 @@ namespace Ascension
                     {
                         skills.health += (int)Math.Ceiling(skills.health * .12);
                         player.aptPoints -= 1;
-                        player.InfoMessage("Your health: " + skills.health);
+                        player.InfoMessage("Your health: " + skills.health + "\nAptitude Points Remaining: " + player.aptPoints);
                     }
                     else if (this.SecondWord.Equals("strength"))
                     {
                         skills.strength += 2;
                         player.aptPoints -= 1;
-                        player.InfoMessage("Your strength: " + skills.strength);
+                        player.InfoMessage("Your strength: " + skills.strength + "\nAptitude Points Remaining: " + player.aptPoints);
                     }
                     else if (this.SecondWord.Equals("intelligence"))
                     {
                         skills.intelligence += 2;
                         player.aptPoints -= 1;
-                        player.InfoMessage("Your intelligence: " + skills.intelligence);
+                        player.InfoMessage("Your intelligence: " + skills.intelligence + "\nAptitude Points Remaining: " + player.aptPoints);
                     }
                     else if (this.SecondWord.Equals("magic"))
                     {
                         skills.magic += 2;
                         player.aptPoints -= 1;
-                        player.InfoMessage("Your magic: " + skills.magic);
+                        player.InfoMessage("Your magic: " + skills.magic + "\nAptitude Points Remaining: " + player.aptPoints);
                     }
                     else if (this.SecondWord.Equals("speed"))
                     {
                         skills.speed += 2;
                         player.aptPoints -= 1;
-                        player.InfoMessage("Your speed: " + skills.speed);
+                        player.InfoMessage("Your speed: " + skills.speed + "\nAptitude Points Remaining: " + player.aptPoints);
                     }
                     else
                     {

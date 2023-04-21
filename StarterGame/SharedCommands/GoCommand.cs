@@ -23,7 +23,17 @@ namespace Ascension
             }
             else
             {
-                player.WarningMessage("\nGo Where?");
+                try
+                {
+                    Player pl = (Player)player;
+                    if (pl != null)
+                    {
+                        pl.WarningMessage("\nGo Where?");
+                    }
+                }
+                catch (System.InvalidCastException ex) {
+
+                }
             }
             return false;
         }

@@ -36,9 +36,11 @@ namespace Ascension
             World = world;
             stick = new Weapon("stick", "A plain stick", 0, 1, 3, 2, Inventory);
             stick.Found = true;
+            stick.SetWielder(this);
             EquippedWeapon = stick;
             jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 1, Inventory);
             jacket.Found = true;
+            jacket.SetWearer(this);
             EquippedArmor = jacket;
             Inventory.Remove(stick);
             Inventory.Remove(jacket);
