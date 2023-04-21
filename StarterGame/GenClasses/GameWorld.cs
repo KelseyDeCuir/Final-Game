@@ -12,6 +12,7 @@ namespace Ascension
         public static Floor abandonedHospital;
         public static Floor abandonedSchool;
         public static Floor hell;
+        public static Floor winZone;
         public List<Floor> floors;
         //Defined global floor variable
         //These static lists are utilized to randomly generate items in the rooms on each floor
@@ -125,6 +126,10 @@ namespace Ascension
         {
             abandonedHospital = new Floor(Floor1Rooms, Floor1Items);
             abandonedHospital.Unlocked = true;
+            abandonedSchool = new Floor(Floor1Rooms, Floor1Items);
+            hell = new Floor(Floor1Rooms, Floor1Items);
+            winZone = new Floor(Floor1Rooms, Floor1Items);
+            winZone.Unlocked = true;
             Character AB = new Character(abandonedHospital, "A", "B");
             Character BC = new Character(abandonedHospital, "B", "C");
             Character CD = new Character(abandonedHospital, "C", "D");
@@ -150,6 +155,7 @@ namespace Ascension
             floors.Add(abandonedHospital);
             floors.Add(abandonedSchool);
             floors.Add(hell);
+            floors.Add(winZone);
             return abandonedHospital;
         }
 

@@ -103,7 +103,14 @@ namespace Ascension
         }
         public void WhenYouWin()
         {
-
+            if (genocide)
+            {
+                ErrorMessage("YOU MONSTER.");
+            }
+            else
+            {
+                InfoMessage("You're finally Free");
+            }
         }
     }
 }

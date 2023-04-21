@@ -24,7 +24,7 @@ namespace Ascension
             //also eventually have it so player can name file
             //and check if player is overwriting file
             Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
-            StreamWriter writer = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), false); //ture appends onto file
+            StreamWriter writer = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), false); //true appends onto file
             writer.Write(PlayerSave);
             writer.Close(); 
         }
