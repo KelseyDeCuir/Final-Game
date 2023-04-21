@@ -41,21 +41,23 @@ namespace Ascension
         public string Description { get { return _description; } }
         private Floor _currentFloor = null; //rooms are separated by floors so that is stored instead
         public Floor CurrentFloor { get { return _currentFloor;} set { _currentFloor = value;} }
-        protected int[] _currentRoom = null;
-        public Room CurrentRoom { get { return CurrentFloor.FloorMap[_currentRoom[0],_currentRoom[1]]; } }
+        protected Room _currentRoom;
+        public Room CurrentRoom { get { return _currentRoom; } set { _currentRoom = value; } }
         //PastRoom Locations, 
         public Stack<Room> PastRooms = new Stack<Room>();
 
         public Weapon EquippedWeapon { set; get; }
         public Armor EquippedArmor { set; get; }
+        public int Eyriskel { set; get; }
         public int aptPoints;
         BossDelegate bossDelegate;
+        public string textfile;
 
-        public Character(Floor floor, string name, string desc, int[]pos)
+        public Character(Floor floor, string name, string desc)
         {
             _currentFloor = floor;
             //current default pos for all chars is in elevator
-            _currentRoom = pos;
+            //_currentRoom = room;
             _name = name;
             _description = desc;
             Inventory = new List<Item>();
@@ -63,6 +65,7 @@ namespace Ascension
             aptitudeLvl = new Skills(10, 100, 10, 10, 10);
             aptPoints = 1;
             CurrentHealth = aptitudeLvl.health;
+            Eyriskel = 5;
         }
 
         // gets the room position for the matrix if it is a valid room
@@ -71,36 +74,36 @@ namespace Ascension
             switch (direction)
             {
                 case "north":
-                    if (_currentRoom[1] != 0)
+                    if (_currentRoom.pos[1] != 0)
                     {
-                        return new int[] {_currentRoom[0], _currentRoom[1] -1};
+                        return new int[] {_currentRoom.pos[0], _currentRoom.pos[1] -1};
                     }
                     else
                     {
                         return null;
                     }
                 case "east":
-                    if (_currentRoom[0] != 1)
+                    if (_currentRoom.pos[0] != 1)
                     {
-                        return new int[] {_currentRoom[0] +1 , _currentRoom[1]};
+                        return new int[] {_currentRoom.pos[0] +1 , _currentRoom.pos[1]};
                     }
                     else
                     {
                         return null;
                     }
                 case "south":
-                    if (_currentRoom[1] != 2)
+                    if (_currentRoom.pos[1] != 2)
                     {
-                        return new int[] {_currentRoom[0], _currentRoom[1] +1};
+                        return new int[] {_currentRoom.pos[0], _currentRoom.pos[1] +1};
                     }
                     else
                     {
                         return null;
                     }
                 case "west":
-                    if (_currentRoom[0] != 0)
+                    if (_currentRoom.pos[0] != 0)
                     {
-                        return new int[] {_currentRoom[0] -1, _currentRoom[1]};
+                        return new int[] {_currentRoom.pos[0] -1, _currentRoom.pos[1]};
                     }
                     else
                     {
@@ -116,7 +119,7 @@ namespace Ascension
             if (newPos != null && !(newPos[0] == 0 && newPos[1] == 0))
             {
                 PastRooms.Push(CurrentRoom); //stores current room as a past room
-                _currentRoom = newPos; //Move rooms
+                _currentRoom = CurrentFloor.FloorMap[newPos[0], newPos[1]]; //Move rooms
                 //NormalMessage("\n" + this.CurrentRoom.Description());
             }
             else
@@ -129,7 +132,7 @@ namespace Ascension
             if (PastRooms.Count != 0 ) 
             {
               
-                _currentRoom = PastRooms.Pop().pos;//gets pos of most recent past room
+                _currentRoom = PastRooms.Pop();//gets most recent past room
                 NormalMessage("\n" + this.CurrentRoom.Description());
             }
             else 
@@ -164,7 +167,7 @@ namespace Ascension
                 foreach (Item item in Inventory)
                 {
                     itemNames += "\n\t" + item.Name;
-                    itemNames += ": " + item.GetDescription();
+                    itemNames += ": " + item.GetDescription(this);
                 }
                 return itemNames;
             }
@@ -175,7 +178,7 @@ namespace Ascension
             string equipped = "";
             if (EquippedWeapon != null)
             {
-                equipped += "Weapon: " + EquippedWeapon.GetDescription();
+                equipped += "Weapon: " + EquippedWeapon.GetDescription(this);
             }
             else
             {
@@ -183,7 +186,7 @@ namespace Ascension
             }
             if (EquippedArmor != null)
             {
-                equipped += "\nArmor: " + EquippedArmor.GetDescription();
+                equipped += "\nArmor: " + EquippedArmor.GetDescription(this);
             }
             else
             {
@@ -201,7 +204,7 @@ namespace Ascension
             EquippedWeapon = weapon;
             Inventory.Remove(weapon);
             InfoMessage("You Equipped the weapon " + weapon.Name);
-            EquippedWeapon.SetWielder(this);
+            Character me = this;
         }
 
         public void EquipArmor(Armor armor)
@@ -213,7 +216,7 @@ namespace Ascension
             EquippedArmor = armor;
             Inventory.Remove(armor);
             InfoMessage("You Equipped the weapon " + armor.Name);
-            EquippedArmor.SetWearer(this);
+            Character me = this;
         }
 
         public int TakeDamage(Character attacker, double damage)
@@ -221,7 +224,7 @@ namespace Ascension
             int damagetoTake = 0;
             if (EquippedArmor != null)
             {
-                damagetoTake = (int)Math.Ceiling((double)damage * (1 - (double)aptitudeLvl.speed / 100) - EquippedArmor.GetDefense());
+                damagetoTake = (int)Math.Ceiling((double)damage * (1 - (double)aptitudeLvl.speed / 100) - EquippedArmor.GetDefense(this));
             }
             else
             {
@@ -247,11 +250,11 @@ namespace Ascension
         }
         public virtual void Die(Character killer)
         {
+            var plForXp = killer as Player;
             this.Alive = false;
             if (bossDelegate != null)
             {
                 bossDelegate();
-                var plForXp = killer as Player;
                 if (plForXp != null)
                 {
                     plForXp.XpUp(15);
@@ -259,11 +262,14 @@ namespace Ascension
             }
             else
             {
-                var plForXp = killer as Player;
                 if (plForXp != null)
                 {
                     plForXp.XpUp(5);
                 }
+            }
+            if (plForXp != null)
+            {
+                plForXp.Eyriskel += this.Eyriskel;
             }
         }
         public void MakeBoss(Floor floor)

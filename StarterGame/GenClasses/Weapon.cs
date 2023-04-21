@@ -8,27 +8,21 @@ namespace Ascension
     {
         public int damage;
         public bool enchanted;
-        public Character wielder;
         public Weapon(string name, string description, int value, int weight, int volume, int dmg, List<Item> items) : base(name, description, value, weight, volume, items)
         {
             damage = dmg;
             enchanted = false;
         }
-        public override string GetDescription()
+        public override string GetDescription(Character character)
         {
-            return "Weapon -> " + this.GetDamage() + " " + this.Description + " W: " + this.Weight + " V: " + this.Volume + " E: " + this.enchanted + ".";
+            return "Weapon -> " + this.GetDamage(character) + " " + this.Description + " W: " + this.Weight + " V: " + this.Volume + " E: " + this.enchanted + ".";
         }
 
-        public void SetWielder(Character character)
-        {
-            wielder = character;
-        }
-
-        public double GetDamage()
+        public double GetDamage(Character character)
         {
             if (enchanted)
             {
-                return (double)damage * (((double)wielder.aptitudeLvl.magic / 100) + 1);
+                return (double)damage * (((double)character.aptitudeLvl.magic / 100) + 1);
             }
             else
             {
@@ -36,17 +30,17 @@ namespace Ascension
             }
         }
 
-        public string Used(Character target)
+        public string Used(Character character, Character target)
         {
             int damageDone = 0;
             if (enchanted)
             {
-                damageDone = target.TakeDamage(wielder, (double)damage * ((double)wielder.aptitudeLvl.magic/100 + 1));
+                damageDone = target.TakeDamage(character, (double)damage * ((double)character.aptitudeLvl.magic/100 + 1));
                 enchanted = false;
             }
             else
             {
-                damageDone = target.TakeDamage(wielder, damage);
+                damageDone = target.TakeDamage(character,damage);
             }
             return "Damage done: " + damageDone;
         }

@@ -9,6 +9,7 @@ namespace Ascension
     [Serializable]
     public class Player : Character
     {
+        public bool genocide;
         private double _weightLimit;
         public double WeightLimit { get { return _weightLimit; } }
         private double _volumeLimit;
@@ -16,7 +17,7 @@ namespace Ascension
         public double heldVolume;
         public double heldWeight;
         private int _exp;
-        private GameWorld World;
+        public GameWorld World;
         public int Exp {get {return _exp; } }
         private int _aptReq;
         public int AptReq { get { return _aptReq; } }
@@ -24,8 +25,9 @@ namespace Ascension
         Weapon stick;
         Armor jacket;
 
-        public Player(GameWorld world) : base(world.Entrance, "player", "yourself", new int[] { 0, 0 })
+        public Player(GameWorld world) : base(world.Entrance, "player", "yourself")
         {
+            Character me = this;
             _aptReq = 2;
             _prevAptReq = 1;
             _volumeLimit = 40;
@@ -33,17 +35,21 @@ namespace Ascension
             heldVolume = 0;
             heldWeight = 0;
             this.State = States.CHARCREATION; // so only the player starts in character creation
+            CurrentRoom = Elevator.Instance;
             World = world;
-            stick = new Weapon("stick", "A plain stick", 0, 1, 3, 2, Inventory);
+            stick = new Weapon("stick", "A plain stick", 0, 1, 3, 5, Inventory);
             stick.Found = true;
-            stick.SetWielder(this);
             EquippedWeapon = stick;
-            jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 1, Inventory);
+            jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 2, Inventory);
             jacket.Found = true;
-            jacket.SetWearer(this);
             EquippedArmor = jacket;
             Inventory.Remove(stick);
             Inventory.Remove(jacket);
+            Eyriskel = 0;
+        }
+        public Player SelfRef()
+        {
+            return this;
         }
 
         public void Saveinfo() { //really cheap way to save ask teacher about it
@@ -77,6 +83,8 @@ namespace Ascension
                 Notification notification = new Notification("PlayerMovedRooms", this);
                 NotificationCenter.Instance.PostNotification(notification);
                 if (_currentRoom[0] == 0 && _currentRoom[1] == 0)
+                _currentRoom = CurrentFloor.FloorMap[newPos[0], newPos[1]]; //Move rooms
+                if (_currentRoom.pos[0] == 0 && _currentRoom.pos[1] == 0)
                 {
                     notification = new Notification("PlayerEnteredElevator", this);
                     NotificationCenter.Instance.PostNotification(notification);
@@ -92,6 +100,10 @@ namespace Ascension
             {
                 ErrorMessage("\nThere is no door to the " + direction + ".");
             }
+        }
+        public void WhenYouWin()
+        {
+
         }
     }
 }
