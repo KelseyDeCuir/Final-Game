@@ -79,10 +79,10 @@ namespace Ascension
             if (newPos != null)
             {
                 PastRooms.Push(CurrentRoom); //stores current room as a past room
-                _currentRoom = newPos; //Move rooms
+                _currentRoom = CurrentFloor.FloorMap[newPos[0],newPos[1]]; //Move rooms
                 Notification notification = new Notification("PlayerMovedRooms", this);
                 NotificationCenter.Instance.PostNotification(notification);
-                if (_currentRoom[0] == 0 && _currentRoom[1] == 0)
+                if (_currentRoom.pos[0] == 0 && _currentRoom.pos[1] == 0)
                 _currentRoom = CurrentFloor.FloorMap[newPos[0], newPos[1]]; //Move rooms
                 if (_currentRoom.pos[0] == 0 && _currentRoom.pos[1] == 0)
                 {
