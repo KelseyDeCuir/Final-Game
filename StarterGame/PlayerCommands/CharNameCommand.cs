@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Ascension
 {
+    //Possibly allow first and last name
     public class CharNameCommand : Command
     {
         public CharNameCommand() : base()

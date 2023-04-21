@@ -81,8 +81,7 @@ namespace Ascension
             _entrance = CreateWorld();
             NotificationCenter.Instance.AddObserver("PlayerMovedRooms", PlayerMovedRooms);
             NotificationCenter.Instance.AddObserver("PlayerEnteredElevator", PlayerEnteredElevator);
-            //NotificationCenter.Instance.AddObserver("PlayerCreated", )
-            //NotificationCenter.Instance.AddObserver("PlayerEnteredBossRoom", PlayerEnteredBossRoom);
+            NotificationCenter.Instance.AddObserver("ItemObtained", ItemObtained);
         }
         public void PlayerMovedRooms(Notification notification)
         {
@@ -107,6 +106,20 @@ namespace Ascension
             else
             {
                 player.ErrorMessage("\n" + "Player has not entered the elevator");
+            }
+        }
+        public void ItemObtained(Notification notification)
+        {
+            TakeCommand take = (TakeCommand)notification.Object;
+            if (take != null)
+            {
+                Console.WriteLine("\n" + "Player obtained a new item.");
+                //NormalMessage("\n" + "Player obtained a new item.");
+            }
+            else
+            {
+                Console.WriteLine("\n" + "Item unclaimed.");
+                //ErrorMessage("\n" + "Item unclaimed.");
             }
         }
 
