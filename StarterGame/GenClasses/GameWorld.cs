@@ -81,6 +81,8 @@ namespace Ascension
             NotificationCenter.Instance.AddObserver("PlayerMovedRooms", PlayerMovedRooms);
             NotificationCenter.Instance.AddObserver("PlayerEnteredElevator", PlayerEnteredElevator);
             NotificationCenter.Instance.AddObserver("ItemObtained", ItemObtained);
+            NotificationCenter.Instance.AddObserver("YouWinGenocide", YouWinGenocide);
+            NotificationCenter.Instance.AddObserver("YouWinTrue", YouWinTrue);
         }
         public void PlayerMovedRooms(Notification notification)
         {
@@ -118,6 +120,34 @@ namespace Ascension
             else
             {
                 Console.WriteLine("\n" + "Item unclaimed.");
+                //ErrorMessage("\n" + "Item unclaimed.");
+            }
+        }
+        public void YouWinGenocide(Notification notification)
+        {
+            DescendCommand descend = (DescendCommand)notification.Object;
+            if (descend != null)
+            {
+                Console.WriteLine("\n" + "Achievement Unlocked: Devil inside awakened.");
+                //NormalMessage("\n" + "Player obtained a new item.");
+            }
+            else
+            {
+                Console.WriteLine("\n" + "Player has not yet reached Monster status.");
+                //ErrorMessage("\n" + "Item unclaimed.");
+            }
+        }
+        public void YouWinTrue(Notification notification)
+        {
+            AscendCommand aescend = (AscendCommand)notification.Object;
+            if (aescend != null)
+            {
+                Console.WriteLine("\n" + "Achievement Unlocked: Congratulations, you have ascended. The cycle has officially been broken.");
+                //NormalMessage("\n" + "Player obtained a new item.");
+            }
+            else
+            {
+                Console.WriteLine("\n" + "Player has not yet ascended.");
                 //ErrorMessage("\n" + "Item unclaimed.");
             }
         }

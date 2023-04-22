@@ -22,6 +22,8 @@ namespace Ascension
                     if (Elevator.Instance.floorLvl.Equals(4))
                     {
                         pl.WhenYouWin();
+                        Notification notification = new Notification("YouWinTrue", this);
+                        NotificationCenter.Instance.PostNotification(notification);
                     }
                 }
             }

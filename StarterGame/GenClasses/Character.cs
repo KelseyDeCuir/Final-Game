@@ -310,6 +310,10 @@ namespace Ascension
         {
             ColoredMessage(message, ConsoleColor.Red);
         }
+        public void AchievementMessage(string message)
+        {
+            ColoredMessage(message, ConsoleColor.Magenta);
+        }
     }
 
     public delegate void BossDelegate();
