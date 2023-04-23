@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ascension
+namespace Ascension.SharedCommands
 {
     public class RunCommand : Command
     {
