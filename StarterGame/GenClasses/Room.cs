@@ -11,12 +11,12 @@ namespace Ascension
     {
         private string _tag;
         private string _generaldescription;
-        public int [] pos { get; set; }
+        public int[] pos { get; set; }
         public string Tag { get { return _tag; } set { _tag = value; } }
         public string GeneralDescription { get { return _generaldescription; } set { _generaldescription = value; } }
         public List<Item> items = new List<Item>();
-       
-        public Room() : this("No Tag", "No Description", new List<Item>()){}
+
+        public Room() : this("No Tag", "No Description", new List<Item>()) { }
 
         // Designated Constructor
         public Room(string tag, string description, List<Item> floorItems)
@@ -82,7 +82,7 @@ namespace Ascension
 
         public virtual string Description() //virtual so elevator can override it
         {
-            return "You are in " + this.Tag +" on floor "+ Elevator.Instance.floorLvl +". " + this.GeneralDescription + ". " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
+            return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + ". " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
         }
         public string BaseDescription()
         {
@@ -91,6 +91,56 @@ namespace Ascension
         public string ItemDescription()
         {
             return "There are currently the following items in this room:\n\n" + GetItems();
+        }
+    }
+
+    public delegate bool RoomCondition(Player player);
+    public class BossRoom
+    {
+        string _reqItemName;
+        public BossRoom(string reqItemName)
+        {
+            _reqItemName = reqItemName;
+        }
+        public bool EnterBossFight(Player player)
+        {
+            if(player.Inventory.Exists(item => item.Name.ToLower().Equals(this._reqItemName))){
+                return true;
+            }
+            else
+            {
+                player.ErrorMessage("You cannot enter the boss room without " + _reqItemName + " in your inventory.");
+                return false;
+            }
+        }
+    }
+
+    public class LockedRoom
+    {
+        bool locked;
+        string _reqItemName;
+        public LockedRoom(string reqItemName)
+        {
+            locked = true;
+            _reqItemName = reqItemName;
+        }
+        public bool UnlockRoom(Player player)
+        {
+            if (locked)
+            {
+                if (player.Inventory.Exists(item => item.Name.ToLower().Equals(this._reqItemName)))
+                {
+                    player.InfoMessage("You unlocked the room and entered.");
+                    this.locked = false;
+                    return true;
+                }
+                else
+                {
+                    player.ErrorMessage("You cannot enter the room without " + _reqItemName + " in your inventory.");
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
