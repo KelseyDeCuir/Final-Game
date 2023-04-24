@@ -9,13 +9,14 @@ namespace Ascension
      */
     public class CommandWords
     {
-        private static Command[] _commandArrayInCreation = { new CharNameCommand(), new QuitCommand() };
-        private static Command[] _commandArrayInMenu = { new ReflectCommand(), new PlayCommand(), new QuitCommand()};
-        private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new BackCommand(), new TakeCommand(), new MenuCommand(), new QuitCommand() };
-        private static Command[] _commandArrayInCombat = { new QuitCommand() };
-        private static Command[] _commandArrayInDialogue = { new QuitCommand() };
-        private static Command[] _commandArrayInElevator = { new GoCommand(), new AscendCommand(), new DescendCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new BackCommand(), new MenuCommand(), new SaveCommand(), new QuitCommand() };
-        private static Dictionary<States, Command[]> _commandArrays = new Dictionary<States, Command[]>() { {States.CHARCREATION, _commandArrayInCreation }, {States.ELEVATOR, _commandArrayInElevator },{ States.MENU, _commandArrayInMenu }, { States.GAME, _commandArrayInGame }, { States.COMBAT, _commandArrayInCombat }, { States.DIALOGUE, _commandArrayInDialogue } };
+        private static Command[] _commandArrayInCreation = { new CharNameCommand()};
+        private static Command[] _commandArrayInMenu = { new ReflectCommand(), new PlayCommand()};
+        private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new BackCommand(), new TakeCommand(), new MenuCommand()};
+        private static Command[] _commandArrayInCombat = {};
+        private static Command[] _commandArrayInDialogue = {};
+        private static Command[] _commandArrayInShop = { new PlayCommand()};
+        private static Command[] _commandArrayInElevator = { new GoCommand(), new AscendCommand(), new DescendCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new BackCommand(), new ShopCommand(), new MenuCommand(), new SaveCommand(),};
+        private static Dictionary<States, Command[]> _commandArrays = new Dictionary<States, Command[]>() { {States.CHARCREATION, _commandArrayInCreation }, {States.ELEVATOR, _commandArrayInElevator },{ States.MENU, _commandArrayInMenu }, { States.GAME, _commandArrayInGame }, { States.COMBAT, _commandArrayInCombat }, { States.DIALOGUE, _commandArrayInDialogue } , { States.SHOP, _commandArrayInShop } };
         private Dictionary<States, Dictionary<string, Command>> _commands;
 
         public CommandWords() : this(_commandArrays) {}
@@ -30,13 +31,16 @@ namespace Ascension
             _commands[States.DIALOGUE] = new Dictionary<string, Command>();
             _commands[States.ELEVATOR] = new Dictionary<string, Command>();
             _commands[States.CHARCREATION] = new Dictionary<string, Command>();
+            _commands[States.SHOP] = new Dictionary<string, Command>();
             foreach (States state in Enum.GetValues(typeof(States))) {
                 foreach (Command command in commandlist[state])
                 {
                     _commands[state][command.Name] = command;
                 }
-            Command help = new HelpCommand(this);
-            _commands[state][help.Name] = help;
+                Command help = new HelpCommand(this);
+                Command quit = new QuitCommand();
+                _commands[state][help.Name] = help;
+                _commands[state][quit.Name] = quit;
         }
         }
 
