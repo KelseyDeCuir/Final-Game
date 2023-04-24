@@ -173,10 +173,11 @@ namespace Ascension
         {
             abandonedHospital = new Floor(Floor1Rooms, Floor1Items);
             abandonedHospital.Unlocked = true;
-            abandonedSchool = new Floor(Floor1Rooms, Floor1Items);
-            hell = new Floor(Floor1Rooms, Floor1Items);
-            winZone = new Floor(Floor1Rooms, Floor1Items);
-            winZone.Unlocked = true;
+            Room room = new Room("Blank", "blank test", Floor1Items);
+            Room [] blankRoomLists = new Room[] {room, room, room, room, room, room, room, room, room };
+            abandonedSchool = new Floor(blankRoomLists, Floor1Items);
+            hell = new Floor(blankRoomLists, Floor1Items);
+            winZone = new Floor(blankRoomLists, Floor1Items);
             Character AB = new Character(abandonedHospital, "A", "B");
             Character BC = new Character(abandonedHospital, "B", "C");
             Character CD = new Character(abandonedHospital, "C", "D");

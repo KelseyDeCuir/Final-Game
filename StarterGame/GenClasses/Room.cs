@@ -15,6 +15,7 @@ namespace Ascension
         public string Tag { get { return _tag; } set { _tag = value; } }
         public string GeneralDescription { get { return _generaldescription; } set { _generaldescription = value; } }
         public List<Item> items = new List<Item>();
+        public RoomCondition Condition;
 
         public Room() : this("No Tag", "No Description", new List<Item>()) { }
 
@@ -91,6 +92,17 @@ namespace Ascension
         public string ItemDescription()
         {
             return "There are currently the following items in this room:\n\n" + GetItems();
+        }
+
+        public void MakeBossRoom(string reqItem)
+        {
+            BossRoom bossRoom = new BossRoom(reqItem);
+            Condition = bossRoom.EnterBossFight;
+        }
+        public void MakeLockedRoom(string reqItem)
+        {
+            LockedRoom lockedRoom = new LockedRoom(reqItem);
+            Condition = lockedRoom.UnlockRoom;
         }
     }
 

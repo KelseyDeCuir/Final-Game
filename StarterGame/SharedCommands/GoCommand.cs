@@ -19,7 +19,18 @@ namespace Ascension
         {
             if (this.HasSecondWord())
             {
-                player.WalkTo(this.SecondWord);
+                try
+                {
+                    Player pl = (Player)player;
+                    if (pl != null)
+                    {
+                        pl.WalkTo(this.SecondWord);
+                    }
+                }
+                catch (System.InvalidCastException ex)
+                {
+                    player.WalkTo(this.SecondWord);
+                }
             }
             else
             {

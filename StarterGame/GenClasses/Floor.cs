@@ -22,13 +22,13 @@ namespace Ascension
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    if (!(i == 0 && j == 0))
+                    if (i+j !=0)
                     {
                         Random rnd = new Random();
                         int index = rnd.Next(0, roomList.Count);
                         FloorMap[i, j] = roomList[index];
                         FloorMap[i, j].pos = new int[] { i, j };
-                        roomList.RemoveAt(index);
+                        roomList.Remove(FloorMap[i,j]);
                     }
                 }
             }
