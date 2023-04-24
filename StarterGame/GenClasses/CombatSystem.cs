@@ -15,9 +15,13 @@ namespace Ascension
             while(combatOngoing)
             {
                 Console.WriteLine("Your avaliable commands are: Fight, Defend, Run, Dodge, Enchant");
+                Console.WriteLine("Your health is currently at: " + playerHealth);
+                Console.WriteLine("The enemy's health is currently at: " + enemyHealth);
+                String battleCommand = Console.ReadLine();
+                
+                }
 
             }
         }
         
     }
-}
