@@ -44,6 +44,7 @@ namespace Ascension
                     rpos2 = rnd.Next(0, 3);
                 }
                 A[index].CurrentRoom = floor.FloorMap[rpos1, rpos2];
+                
             }
         }
         
@@ -83,6 +84,7 @@ namespace Ascension
             NotificationCenter.Instance.AddObserver("ItemObtained", ItemObtained);
             NotificationCenter.Instance.AddObserver("YouWinGenocide", YouWinGenocide);
             NotificationCenter.Instance.AddObserver("YouWinTrue", YouWinTrue);
+            NotificationCenter.Instance.AddObserver("CharactersInRoom", CharactersInRoom);
         }
         public void PlayerMovedRooms(Notification notification)
         {
@@ -151,6 +153,21 @@ namespace Ascension
                 //ErrorMessage("\n" + "Item unclaimed.");
             }
         }
+        public void CharactersInRoom(Notification notification)
+        {
+            GameWorld gw = (GameWorld)notification.Object;
+            if (gw != null)
+            {
+                Console.WriteLine("\n" + "Characters: " + U_hospitalCharacters);
+                //character.NormalMessage("\n" + "Characters: " + U_hospitalCharacters);
+            }
+            else
+            {
+                Console.WriteLine("\n" + "Characters list unavaliable.");
+                //character.ErrorMessage("\n" + "Characters list unavaliable.");
+            }
+
+        }
 
         private Floor CreateWorld()
         {
@@ -180,7 +197,9 @@ namespace Ascension
             A_hospitalCharacters.Add(HI);
             A_hospitalCharacters.Add(IJ);
             A_hospitalCharacters.Add(JK);
-            GenCharacters(abandonedHospital, A_hospitalCharacters, U_hospitalCharacters);
+            GenCharacters(abandonedHospital, A_hospitalCharacters, U_hospitalCharacters); //Generates characters
+            Notification notification = new Notification("CharactersInRoom", this);
+            NotificationCenter.Instance.PostNotification(notification);
             floors = new List<Floor>();
             floors.Add(abandonedHospital);
             floors.Add(abandonedSchool);
@@ -188,66 +207,5 @@ namespace Ascension
             floors.Add(winZone);
             return abandonedHospital;
         }
-
-        //Method to create items in each room on each floor 
-        /*private void CreateItem()
-        {
-            Item A = new Item("A", "B,", 1, 2, 3, Floor1Items);
-            Item B = new Item("B", "C", 2, 3, 4, Floor1Items);
-            Item C = new Item("C", "D", 3, 4, 5, Floor1Items);
-            Item D = new Item("D", "E", 4, 5, 6, Floor1Items);
-            Item E = new Item("E", "F", 5, 6, 7, Floor1Items);
-            Item F = new Item("F", "G", 6, 7, 8, Floor1Items);
-            Item G = new Item("G", "H", 7, 8, 9, Floor1Items);
-            Item H = new Item("H", "I", 8, 9, 10, Floor1Items);
-            Item I = new Item("I", "J", 9, 10, 11, Floor1Items);
-            Item J = new Item("J", "K", 10, 11, 12, Floor1Items);
-            
-            Floor1Items = new List<Item> { A, B, C, D, E};
-        */
-        }
-    } //{ "1A", "1B", "Hallway", "1C", "ER", "1H", "OGBYN", "OR1", "Rad5", "X-ray Exam 3", "Pediactrics" 
-
-            /*
-            Room outside = new Room("outside the main entrance of the university");
-            Room scctparking = new Room("in the parking lot at SCCT");
-            Room boulevard = new Room("on the boulevard");
-            Room universityParking = new Room("in the parking lot at University Hall");
-            Room parkingDeck = new Room("in the parking deck");
-            Room scct = new Room("in the SCCT building");
-            Room theGreen = new Room("in the green in from of Schuster Center");
-            Room universityHall = new Room("in University Hall");
-            Room schuster = new Room("in the Schuster Center");
-
-            outside.SetExit("west", boulevard);
-
-            boulevard.SetExit("east", outside);
-            boulevard.SetExit("south", scctparking);
-            boulevard.SetExit("west", theGreen);
-            boulevard.SetExit("north", universityParking);
-
-            scctparking.SetExit("west", scct);
-            scctparking.SetExit("north", boulevard);
-
-            scct.SetExit("east", scctparking);
-            scct.SetExit("north", schuster);
-
-            schuster.SetExit("south", scct);
-            schuster.SetExit("north", universityHall);
-            schuster.SetExit("east", theGreen);
-
-            theGreen.SetExit("west", schuster);
-            theGreen.SetExit("east", boulevard);
-
-            universityHall.SetExit("south", schuster);
-            universityHall.SetExit("east", universityParking);
-
-            universityParking.SetExit("south", boulevard);
-            universityParking.SetExit("west", universityHall);
-            universityParking.SetExit("north", parkingDeck);
-
-            parkingDeck.SetExit("south", universityParking);
-
-            return outside;
-            */
-
+    }
+} 
