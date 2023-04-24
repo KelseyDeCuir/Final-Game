@@ -27,7 +27,7 @@ namespace Ascension
         }
         public virtual string GetDescription(Character character)
         {
-            return this.Description + "W: " + this.Weight + " V: " + this.Volume + ".";
+            return this.Description + "W: " + this.Weight + " V: " + this.Volume + " Eyriskel: " + this.Value + ".";
         }
     }
 }

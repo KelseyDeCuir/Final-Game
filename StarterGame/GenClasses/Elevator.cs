@@ -32,5 +32,22 @@ namespace Ascension
         {
             return "You are in " + this.Tag + ". " + this.GeneralDescription + ". " + "\n\nYou can go through the following exits\n" + GetExits();
         }
+        public override string GetItems() //grabs names of the items in the room
+        {
+            string itemNames = "Items:";
+            if (items.Count > 0)
+            {
+                foreach (Item item in items)
+                {
+                    itemNames += "\n " + item.Name + " Eyriskel: " + (item.Value+5);
+                }
+                itemNames += ".";
+            }
+            else
+            {
+                itemNames = "No items in the shop.";
+            }
+            return itemNames;
+        }
     }
 }

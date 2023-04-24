@@ -62,7 +62,7 @@ namespace Ascension
             exitNames += "\n";
             return exitNames;
         }
-        public string GetItems() //grabs names of the items in the room
+        public virtual string GetItems() //grabs names of the items in the room
         {
             string itemNames = "Items:";
             if (items.Count > 0)

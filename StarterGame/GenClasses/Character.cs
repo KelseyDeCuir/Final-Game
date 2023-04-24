@@ -272,9 +272,10 @@ namespace Ascension
                 plForXp.Eyriskel += this.Eyriskel;
             }
         }
-        public void MakeBoss(Floor floor)
+        public void MakeBoss(Floor floor, int moneyBonus)
         {
             var obj = new Boss(floor);
+            this.Eyriskel += moneyBonus;
             bossDelegate = new BossDelegate(obj.UnlockFloor);
         }
 
