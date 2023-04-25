@@ -50,16 +50,19 @@ namespace Ascension
         
         
         
-        Item A = new Item("A", "B,", 1, 2, 3, Floor1Items);
-        Item B = new Item("B", "C", 2, 3, 4, Floor1Items);
-        Item C = new Item("C", "D", 3, 4, 5, Floor1Items);
-        Item D = new Item("D", "E", 4, 5, 6, Floor1Items);
-        Item E = new Item("E", "F", 5, 6, 7, Floor1Items);
-        Item F = new Item("F", "G", 6, 7, 8, Floor1Items);
-        Item G = new Item("G", "H", 7, 8, 9, Floor1Items);
-        Item H = new Item("H", "I", 8, 9, 10, Floor1Items);
-        Item I = new Item("I", "J", 9, 10, 11, Floor1Items);
-        Item J = new Item("J", "K", 10, 11, 12, Floor1Items);
+        Weapon rustyScalpel = new Weapon("rusty-scalpel", "A rusted surgery tool.", 5, 1, 1, 8, Floor1Items);
+        Weapon rubberGloves = new Weapon("rubber-gloves", "A pair of rubber gloves.", 6, 2, 2, 6, Floor1Items);
+        Armor scrubs = new Armor("scrubs", "No, I know, I'm no superman.", 4, 3, 5, 5, Floor1Items);
+        Armor paperJacket = new Armor("paper-jacket", "You're so c- co- cold!", 3, 1, 4, 3, Floor1Items);
+        Item mdID = new Item("md-id", "(Key) An M.D.'s ID Card. This can get you anywhere in here...", 0, 1, 1, Floor1Items);
+        Item jID = new Item("janitor-id", "(Key) A janitor's ID Card. Maybe this can get you into the south-west room.", 0, 1, 1, Floor1Items);
+
+        Weapon metalYardstick = new Weapon("yardstick", "A sharp metal yardstick.", 9, 3, 3, 12, Floor2Items);
+        Weapon whip = new Weapon("extension-cords", "Several extension cords braided together like a whip.", 10, 5, 3, 13, Floor2Items);
+        Armor tweedCoat = new Armor("tweed-coat", "A tweed coat with patches on the elbows.", 7, 3, 4, 8, Floor2Items);
+        Armor suitJacket = new Armor("suit", "A nice suit jacket.", 8, 2, 4, 7, Floor2Items);
+        Item masterKey = new Item("master-key", "The one key to rule them all, and in the darkness bind them. Or however that goes.", 0, 1, 2, Floor2Items);
+        Item lanyard = new Item("lanyard", "Lanyard of keys, this can probably get you into that locked room on the East edge.", 0, 3, 2, Floor2Items);
 
         private static GameWorld _instance = null;
         public static GameWorld Instance
@@ -173,9 +176,15 @@ namespace Ascension
         {
             abandonedHospital = new Floor(Floor1Rooms, Floor1Items);
             abandonedHospital.Unlocked = true;
+            abandonedHospital.FloorMap[0, 2].items.Add(mdID);
+            abandonedHospital.FloorMap[0, 2].MakeLockedRoom(jID.Name);
+            abandonedHospital.FloorMap[1, 2].MakeBossRoom(mdID.Name);
             Room room = new Room("Blank", "blank test", Floor1Items);
             Room [] blankRoomLists = new Room[] {room, room, room, room, room, room, room, room, room };
-            abandonedSchool = new Floor(blankRoomLists, Floor1Items);
+            abandonedSchool = new Floor(blankRoomLists, Floor2Items);
+            abandonedSchool.FloorMap[1, 1].items.Add(masterKey);
+            abandonedSchool.FloorMap[1, 1].MakeLockedRoom(lanyard.Name);
+            abandonedSchool.FloorMap[1, 2].MakeBossRoom(masterKey.Name);
             hell = new Floor(blankRoomLists, Floor1Items);
             winZone = new Floor(blankRoomLists, Floor1Items);
             Character AB = new Character(abandonedHospital, "A", "B");

@@ -28,7 +28,7 @@ namespace Ascension
             {
                 Random rnd = new Random();
                 int rem;
-                int itemsToGen = rnd.Next(0, Math.DivRem(floorItems.Count, 3, out rem) + 1);
+                int itemsToGen = rnd.Next(1, 3);
                 for (int i = 0; i < itemsToGen; i++)
                 {
                     int index = rnd.Next(0, floorItems.Count);

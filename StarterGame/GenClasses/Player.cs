@@ -46,7 +46,6 @@ namespace Ascension
             Inventory.Remove(stick);
             Inventory.Remove(jacket);
             Eyriskel = 0;
-            world.Entrance.FloorMap[0, 1].MakeLockedRoom("stick");
         }
         public Player SelfRef()
         {
