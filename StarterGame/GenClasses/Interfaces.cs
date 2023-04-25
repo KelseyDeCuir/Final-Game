@@ -14,7 +14,6 @@ namespace Ascension
     interface IRoom
     {
         Character[] characters { set; get; }
-        Boss boss { set; get; }
         Item[] item { set; get; }
         Weapon weapon { set; get; }
         Armor armor { set; get; }
@@ -31,6 +30,7 @@ namespace Ascension
         Skills aptitudeLvl { set; get; }
         //Thinking about what to do with this
         Command[] actions { set; get; }
+        int Eyriskel { set; get; }
         
     }
     interface iItems

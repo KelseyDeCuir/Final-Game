@@ -22,6 +22,8 @@ namespace Ascension
                     {
                         if (pl.heldWeight + item.Weight <= pl.WeightLimit && pl.heldVolume + item.Volume <= pl.VolumeLimit)
                         {
+                            Notification notification = new Notification("ItemObtained", this);
+                            NotificationCenter.Instance.PostNotification(notification);
                             player.InfoMessage("You picked up " + item.Name);
                             if (item.Found != true)
                             {

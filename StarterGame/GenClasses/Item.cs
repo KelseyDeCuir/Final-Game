@@ -25,9 +25,9 @@ namespace Ascension
             this._found = false;
             items.Add(this);
         }
-        public virtual string GetDescription()
+        public virtual string GetDescription(Character character)
         {
-            return this.Description + "W: " + this.Weight + " V: " + this.Volume + ".";
+            return this.Description + "W: " + this.Weight + " V: " + this.Volume + " Eyriskel: " + this.Value + ".";
         }
     }
 }
