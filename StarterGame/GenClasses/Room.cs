@@ -83,7 +83,7 @@ namespace Ascension
 
         public virtual string Description() //virtual so elevator can override it
         {
-            return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + ". " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
+            return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + " " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
         }
         public string BaseDescription()
         {

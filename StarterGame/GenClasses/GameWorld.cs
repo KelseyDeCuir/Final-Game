@@ -61,8 +61,10 @@ namespace Ascension
         Weapon whip = new Weapon("extension-cords", "Several extension cords braided together like a whip.", 10, 5, 3, 13, Floor2Items);
         Armor tweedCoat = new Armor("tweed-coat", "A tweed coat with patches on the elbows.", 7, 3, 4, 8, Floor2Items);
         Armor suitJacket = new Armor("suit", "A nice suit jacket.", 8, 2, 4, 7, Floor2Items);
-        Item masterKey = new Item("master-key", "The one key to rule them all, and in the darkness bind them. Or however that goes.", 0, 1, 2, Floor2Items);
-        Item lanyard = new Item("lanyard", "Lanyard of keys, this can probably get you into that locked room on the East edge.", 0, 3, 2, Floor2Items);
+        Item masterKey = new Item("master-key", "(Key) The one key to rule them all, and in the darkness bind them. Or however that goes.", 0, 1, 2, Floor2Items);
+        Item lanyard = new Item("lanyard", "(Key) Lanyard of keys, this can probably get you into that locked room on the East edge.", 0, 3, 2, Floor2Items);
+
+        Weapon pitchfork = new Weapon("pitchfork", "A large red pitchfork. Stereotypical if you ask me", 14, 5, 4, 18, Floor3Items);
 
         private static GameWorld _instance = null;
         public static GameWorld Instance
@@ -78,7 +80,11 @@ namespace Ascension
         }
         private Floor _entrance; 
         public Floor Entrance { get { return _entrance; } }
-        private Room[] Floor1Rooms = { new Room("1A", "Description 1", Floor1Items), new Room("1B", "Description 2", Floor1Items), new Room ("Hallway", "Description 3", Floor1Items), new Room("1C", "Description 4", Floor1Items), new Room("ER", "Description 5", Floor1Items ), new Room("1H", "Description 6", Floor1Items), new Room("OGBYN", "Description 7", Floor1Items), new Room("Rad5", "Description 8", Floor1Items), new Room("X-ray Exam 3", "Description 9", Floor1Items), new Room("Pediactrics", " Description 10", Floor1Items) };
+        private Room[] Floor1Rooms = { new Room("Patient 1A", "The room reeks of death, but there is no body to be found.", Floor1Items), new Room("Patient 1B","The patiet's bed is overturned and things are strewn across the floor.", Floor1Items), new Room("ER Lobby","The Emergancy Room is probably far cleaner now than it ever was during operation.",Floor1Items), new Room("OR-1", "Operating Room 1 was luckily not recently used before whatever happened here.", Floor1Items), new Room("Radiology Screening", "The waiting room in the radiology department has a lot of mattressless cots, it might have been a good place for a kip otherwise.", Floor1Items), new Room("R4 X-RAY","The X-RAY machine is broken... you hope.", Floor1Items), new Room("Pediactrics Lobby", "There's some poor souls bunny rabbit fused to the floor here.", Floor1Items), new Room("OBGYN Lobby", "The chairs in the room have been splintered into so many pieces.", Floor1Items) };
+
+        private Room[] Floor2Rooms = {new Room("Classroom 101","A plain classroom, probably taught young kids.", Floor2Items), new Room("Classroom 102", "A messy classroom, definitely taught young kids.", Floor2Items), new Room("Classroom 103", "Either the kids were well behaved or the teacher was very strict, this classroom is incredibly tidy.", Floor2Items), new Room("Classroom 104", "This classroom was likely for the older kids. This based almost entirely on the amount of pencils still stuck in the ceiling.", Floor2Items), new Room("Administrator's Office", "The Office is amess of papers, out of a sense of privacy you avoid reading them.", Floor2Items), new Room("Teachers' Lounge", "You have the feeling this room isn't supposed to smell this strongly of booze.", Floor2Items), new Room("Locker Room", "Still smells sweaty... Ew.", Floor2Items), new Room("Quad", "The grass out here is real enough, dead though. Looking up you can see sky painted on the ceiling, with the paint chipping away. There's a busted bulb of a sunlamp.", Floor2Items) };
+
+        private Room[] Floor3Rooms = { new Room("Sulfer Pits", "Sticks of rotten eggs.", Floor3Items), new Room("Bridge of Doom", "Yep. That hole does not have a bottem, good thing the bridge is there.", Floor3Items), new Room("Dunes of Despair", "These sandy dunes cry out in the anguish of the souls trapped within.", Floor3Items), new Room("Lava Mount", "HOT!!!!!!!!", Floor3Items), new Room("Abandoned Elevator", "This room looks strangely similar to the one that you've been travellig around in...", Floor3Items), new Room("Shattered Bone Fields", "it's in the name really. You try to watch your step.", Floor3Items), new Room("Sanguine Sea", "A sea of blood rages below you, a wooden dock leads to the other exits.", Floor3Items), new Room("Infinite Factory", "The machinery is so loud, the hellscape of dangerous moving machines continues outwards for ages.", Floor3Items) };
         private GameWorld()
         {
             _entrance = CreateWorld();
@@ -181,11 +187,11 @@ namespace Ascension
             abandonedHospital.FloorMap[1, 2].MakeBossRoom(mdID.Name);
             Room room = new Room("Blank", "blank test", Floor1Items);
             Room [] blankRoomLists = new Room[] {room, room, room, room, room, room, room, room, room };
-            abandonedSchool = new Floor(blankRoomLists, Floor2Items);
+            abandonedSchool = new Floor(Floor2Rooms, Floor2Items);
             abandonedSchool.FloorMap[1, 1].items.Add(masterKey);
             abandonedSchool.FloorMap[1, 1].MakeLockedRoom(lanyard.Name);
             abandonedSchool.FloorMap[1, 2].MakeBossRoom(masterKey.Name);
-            hell = new Floor(blankRoomLists, Floor1Items);
+            hell = new Floor(Floor3Rooms, Floor3Items);
             winZone = new Floor(blankRoomLists, Floor1Items);
             Character AB = new Character(abandonedHospital, "A", "B");
             Character BC = new Character(abandonedHospital, "B", "C");
