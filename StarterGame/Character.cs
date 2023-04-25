@@ -41,10 +41,10 @@ namespace Ascension
         private Floor _currentFloor = null; //rooms are separated by floors so that is stored instead
         public Floor CurrentFloor { get { return _currentFloor;} set { _currentFloor = value;} }
         protected int[] _currentRoom = null;
+
         public Room CurrentRoom { get { return CurrentFloor.FloorMap[_currentRoom[0],_currentRoom[1]]; } }
         //PastRoom Locations, 
         public Stack<Room> PastRooms = new Stack<Room>();
-
         public Weapon EquippedWeapon { set; get; }
         public Armor EquippedArmor { set; get; }
         public int aptPoints;
@@ -121,7 +121,7 @@ namespace Ascension
                 ErrorMessage("\nThere is no door to the " + direction + ".");
             }
         }
-        public void Backto()
+        public void Backto()//back to should reset everytime floor changes, observer subscribe to cllear
         {
             if (PastRooms.Count != 0 ) 
             {

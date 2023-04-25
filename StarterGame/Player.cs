@@ -16,7 +16,7 @@ namespace Ascension
         public double heldVolume;
         public double heldWeight;
         private int _exp;
-        private GameWorld World;
+        public GameWorld World; //returns an exception at chara curretnflor when world is public
         public int Exp {get {return _exp; } }
         private int _aptReq;
         public int AptReq { get { return _aptReq; } }
@@ -46,8 +46,13 @@ namespace Ascension
 
         public void Saveinfo() { //really cheap way to save ask teacher about it
             //Simpleton for now
-            SaveSystem sv = new SaveSystem(this);
+            SaveSystem sv = new SaveSystem(this); //never actually saves just stops here
             sv.SavePlayerinfo();
+        }
+        public void Loadinfo() {
+            SaveSystem sv = new SaveSystem(this);
+            Console.WriteLine(sv.LoadPlayerinfo());
+            
         }
 
         public void XpUp(int exp)

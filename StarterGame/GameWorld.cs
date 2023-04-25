@@ -18,7 +18,7 @@ namespace Ascension
         public static List<Item> Floor2Items = new List<Item>();
         public static List<Item> Floor3Items = new List<Item>();
 
-        Character AB = new Character(abandonedHospital, "A", "B", new int[] { 0, 1 });
+        Character AB = new Character(abandonedHospital, "A", "B", new int[] { 0, 1 }); 
         Character BC = new Character(abandonedHospital, "B", "C", new int[] { 0, 2 });
         Character CD = new Character(abandonedHospital, "C", "D", new int[] { 1, 1 });
         Character DE = new Character(abandonedHospital, "D", "E", new int[] { 1, 2 });
@@ -28,6 +28,7 @@ namespace Ascension
         Character HI = new Character(abandonedHospital, "H", "I", new int[] { 0, 2 });
         Character IJ = new Character(abandonedHospital, "I", "J", new int[] { 1, 1 });
         Character JK = new Character(abandonedHospital, "J", "K", new int[] { 1, 2 });
+
         //These lists are utilized to generate characters 
         public List<Character> A_hospitalCharacters = new List<Character>();
         public List<Character> U_hospitalCharacters = new List<Character>();
@@ -78,6 +79,7 @@ namespace Ascension
         private GameWorld()
         {
             _entrance = CreateWorld();
+           
         }
 
         private Floor CreateWorld()
