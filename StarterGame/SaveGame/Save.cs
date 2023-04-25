@@ -14,10 +14,48 @@ namespace Ascension
     {
         String PlayerSave;
         //Simpleton for now
-   
-        public SaveSystem(Character player) {
-            PlayerSave = JsonConvert.SerializeObject(player, Formatting.Indented);
+
+        public SaveSystem(Character player)
+        {
+            PlayerSave = JsonConvert.SerializeObject(player);
+            //NOTE : the problem is with character and how chara current room is done
+            //if i try to call character.currentRoom it returns a null point exception
         }
+
+        //TODO: read save files names
+        public void readPlayerSavesNames()
+        { //stores inside bin which is stored inside another file
+
+
+        }
+        public void CheckIfOverwrite(String newSave) { 
+            String path = newSave;
+            if (!File.Exists(path))
+            {
+
+            }
+            else { 
+            //ask if want to over write
+            //thrid word commands 
+            //that file already exisr if  you wish to ovverwrite it 
+            //do "save (filename) ovverwrite" command 
+            //kicks you out if you dont type properly
+
+
+            }
+        
+        }
+
+        public void OverwriteSave(String newSave) //overwrite saves
+        {
+            String path = newSave + ".json"; 
+            StreamWriter writer = new StreamWriter(path, false); //ture appends onto file
+            writer.Write(PlayerSave); //if gameworld in player is set public it returns a null eorror in currernt room inside charat=cter>>>
+            writer.Close();
+        }
+
+
+        //change to take txt file
         public void SavePlayerinfo()
         {
             String path = "SaveGame\\saveGame.json"; //needs to save in a specfic path
@@ -29,10 +67,14 @@ namespace Ascension
             writer.Close(); 
         }
 
-        public void LoadPlayerinfo()
+        public Player LoadPlayerinfo()
         {
-
-
+            String path = "saveGame.json";
+            StreamReader reader = new StreamReader(path);
+            String json = reader.ReadToEnd();
+            Player ply = JsonConvert.DeserializeObject<Player>(json);
+            return ply; 
+            //turns words from json file into a list of stuff to be shoved into player
         }
 
         //TODO: load gameworld

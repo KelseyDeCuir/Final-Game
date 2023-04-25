@@ -45,7 +45,6 @@ namespace Ascension
         public Room CurrentRoom { get { return _currentRoom; } set { _currentRoom = value; } }
         //PastRoom Locations, 
         public Stack<Room> PastRooms = new Stack<Room>();
-
         public Weapon EquippedWeapon { set; get; }
         public Armor EquippedArmor { set; get; }
         public int Eyriskel { set; get; }

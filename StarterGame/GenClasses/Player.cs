@@ -54,8 +54,13 @@ namespace Ascension
 
         public void Saveinfo() { //really cheap way to save ask teacher about it
             //Simpleton for now
-            SaveSystem sv = new SaveSystem(this);
+            SaveSystem sv = new SaveSystem(this); //never actually saves just stops here
             sv.SavePlayerinfo();
+        }
+        public void Loadinfo() {
+            SaveSystem sv = new SaveSystem(this);
+            Console.WriteLine(sv.LoadPlayerinfo());
+            
         }
 
         public void XpUp(int exp)
