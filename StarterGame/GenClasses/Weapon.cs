@@ -15,7 +15,7 @@ namespace Ascension
         }
         public override string GetDescription(Character character)
         {
-            return "Weapon -> " + this.GetDamage(character) + " " + this.Description + " W: " + this.Weight + " V: " + this.Volume + " E: " + this.enchanted + ".";
+            return "Weapon -> " + this.GetDamage(character) + " "+ this.Name + " " + this.Description + " W: " + this.Weight + " V: " + this.Volume + " E: " + this.enchanted + ".";
         }
 
         public double GetDamage(Character character)

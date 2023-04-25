@@ -15,7 +15,7 @@ namespace Ascension
         }
         public override string GetDescription(Character character)
         {
-            return "Armor -> " + this.GetDefense(character) + " " + this.Description + " W: " + this.Weight + " V: " + this.Volume + " E: " + this.enchanted + ".";
+            return "Armor -> " + this.GetDefense(character) + " " + this.Name + " " + this.Description + " W: " + this.Weight + " V: " + this.Volume + " E: " + this.enchanted + ".";
         }
         public double GetDefense(Character character)
         {
