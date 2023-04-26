@@ -65,6 +65,9 @@ namespace Ascension
             aptPoints = 1;
             CurrentHealth = aptitudeLvl.health;
             Eyriskel = 5;
+            //A bit worried this might affect all instances 
+            //NotificationCenter.Instance.AddObserver("PlayerEndedDialouge", PlayerEndedDialouge);
+
         }
 
         // gets the room position for the matrix if it is a valid room
@@ -247,6 +250,7 @@ namespace Ascension
                 return 0;
             }
         }
+
         public virtual void Die(Character killer)
         {
             var plForXp = killer as Player;

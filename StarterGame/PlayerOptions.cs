@@ -9,11 +9,14 @@ namespace Ascension
     {
         public string BodyTxt { get; set; }
         public string Endtxt { get; set; }
-        public string NextTxtFile { get; set; }
+
+        public string NextTxtFile { get; set; } //when continueing dialouge
+        public string NewResponseTxtFile { get; set; } //when you end dialouge but want a new response after ending dialouge
         public List<OptionandEvent> optionsAndEvents = new List<OptionandEvent>();
         //could be state?
 
         public PlayerOptions(string BodyTxt, List<OptionandEvent> optionsAndEvents) {
+          
             this.BodyTxt = BodyTxt;
             this.optionsAndEvents = optionsAndEvents;
         }
@@ -43,25 +46,44 @@ namespace Ascension
         public void EndDialouge() {
             
             Console.WriteLine(Endtxt);
-            //Switch State to gameplay
+            //use observer
+            Notification notification = new Notification("PlayerEndedDialouge", this);
+            NotificationCenter.Instance.PostNotification(notification);
+            //Switch State to gameplay but not here
         }
 
-        public void setNewCharFile() { 
-         //obserever on Dialouge end switchs npc currenttxtfile to nexttxtfile
-        
+        public void setNewCharFile() {
+            //obserever on Dialouge end switchs npc currenttxtfile to nexttxtfile
+            NotificationCenter.Instance.AddObserver("PlayerEndedDialouge", PlayerEndedDialouge);
 
 
 
-        //should be called if you want to go to the next file without having to
-        //have pc manually type in ContinueDialouge
-        //how it goes:
-        //uses an observer to check if dialouge has ended, recvies message that it has ended
-        //AND no option to continue txt is present
-        //sets char file so when you talk to npc again something new comes out
+            //should be called if you want to go to the next file without having to
+            //have pc manually type in ContinueDialouge
+            //how it goes:
+            //uses an observer to check if dialouge has ended, recvies message that it has ended
+            //AND no option to continue txt is present
+            //sets char file so when you talk to npc again something new comes out
 
-        
+
         }
-        
+        public void PlayerEndedDialouge(Notification notification)
+        {
+            PlayerOptions playeroptions = (PlayerOptions)notification.Object;
+            if (playeroptions != null)
+            {
+                Console.WriteLine("\n" + "Player ended dialouge");
+                if (NewResponseTxtFile != null) {
+                    
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("\n" + "Player did not end dialouge");
+            }
+        }
+
 
         //TODO: AUTOMICALLY ADD A COMMAND TO A STATE IF IT CORRESPONDS WIth OPTION ADN EVENTS
         //if option+ event = true (options would be continue,fight)
@@ -81,7 +103,7 @@ namespace Ascension
         //eneter fight(can fight)
         //on run(coward)
         //on npc death(all)
-        
+
         //elevator attendeeeeeeeeeeee
         //USE OBSEREVERS
         //comments on player equipment,items,npcs killed,etc 

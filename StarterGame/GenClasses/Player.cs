@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -68,6 +69,81 @@ namespace Ascension
             
         }
 
+        //CHANGED HERE
+        public void TakeAll(string secondword) {
+            List<Item> temp= new List<Item>();
+       
+                if (CurrentRoom.items.Count > 0)
+                {
+                    foreach (Item item in CurrentRoom.items) //gettign an exception her due to removeing while modifying
+                 
+                    {
+                        if (heldWeight + item.Weight <= WeightLimit && heldVolume + item.Volume <= VolumeLimit)
+                        {
+
+                            Notification notification = new Notification("ItemObtained", this);
+                            NotificationCenter.Instance.PostNotification(notification);
+                            InfoMessage("You picked up " + item.Name);
+                            if (item.Found != true)
+                            {
+                                XpUp(2);
+                                item.Found = true;
+                            }
+                            Inventory.Add(item);
+                            temp.Add(item); 
+                  
+                            heldWeight += item.Weight;
+                            heldVolume += item.Volume;
+                        }
+                        else
+                        {
+                            WarningMessage("Cannot fit " + item.Name + " into your inventory.");
+                            break;
+                        }
+                    }
+                    foreach (Item tempItem in temp) { 
+                        CurrentRoom.items.Remove(tempItem); 
+                    }
+                    temp.Clear();
+                }
+                else
+                {
+                    WarningMessage("Nothing to pick up");
+                }
+            }
+     
+        
+        //CHANGED HERE
+        public void TakeOne(string item)
+        {//TODO: custom warrning messages based on if too heavy or if item does not exist
+            if (item == null || item == "" || item == "all") { TakeAll(item); }
+            else { 
+            if (CurrentRoom.items.Count > 0) {
+                foreach (Item i in CurrentRoom.items)
+                {
+                    if (i.Name == item)
+                    {
+                        if (heldWeight + i.Weight <= WeightLimit && heldVolume + i.Volume <= VolumeLimit)
+                        {
+                            InfoMessage("You picked up " + i.Name);
+                            if (i.Found != true)
+                            {
+                                XpUp(2);
+                                i.Found = true;
+                            }
+                            Inventory.Add(i);
+                            CurrentRoom.items.Remove(i);
+                            heldWeight += i.Weight;
+                            heldVolume += i.Volume;
+                            break;
+                        }
+                    }
+                }
+                }
+            }
+        }
+
+
         public void XpUp(int exp)
         {
             _exp += exp;
@@ -82,6 +158,7 @@ namespace Ascension
             }
             this.InfoMessage("+" + i + " Aptitude Points.\nYou now have " + this.aptPoints + " Aptitude Points.You get your next Aptitude point at " + _aptReq + " EXP.");
         }
+            
 
         public override void WalkTo(string direction) 
         {
