@@ -44,7 +44,7 @@ namespace Ascension
                     rpos2 = rnd.Next(0, 3);
                 }
                 A[index].CurrentRoom = floor.FloorMap[rpos1, rpos2];
-                
+                Console.WriteLine("Characters are being generated.");
             }
         }
         
