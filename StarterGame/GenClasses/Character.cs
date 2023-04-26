@@ -214,7 +214,7 @@ namespace Ascension
             }
             EquippedArmor = armor;
             Inventory.Remove(armor);
-            InfoMessage("You Equipped the weapon " + armor.Name);
+            InfoMessage("You Equipped the armor " + armor.Name);
             Character me = this;
         }
 

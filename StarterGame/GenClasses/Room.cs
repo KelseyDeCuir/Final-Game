@@ -28,7 +28,7 @@ namespace Ascension
             {
                 Random rnd = new Random();
                 int rem;
-                int itemsToGen = rnd.Next(0, Math.DivRem(floorItems.Count, 3, out rem) + 1);
+                int itemsToGen = rnd.Next(1, 3);
                 for (int i = 0; i < itemsToGen; i++)
                 {
                     int index = rnd.Next(0, floorItems.Count);
@@ -83,7 +83,7 @@ namespace Ascension
 
         public virtual string Description() //virtual so elevator can override it
         {
-            return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + ". " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
+            return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + " " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
         }
         public string BaseDescription()
         {
