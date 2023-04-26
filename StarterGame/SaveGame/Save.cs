@@ -75,11 +75,13 @@ namespace Ascension
             String path = "saveGame.json";
             StreamReader reader = new StreamReader(path);
             String json = reader.ReadToEnd();
-            Player ply = JsonConvert.DeserializeObject<Player>(json);
-            return ply; 
+            //NOTE: reader is reading object but deserliaing is problem
+            //detecing empty list in item and no priting
+            return JsonConvert.DeserializeObject<Player>(json);
+          
             //turns words from json file into a list of stuff to be shoved into player
         }
-
+  
         //TODO: load gameworld
 
     }

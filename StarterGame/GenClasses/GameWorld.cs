@@ -44,7 +44,7 @@ namespace Ascension
                     rpos2 = rnd.Next(0, 3);
                 }
                 A[index].CurrentRoom = floor.FloorMap[rpos1, rpos2];
-                
+                Console.WriteLine("Characters are being generated.");
             }
         }
         
@@ -94,6 +94,7 @@ namespace Ascension
             NotificationCenter.Instance.AddObserver("YouWinGenocide", YouWinGenocide);
             NotificationCenter.Instance.AddObserver("YouWinTrue", YouWinTrue);
             NotificationCenter.Instance.AddObserver("CharactersInRoom", CharactersInRoom);
+            NotificationCenter.Instance.AddObserver("PlayerEndedDialouge", PlayerEndedDialouge);
         }
         public void PlayerMovedRooms(Notification notification)
         {
@@ -122,8 +123,8 @@ namespace Ascension
         }
         public void ItemObtained(Notification notification)
         {
-            TakeCommand take = (TakeCommand)notification.Object;
-            if (take != null)
+            Player player  = (Player)notification.Object;
+            if (player != null)
             {
                 Console.WriteLine("\n" + "Player obtained a new item.");
                 //NormalMessage("\n" + "Player obtained a new item.");
@@ -176,6 +177,20 @@ namespace Ascension
                 //character.ErrorMessage("\n" + "Characters list unavaliable.");
             }
 
+        }
+
+        //TODO: PLAYER OPTIONS
+        public void PlayerEndedDialouge(Notification notification)
+        {
+            PlayerOptions playeroptions = (PlayerOptions)notification.Object;
+            if (playeroptions != null)
+            {
+                Console.WriteLine("\n" + "Player ended dialouge");
+            }
+            else
+            {
+                Console.WriteLine("\n" + "Player did not end dialouge");
+            }
         }
 
         private Floor CreateWorld()
