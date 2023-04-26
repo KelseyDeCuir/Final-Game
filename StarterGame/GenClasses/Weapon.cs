@@ -20,27 +20,29 @@ namespace Ascension
 
         public double GetDamage(Character character)
         {
+            double StrengthDamage = (double)character.aptitudeLvl.strength / 10;
             if (enchanted)
             {
-                return (double)damage * (((double)character.aptitudeLvl.magic / 100) + 1);
+                return StrengthDamage * (double)damage * (((double)character.aptitudeLvl.magic / 7.5));
             }
             else
             {
-                return damage;
+                return StrengthDamage * damage;
             }
         }
 
         public string Used(Character character, Character target)
         {
             int damageDone = 0;
+            double StrengthDamage = (double)character.aptitudeLvl.strength / 10;
             if (enchanted)
             {
-                damageDone = target.TakeDamage(character, (double)damage * ((double)character.aptitudeLvl.magic/100 + 1));
+                damageDone = target.TakeDamage(character, StrengthDamage * (double)damage * ((double)character.aptitudeLvl.magic/7.5));
                 enchanted = false;
             }
             else
             {
-                damageDone = target.TakeDamage(character,damage);
+                damageDone = target.TakeDamage(character, StrengthDamage * damage);
             }
             return "Damage done: " + damageDone;
         }

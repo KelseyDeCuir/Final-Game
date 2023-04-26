@@ -20,6 +20,8 @@ namespace Ascension
         public string GeneralDescription { get { return _generaldescription; } set { _generaldescription = value; } }
         public List<Item> items = new List<Item>();
         public Conditional conditional;
+        public MonsterBuilder monsterBuilder;
+        public RoomMonster monster;
         [Newtonsoft.Json.JsonIgnore]
         public RoomCondition Condition;
 
@@ -97,8 +99,22 @@ namespace Ascension
         }
 
         public virtual string Description() //virtual so elevator can override it
-        {
-            return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + " " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
+        { // has a chance of generating a monster anytime the player gets the description of the room (usually on entrance but can spam look to force spawns)
+            Random rnd = new Random();
+            double chance = rnd.NextDouble();
+            if (monster == null && chance > .75)
+            {
+                monster = new RoomMonster(monsterBuilder);
+                monster.BuildMonster();
+            }
+            if (monster != null)
+            {
+                return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + " There's a monster in this room!!! " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
+            }
+            else
+            {
+                return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + " " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
+            }
         }
         public string BaseDescription()
         {

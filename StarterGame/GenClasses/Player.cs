@@ -221,5 +221,32 @@ namespace Ascension
                 InfoMessage("You're finally Free");
             }
         }
+        public void HitMonster()
+        {
+            if(CurrentRoom.monster != null)
+            {
+                double damage = EquippedWeapon.GetDamage(this);
+                if(EquippedWeapon.enchanted) { EquippedWeapon.enchanted = false; }
+                int remainingHealth = CurrentRoom.monster.GetMonster().MonsterHurt(damage);
+                string status = "still alive";
+                if(remainingHealth <= 0)
+                {
+                    status = "dead";
+                    CurrentRoom.monster.GetMonster().Die();
+                    Eyriskel += CurrentRoom.monster.GetMonster().Eyriskel;
+                    InfoMessage(String.Format("You did {0} damage! The monster is {1}.", (int)Math.Ceiling(damage), status));
+                    XpUp(Elevator.Instance.floorLvl * 2);
+                    CurrentRoom.monster = null;
+                }
+                else{
+                    InfoMessage(String.Format("You did {0} damage! The monster is {1}.", (int)Math.Ceiling(damage), status));
+                }
+                
+            }
+            else
+            {
+                WarningMessage("There's no monster to hit!");
+            }
+        }
     }
 }

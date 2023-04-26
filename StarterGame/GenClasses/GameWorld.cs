@@ -195,19 +195,22 @@ namespace Ascension
 
         private Floor CreateWorld()
         {
-            abandonedHospital = new Floor(Floor1Rooms, Floor1Items);
+            MonsterBuilder hospitalBuilder = new HospitalGhost();
+            MonsterBuilder schoolBuilder = new HospitalGhost();
+            MonsterBuilder hellBuilder = new HospitalGhost();
+            abandonedHospital = new Floor(Floor1Rooms, Floor1Items, hospitalBuilder);
             abandonedHospital.Unlocked = true;
             abandonedHospital.FloorMap[0, 2].items.Add(mdID);
             abandonedHospital.FloorMap[0, 2].MakeLockedRoom(jID.Name);
             abandonedHospital.FloorMap[1, 2].MakeBossRoom(mdID.Name);
             Room room = new Room("Blank", "blank test", Floor1Items);
             Room [] blankRoomLists = new Room[] {room, room, room, room, room, room, room, room, room };
-            abandonedSchool = new Floor(Floor2Rooms, Floor2Items);
+            abandonedSchool = new Floor(Floor2Rooms, Floor2Items, schoolBuilder);
             abandonedSchool.FloorMap[1, 1].items.Add(masterKey);
             abandonedSchool.FloorMap[1, 1].MakeLockedRoom(lanyard.Name);
             abandonedSchool.FloorMap[1, 2].MakeBossRoom(masterKey.Name);
-            hell = new Floor(Floor3Rooms, Floor3Items);
-            winZone = new Floor(blankRoomLists, Floor1Items);
+            hell = new Floor(Floor3Rooms, Floor3Items, hellBuilder);
+            winZone = new Floor(blankRoomLists, Floor1Items, hospitalBuilder);
             Character AB = new Character(abandonedHospital, "A", "B");
             Character BC = new Character(abandonedHospital, "B", "C");
             Character CD = new Character(abandonedHospital, "C", "D");
