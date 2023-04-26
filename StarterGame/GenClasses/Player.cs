@@ -46,7 +46,11 @@ namespace Ascension
             Inventory.Remove(stick);
             Inventory.Remove(jacket);
             Eyriskel = 0;
-            world.Entrance.FloorMap[0, 1].MakeLockedRoom("stick");
+            //world.Entrance.FloorMap[0, 1].MakeLockedRoom("stick");
+            //I also think that locked rooms should be in gameworld not player 
+            //issue with this line when saving self ref loop 
+            //also only locks south room
+
         }
         public Player SelfRef()
         {

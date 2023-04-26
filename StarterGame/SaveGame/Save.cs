@@ -58,12 +58,15 @@ namespace Ascension
         //change to take txt file
         public void SavePlayerinfo()
         {
-            String path = "SaveGame\\saveGame.json"; //needs to save in a specfic path
+            //TODO: REVERT back FOR TESting
+            //*String path = "SaveGame\\saveGame.json"; //needs to save in a specfic path
             //also eventually have it so player can name file
             //and check if player is overwriting file
-            Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
-            StreamWriter writer = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), false); //true appends onto file
-            writer.Write(PlayerSave);
+            //*Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
+            //*StreamWriter writer = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), false); //true appends onto file
+            String path = "saveGame.json";
+            StreamWriter writer = new StreamWriter(path,false);
+            writer.Write(PlayerSave,Formatting.Indented);
             writer.Close(); 
         }
 
@@ -72,11 +75,13 @@ namespace Ascension
             String path = "saveGame.json";
             StreamReader reader = new StreamReader(path);
             String json = reader.ReadToEnd();
-            Player ply = JsonConvert.DeserializeObject<Player>(json);
-            return ply; 
+            //NOTE: reader is reading object but deserliaing is problem
+            //detecing empty list in item and no priting
+            return JsonConvert.DeserializeObject<Player>(json);
+          
             //turns words from json file into a list of stuff to be shoved into player
         }
-
+  
         //TODO: load gameworld
 
     }

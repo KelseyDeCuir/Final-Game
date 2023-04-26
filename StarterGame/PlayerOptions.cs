@@ -80,14 +80,14 @@ namespace Ascension
         //depeends on enum personality
         //eneter fight(can fight)
         //on run(coward)
-        //death(all)
+        //on npc death(all)
         
         //elevator attendeeeeeeeeeeee
         //USE OBSEREVERS
-        //comments on player equipment,items,npcs killed 
+        //comments on player equipment,items,npcs killed,etc 
         //keep tracks of deaths
         //keeps track of floor
-        //
+        //objectively most dialouge heavy 
 
 
     }
