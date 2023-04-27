@@ -242,6 +242,11 @@ namespace Ascension
                     Eyriskel += CurrentRoom.monster.GetMonster().Eyriskel;
                     InfoMessage(String.Format("You did {0} damage! The monster is {1}.", (int)Math.Ceiling(damage), status));
                     XpUp(Elevator.Instance.floorLvl * 2);
+                    Item drop = CurrentRoom.monster.GetMonster().GetItem();
+                    if(drop != null)
+                    {
+                        CurrentRoom.items.Add(drop);
+                    }
                     CurrentRoom.monster = null;
                 }
                 else{

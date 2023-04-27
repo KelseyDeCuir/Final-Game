@@ -67,6 +67,15 @@ namespace Ascension
         {
             this.name = name;
         }
+        public Item GetItem()
+        {
+            Random rnd = new Random();
+            if(rnd.NextDouble() > possibleChance)
+            {
+                return possibleItem;
+            }
+            return null;
+        }
     }
 
     public interface MonsterBuilder

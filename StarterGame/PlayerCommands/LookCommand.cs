@@ -15,6 +15,7 @@ namespace Ascension
         }
         public override bool Execute(Character player)
         {
+            player.CurrentRoom.MonsterAttack((Player)player);
             if (this.HasSecondWord())
             {
                 if (this.SecondWord.Equals("room"))
@@ -79,7 +80,6 @@ namespace Ascension
                 player.NormalMessage("\n" + player.CurrentRoom.Description());
             }
 
-            player.CurrentRoom.MonsterAttack((Player)player);
             return false;
         }
     }
