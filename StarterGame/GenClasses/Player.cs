@@ -111,8 +111,25 @@ namespace Ascension
                     WarningMessage("Nothing to pick up");
                 }
             }
-     
-        
+
+        public override void Die(Character killer)
+        {
+            var plForXp = killer as Player;
+            this.Alive = false;
+            if (plForXp != null)
+            {
+                plForXp.Eyriskel += this.Eyriskel;
+            }
+            foreach (Item item in Inventory)
+            {
+                CurrentRoom.items.Add(item);
+            }
+            Inventory.Clear();
+            ElevatorAttendant.Instance.NameAttendant(this.Name);
+            this.Alive = true;
+            this.State = States.CHARCREATION;
+        }
+
         //CHANGED HERE
         public void TakeOne(string item)
         {//TODO: custom warrning messages based on if too heavy or if item does not exist

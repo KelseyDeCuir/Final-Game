@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 
@@ -35,7 +36,7 @@ namespace Ascension
         //the intended purpose for actions is to store
         //comamands for npcs based on their personality
         public Command[] actions { set; get; }
-        private string _name = null;
+        protected string _name = null;
         private string _description = null;
         public string Name { get { return _name; } }
         public string Description { get { return _description; } }
@@ -241,7 +242,15 @@ namespace Ascension
                 this.InfoMessage(this.Name + " health: " + CurrentHealth);
                 if(CurrentHealth == 0)
                 {
-                    Die(attacker);
+                    var pl = this as Player;
+                    if (pl == null)
+                    {
+                        Die(attacker);
+                    }
+                    else
+                    {
+                        pl.Die(attacker);
+                    }
                 }
                 return damagetoTake;
             }
