@@ -30,7 +30,7 @@ namespace Ascension
         public Boolean CanMove { set; get; }
         public Boolean Alive { set; get; }
         public Skills aptitudeLvl { set; get; }
-        protected int CurrentHealth; // stores current health, automatically goes to max health on level
+        public int CurrentHealth; // stores current health, automatically goes to max health on level
         //actions currently do not store or do anything
         //the intended purpose for actions is to store
         //comamands for npcs based on their personality

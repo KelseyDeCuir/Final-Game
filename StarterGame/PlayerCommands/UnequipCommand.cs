@@ -64,6 +64,7 @@ namespace Ascension
                 {
                     player.WarningMessage("Cannot unequip " + this.SecondWord);
                 }
+                player.CurrentRoom.MonsterAttack((Player)player);
             }
             else
             {

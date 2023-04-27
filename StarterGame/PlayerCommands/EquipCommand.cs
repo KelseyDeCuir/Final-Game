@@ -35,6 +35,7 @@ namespace Ascension
                 {
                     player.WarningMessage("Could not find " + this.SecondWord);
                 }
+                player.CurrentRoom.MonsterAttack((Player)player);
             }
             else
             {

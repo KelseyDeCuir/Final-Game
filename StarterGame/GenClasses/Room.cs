@@ -109,7 +109,7 @@ namespace Ascension
             }
             if (monster != null)
             {
-                return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + " There's a monster in this room!!! " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
+                return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + " There is " + this.monster.GetMonster().name + " in this room!!! " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
             }
             else
             {
@@ -134,6 +134,14 @@ namespace Ascension
         {
             conditional = new LockedRoom(reqItem);
             Condition = conditional.TryEnter;
+        }
+
+        public void MonsterAttack(Player player)
+        {
+            if (monster != null)
+            {
+                player.InfoMessage(String.Format("You took {0} damage from a monster!", player.TakeDamage(player, monster.GetMonster().MonsterAttacks())));
+            }
         }
     }
 

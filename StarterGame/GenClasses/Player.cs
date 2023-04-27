@@ -137,10 +137,16 @@ namespace Ascension
                             heldVolume += i.Volume;
                             break;
                         }
+                            else
+                            {
+                                WarningMessage("Cannot fit " + item + " into your inventory.");
+                                break;
+                            }
                     }
                 }
                 }
             }
+            CurrentRoom.MonsterAttack(this);
         }
 
 
@@ -156,7 +162,7 @@ namespace Ascension
                 _prevAptReq = _aptReq - _prevAptReq;
                 i++;
             }
-            this.InfoMessage("+" + i + " Aptitude Points.\nYou now have " + this.aptPoints + " Aptitude Points.You get your next Aptitude point at " + _aptReq + " EXP.");
+            this.InfoMessage("+" + i + " Aptitude Points.\nYou now have " + this.aptPoints + " Aptitude Points. You get your next Aptitude point at " + _aptReq + " EXP.");
         }
             
 
@@ -247,6 +253,7 @@ namespace Ascension
             {
                 WarningMessage("There's no monster to hit!");
             }
+            CurrentRoom.MonsterAttack(this);
         }
     }
 }

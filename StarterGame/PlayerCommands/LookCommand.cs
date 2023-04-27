@@ -78,6 +78,8 @@ namespace Ascension
             {
                 player.NormalMessage("\n" + player.CurrentRoom.Description());
             }
+
+            player.CurrentRoom.MonsterAttack((Player)player);
             return false;
         }
     }

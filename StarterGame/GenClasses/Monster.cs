@@ -9,10 +9,12 @@ namespace Ascension
         public Item possibleItem { get; set; }
         public double possibleChance { get; set; }
         int Eyriskel { get; set; }
+        string name { get; set; }
         public void SetEyriskel(int eyr);
         public void SetPossibleItem(Item item, double chance);
         public void SetDamage(int dmg);
         public void SetHealth(int hlt);
+        public void SetName(string name);
         public int MonsterAttacks(); //returns damage done by monster
         public int MonsterHurt(double damage); //returns health left on monster
         public void Die(); //returns self to be used to give player stuff and drop stuff in room
@@ -22,6 +24,7 @@ namespace Ascension
         public Item possibleItem { get; set; }
         public double possibleChance { get; set; }
         public int Eyriskel { get; set; }
+        public string name { get; set; }
         private int _baseDamage;
         private int _health;
         private bool _alive = true;
@@ -60,6 +63,10 @@ namespace Ascension
         {
             _health = hlt;
         }
+        public void SetName(string name)
+        {
+            this.name = name;
+        }
     }
 
     public interface MonsterBuilder
@@ -69,6 +76,7 @@ namespace Ascension
         public void BuildPossibleItem();
         public void BuildDamage();
         public void BuildHealth();
+        public void BuildName();
 
     }
 
@@ -94,11 +102,101 @@ namespace Ascension
         {
             monster.SetHealth(15);
         }
+        public void BuildName()
+        {
+            monster.SetName("Ghost");
+        }
 
         public void BuildPossibleItem()
         {
             Random rnd = new Random();
             List<Item> itemsList = GameWorld.Floor1Items;
+            int index = rnd.Next(0, itemsList.Count);
+            Item item = itemsList[index];
+            double percentChance = rnd.NextDouble();
+            monster.SetPossibleItem(item, percentChance);
+        }
+
+        public Monster GetMonster()
+        {
+            return this.monster;
+        }
+    }
+
+    public class PossessedJanitor : MonsterBuilder
+    {
+        private Monster monster;
+        public PossessedJanitor()
+        {
+            this.monster = new Monster();
+        }
+
+        public void BuildDamage()
+        {
+            monster.SetDamage(10);
+        }
+
+        public void BuildEyriskel()
+        {
+            monster.SetEyriskel(8);
+        }
+
+        public void BuildHealth()
+        {
+            monster.SetHealth(25);
+        }
+        public void BuildName()
+        {
+            monster.SetName("Evil Janitor");
+        }
+
+        public void BuildPossibleItem()
+        {
+            Random rnd = new Random();
+            List<Item> itemsList = GameWorld.Floor2Items;
+            int index = rnd.Next(0, itemsList.Count);
+            Item item = itemsList[index];
+            double percentChance = rnd.NextDouble();
+            monster.SetPossibleItem(item, percentChance);
+        }
+
+        public Monster GetMonster()
+        {
+            return this.monster;
+        }
+    }
+
+    public class HellDemon : MonsterBuilder
+    {
+        private Monster monster;
+        public HellDemon()
+        {
+            this.monster = new Monster();
+        }
+
+        public void BuildDamage()
+        {
+            monster.SetDamage(20);
+        }
+
+        public void BuildEyriskel()
+        {
+            monster.SetEyriskel(10);
+        }
+
+        public void BuildHealth()
+        {
+            monster.SetHealth(40);
+        }
+        public void BuildName()
+        {
+            monster.SetName("Demon");
+        }
+
+        public void BuildPossibleItem()
+        {
+            Random rnd = new Random();
+            List<Item> itemsList = GameWorld.Floor3Items;
             int index = rnd.Next(0, itemsList.Count);
             Item item = itemsList[index];
             double percentChance = rnd.NextDouble();
@@ -128,6 +226,7 @@ namespace Ascension
             this.monsterBuilder.BuildEyriskel();
             this.monsterBuilder.BuildHealth();
             this.monsterBuilder.BuildPossibleItem();
+            this.monsterBuilder.BuildName();
         }
     }
 }

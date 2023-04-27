@@ -19,7 +19,9 @@ namespace Ascension
                     Skills skills = player.aptitudeLvl;
                     if (this.SecondWord.Equals("health"))
                     {
-                        skills.health += (int)Math.Ceiling(skills.health * .12);
+                        int healthIncrease = (int)Math.Ceiling(skills.health * .12);
+                        skills.health += healthIncrease;
+                        player.CurrentHealth += healthIncrease;
                         player.aptPoints -= 1;
                         player.InfoMessage("Your health: " + skills.health + "\nAptitude Points Remaining: " + player.aptPoints);
                     }
@@ -57,6 +59,8 @@ namespace Ascension
                 {
                     player.WarningMessage("No Apt Points to level with.");
                 }
+
+                player.CurrentRoom.MonsterAttack((Player)player);
             }
             else
             {

@@ -25,6 +25,7 @@ namespace Ascension
                     {
                         player.WarningMessage("No Weapon to Enchant");
                     }
+                    player.CurrentRoom.MonsterAttack((Player)player);
                 }
                 else if (this.SecondWord.Equals("armor"))
                 {
@@ -37,6 +38,12 @@ namespace Ascension
                     {
                         player.WarningMessage("No Armor to Enchant");
                     }
+                    player.CurrentHealth += (int)Math.Ceiling(player.aptitudeLvl.intelligence * .5);
+                    if (player.CurrentHealth > player.aptitudeLvl.health)
+                    {
+                        player.CurrentHealth = player.aptitudeLvl.health;
+                    }
+                    player.CurrentRoom.MonsterAttack((Player)player);
                 }
                 else
                 {
