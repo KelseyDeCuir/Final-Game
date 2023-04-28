@@ -125,9 +125,43 @@ namespace Ascension
                 CurrentRoom.items.Add(item);
             }
             Inventory.Clear();
+            heldVolume = 0;
+            heldWeight = 0;
             ElevatorAttendant.Instance.NameAttendant(this.Name);
             this.Alive = true;
+            CurrentHealth = aptitudeLvl.health;
             this.State = States.CHARCREATION;
+        }
+
+        public override void EquipWeapon(Weapon weapon)
+        {
+            if (EquippedWeapon != null)
+            {
+                Inventory.Add(EquippedWeapon);
+                heldWeight += EquippedWeapon.Weight;
+                heldVolume += EquippedWeapon.Volume;
+
+            }
+            EquippedWeapon = weapon;
+            Inventory.Remove(weapon);
+            heldWeight -= weapon.Weight;
+            heldVolume -= weapon.Volume;
+            InfoMessage("You Equipped the weapon " + weapon.Name);
+        }
+
+        public override void EquipArmor(Armor armor)
+        {
+            if (EquippedArmor != null)
+            {
+                Inventory.Add(EquippedArmor);
+                heldWeight += EquippedArmor.Weight;
+                heldVolume += EquippedArmor.Volume;
+            }
+            EquippedArmor = armor;
+            Inventory.Remove(armor);
+            heldWeight -= armor.Weight;
+            heldVolume -= armor.Volume;
+            InfoMessage("You Equipped the armor " + armor.Name);
         }
 
         //CHANGED HERE

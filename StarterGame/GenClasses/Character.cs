@@ -198,7 +198,7 @@ namespace Ascension
             return equipped;
         }
 
-        public void EquipWeapon(Weapon weapon)
+        public virtual void EquipWeapon(Weapon weapon)
         {
             if (EquippedWeapon != null)
             {
@@ -207,10 +207,9 @@ namespace Ascension
             EquippedWeapon = weapon;
             Inventory.Remove(weapon);
             InfoMessage("You Equipped the weapon " + weapon.Name);
-            Character me = this;
         }
 
-        public void EquipArmor(Armor armor)
+        public virtual void EquipArmor(Armor armor)
         {
             if (EquippedArmor != null)
             {
@@ -219,7 +218,6 @@ namespace Ascension
             EquippedArmor = armor;
             Inventory.Remove(armor);
             InfoMessage("You Equipped the armor " + armor.Name);
-            Character me = this;
         }
 
         public int TakeDamage(Character attacker, double damage)

@@ -30,11 +30,15 @@ namespace Ascension
                         Notification notification = new Notification("YouWinGenocide", this);
                         NotificationCenter.Instance.PostNotification(notification);
                     }
+                    else
+                    {
+                        pl.InfoMessage("You are on floor " + Elevator.Instance.floorLvl);
+                    }
                 }
             }
             else
             {
-                player.ErrorMessage(GameWorld.Instance.floors[floorNum] + " is still locked, you must beat any bosses left on this floor.");
+                player.ErrorMessage("Floor " + (Elevator.Instance.floorLvl - 1) + " is still locked, you must beat any bosses left on this floor.");
             }
             return false;
         }

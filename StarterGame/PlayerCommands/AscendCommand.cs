@@ -25,11 +25,15 @@ namespace Ascension
                         Notification notification = new Notification("YouWinTrue", this);
                         NotificationCenter.Instance.PostNotification(notification);
                     }
+                    else
+                    {
+                        pl.InfoMessage("You are on floor " + Elevator.Instance.floorLvl);
+                    }
                 }
             }
             else
             {
-                player.ErrorMessage("That floor is still locked, you must beat any bosses left on this floor.");
+                player.ErrorMessage("Floor " + (Elevator.Instance.floorLvl+1) + " is still locked, you must beat any bosses left on this floor.");
             }
             return false;
         }
