@@ -26,6 +26,7 @@ namespace Ascension
     public class Character : ICharacter
     {
         public States State;
+        public bool inPlayerRoom;
         public List<Item> Inventory { set; get; }
         public Boolean CanMove { set; get; }
         public Boolean Alive { set; get; }
@@ -52,6 +53,7 @@ namespace Ascension
         BossDelegate bossDelegate;
         public string generalDialouge;
         public string combatDialouge;
+        public CPersonality personality;
 
         public Character(Floor floor, string name, string desc)
         {
@@ -66,6 +68,7 @@ namespace Ascension
             aptPoints = 1;
             CurrentHealth = aptitudeLvl.health;
             Eyriskel = 5;
+            personality = new CPersonality(Personality.COWARD);
             //A bit worried this might affect all instances 
             //NotificationCenter.Instance.AddObserver("PlayerEndedDialouge", PlayerEndedDialouge);
 
@@ -123,7 +126,10 @@ namespace Ascension
             {
                 PastRooms.Push(CurrentRoom); //stores current room as a past room
                 _currentRoom = CurrentFloor.FloorMap[newPos[0], newPos[1]]; //Move rooms
-                //NormalMessage("\n" + this.CurrentRoom.Description());
+                                                                            //NormalMessage("\n" + this.CurrentRoom.Description());
+
+                Notification notification = new Notification("CharacterArrived", this);
+                NotificationCenter.Instance.PostNotification(notification);
             }
             else
             {
@@ -310,6 +316,39 @@ namespace Ascension
         public void AchievementMessage(string message)
         {
             ColoredMessage(message, ConsoleColor.Magenta);
+        }
+
+        public void AI()
+        {
+            Command CommandToExcecute = personality.AIcommand;
+            NullCommand nC = CommandToExcecute as NullCommand;
+            if(nC == null)
+            {
+                if(CommandToExcecute as GoCommand != null)
+                {
+                    Random rnd = new Random();
+                    int choice = rnd.Next(0, 4);
+                    switch (choice)
+                    {
+                        case 0:
+                            CommandToExcecute.SecondWord = "north";
+                            break;
+                        case 1:
+                            CommandToExcecute.SecondWord = "east";
+                            break;
+                        case 2:
+                            CommandToExcecute.SecondWord = "south";
+                            break;
+                        case 3:
+                            CommandToExcecute.SecondWord = "west";
+                            break;
+                        default:
+                            CommandToExcecute.SecondWord = "north";
+                            break;
+                    }
+                    CommandToExcecute.Execute(this);
+                }
+            }
         }
     }
 

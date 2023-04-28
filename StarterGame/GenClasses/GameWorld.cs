@@ -31,10 +31,14 @@ namespace Ascension
         public void GenCharacters(Floor floor, List<Character> A, List<Character> U)
         {
             Random rnd = new Random();
-            int charsToGen = rnd.Next(1, 7);
+            int charsToGen = rnd.Next(1, A.Count);
             for (int i = 0; i < charsToGen; i++)
             {
                 int index = rnd.Next(0, A.Count);
+                while (U.Contains(A[index]))
+                {
+                    index = rnd.Next(0, A.Count);
+                }
                 U.Add(A[index]);
                 int rpos1 = rnd.Next(0, 2);
                 int rpos2 = rnd.Next(0, 3);
@@ -101,6 +105,23 @@ namespace Ascension
             NotificationCenter.Instance.AddObserver("YouWinTrue", YouWinTrue);
             NotificationCenter.Instance.AddObserver("CharactersInRoom", CharactersInRoom);
             NotificationCenter.Instance.AddObserver("PlayerEndedDialouge", PlayerEndedDialouge);
+            NotificationCenter.Instance.AddObserver("SuccessfulCommand", SuccessfulCommand);
+        }
+
+        public void SuccessfulCommand(Notification notification)
+        {
+            foreach(Character character in U_hospitalCharacters)
+            {
+                character.AI();
+            }
+            foreach (Character character in U_schoolCharacters)
+            {
+                character.AI();
+            }
+            foreach (Character character in U_hellCharacters)
+            {
+                character.AI();
+            }
         }
         public void PlayerMovedRooms(Notification notification)
         {
