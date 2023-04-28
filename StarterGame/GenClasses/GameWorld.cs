@@ -68,7 +68,7 @@ namespace Ascension
         Weapon blade = new Weapon("blade", "The Blade of Abaddon the Destroyer.", 15, 4, 5, 20, Floor3Items);
         Armor cloak = new Armor("cloak", "A cloak of hellfire.", 11, 1, 6, 14, Floor3Items);
         Armor wings = new Armor("wings", "Samael's wings. You hope he hasn't been looking for these...", 10, 4, 9, 18, Floor3Items);
-        Item rune = new Item("rune", "(key) Rune of ▓░▒░▓▒", 0, 5, 1, Floor3Items);
+        Item rune = new Item("rune", "(key) Rune of ▓░▒░▓▒.", 0, 5, 1, Floor3Items);
         Item sigil = new Item("sigil", "(key) A Sigil of sins", 0, 2, 2, Floor3Items);
 
 
