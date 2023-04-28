@@ -30,12 +30,12 @@ namespace Ascension
         public Boolean CanMove { set; get; }
         public Boolean Alive { set; get; }
         public Skills aptitudeLvl { set; get; }
-        protected int CurrentHealth; // stores current health, automatically goes to max health on level
+        public int CurrentHealth; // stores current health, automatically goes to max health on level
         //actions currently do not store or do anything
         //the intended purpose for actions is to store
         //comamands for npcs based on their personality
         public Command[] actions { set; get; }
-        private string _name = null;
+        protected string _name = null;
         private string _description = null;
         public string Name { get { return _name; } }
         public string Description { get { return _description; } }
@@ -198,7 +198,7 @@ namespace Ascension
             return equipped;
         }
 
-        public void EquipWeapon(Weapon weapon)
+        public virtual void EquipWeapon(Weapon weapon)
         {
             if (EquippedWeapon != null)
             {
@@ -207,10 +207,9 @@ namespace Ascension
             EquippedWeapon = weapon;
             Inventory.Remove(weapon);
             InfoMessage("You Equipped the weapon " + weapon.Name);
-            Character me = this;
         }
 
-        public void EquipArmor(Armor armor)
+        public virtual void EquipArmor(Armor armor)
         {
             if (EquippedArmor != null)
             {
@@ -219,7 +218,6 @@ namespace Ascension
             EquippedArmor = armor;
             Inventory.Remove(armor);
             InfoMessage("You Equipped the armor " + armor.Name);
-            Character me = this;
         }
 
         public int TakeDamage(Character attacker, double damage)
@@ -242,7 +240,15 @@ namespace Ascension
                 this.InfoMessage(this.Name + " health: " + CurrentHealth);
                 if(CurrentHealth == 0)
                 {
-                    Die(attacker);
+                    var pl = this as Player;
+                    if (pl == null)
+                    {
+                        Die(attacker);
+                    }
+                    else
+                    {
+                        pl.Die(attacker);
+                    }
                 }
                 return damagetoTake;
             }

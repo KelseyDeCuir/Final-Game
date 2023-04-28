@@ -29,6 +29,7 @@ namespace Ascension
             {
                 player.NormalMessage("\n" + player.CurrentRoom.Description());
             }
+
             return false;
         }
     }

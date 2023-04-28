@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Ascension
 {
@@ -15,7 +19,20 @@ namespace Ascension
         public string Tag { get { return _tag; } set { _tag = value; } }
         public string GeneralDescription { get { return _generaldescription; } set { _generaldescription = value; } }
         public List<Item> items = new List<Item>();
+        public Conditional conditional;
+        public MonsterBuilder monsterBuilder;
+        public RoomMonster monster;
+        [Newtonsoft.Json.JsonIgnore]
         public RoomCondition Condition;
+
+        [System.Runtime.Serialization.OnDeserialized]
+        void OnDeserialized(System.Runtime.Serialization.StreamingContext context)
+        {
+            if(this.conditional != null)
+            {
+                this.Condition = this.conditional.TryEnter;
+            }
+        }
 
         public Room() : this("No Tag", "No Description", new List<Item>()) { }
 
@@ -82,8 +99,22 @@ namespace Ascension
         }
 
         public virtual string Description() //virtual so elevator can override it
-        {
-            return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + " " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
+        { // has a chance of generating a monster anytime the player gets the description of the room (usually on entrance but can spam look to force spawns)
+            Random rnd = new Random();
+            double chance = rnd.NextDouble();
+            if (monster == null && chance > .75)
+            {
+                monster = new RoomMonster(monsterBuilder);
+                monster.BuildMonster();
+            }
+            if (monster != null)
+            {
+                return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + " There is " + this.monster.GetMonster().name + " in this room!!! " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
+            }
+            else
+            {
+                return "You are in " + this.Tag + " on floor " + Elevator.Instance.floorLvl + ". " + this.GeneralDescription + " " + ItemDescription() + "\n\nYou can go through the following exits:\n\n" + GetExits();
+            }
         }
         public string BaseDescription()
         {
@@ -96,25 +127,40 @@ namespace Ascension
 
         public void MakeBossRoom(string reqItem)
         {
-            BossRoom bossRoom = new BossRoom(reqItem);
-            Condition = bossRoom.EnterBossFight;
+            conditional = new BossRoom(reqItem);
+            Condition = conditional.TryEnter;
         }
         public void MakeLockedRoom(string reqItem)
         {
-            LockedRoom lockedRoom = new LockedRoom(reqItem);
-            Condition = lockedRoom.UnlockRoom;
+            conditional = new LockedRoom(reqItem);
+            Condition = conditional.TryEnter;
+        }
+
+        public void MonsterAttack(Player player)
+        {
+            if (monster != null)
+            {
+                player.InfoMessage(String.Format("You took {0} damage from a monster!", player.TakeDamage(player, monster.GetMonster().MonsterAttacks())));
+            }
         }
     }
 
     public delegate bool RoomCondition(Player player);
-    public class BossRoom
+    public abstract class Conditional
     {
-        string _reqItemName;
-        public BossRoom(string reqItemName)
+        public string _reqItemName;
+        public Conditional(string reqItemName)
         {
             _reqItemName = reqItemName;
         }
-        public bool EnterBossFight(Player player)
+        public abstract bool TryEnter(Player player);
+    }
+    public partial class BossRoom : Conditional
+    {
+        public BossRoom(string reqItemName) : base(reqItemName)
+        {
+        }
+        public override bool TryEnter(Player player)
         {
             if(player.Inventory.Exists(item => item.Name.ToLower().Equals(this._reqItemName))){
                 return true;
@@ -127,16 +173,14 @@ namespace Ascension
         }
     }
 
-    public class LockedRoom
+    public partial class LockedRoom : Conditional
     {
         bool locked;
-        string _reqItemName;
-        public LockedRoom(string reqItemName)
+        public LockedRoom(string reqItemName) : base(reqItemName)
         {
             locked = true;
-            _reqItemName = reqItemName;
         }
-        public bool UnlockRoom(Player player)
+        public override bool TryEnter(Player player)
         {
             if (locked)
             {

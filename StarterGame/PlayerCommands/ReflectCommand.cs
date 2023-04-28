@@ -14,13 +14,9 @@ namespace Ascension
         public override bool Execute(Character player) //ASK IF BREAKS COMMAND PATTERN
         {
             Player pl = (Player)player;
-            player.InfoMessage("You are " + player.Name + "\nYou look like " + player.Description + "\nYou currently have equipped:\n" 
-                + player.GetEquipped() + "\nYou have " + pl.Exp + " EXP.\nYou have " + pl.aptPoints + 
-                " Aptitude points.\nYou get your next Aptitude point at " + pl.AptReq +
-                " EXP.\nYour Aptitude Levels are:\n" + player.GetStats() + 
-                "\nEyriskel (coins): " + pl.Eyriskel + "\nYour Inventory currently contains:\n" + player.GetInventory() +
-                "\nYou have " + pl.heldVolume + "/" + pl.VolumeLimit + " Volume taken up.\nYou have " + pl.heldWeight + "/" + 
-                pl.WeightLimit + " Weight taken up.");
+            player.InfoMessage("You are " + player.Name + "\nYou look like " + player.Description + "\nYour Current Health is " + player.CurrentHealth + "\nYou currently have equipped:\n" + player.GetEquipped() + "\nYou have " + pl.Exp + " EXP.\nYou have " + pl.aptPoints + " Aptitude points.\nYou get your next Aptitude point at " + pl.AptReq + " EXP.\nYour Aptitude Levels are:\n" + player.GetStats() + "\nEyriskel (coins): " + pl.Eyriskel + "\nYour Inventory currently contains:\n" + player.GetInventory() + "\nYou have " + pl.heldVolume + "/" + pl.VolumeLimit + " Volume taken up.\nYou have " + pl.heldWeight + "/" + pl.WeightLimit + " Weight taken up.");
+
+            player.CurrentRoom.MonsterAttack((Player)player);
             return false;
         }
     }

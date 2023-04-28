@@ -64,7 +64,13 @@ namespace Ascension
         Item masterKey = new Item("master-key", "(Key) The one key to rule them all, and in the darkness bind them. Or however that goes.", 0, 1, 2, Floor2Items);
         Item lanyard = new Item("lanyard", "(Key) Lanyard of keys, this can probably get you into that locked room on the East edge.", 0, 3, 2, Floor2Items);
 
-        Weapon pitchfork = new Weapon("pitchfork", "A large red pitchfork. Stereotypical if you ask me", 14, 5, 4, 18, Floor3Items);
+        Weapon pitchfork = new Weapon("pitchfork", "A large red pitchfork. Stereotypical if you ask me.", 14, 5, 4, 18, Floor3Items);
+        Weapon blade = new Weapon("blade", "The Blade of Abaddon the Destroyer.", 15, 4, 5, 20, Floor3Items);
+        Armor cloak = new Armor("cloak", "A cloak of hellfire.", 11, 1, 6, 14, Floor3Items);
+        Armor wings = new Armor("wings", "Samael's wings. You hope he hasn't been looking for these...", 10, 4, 9, 18, Floor3Items);
+        Item rune = new Item("rune", "(key) Rune of ▓░▒░▓▒.", 0, 5, 1, Floor3Items);
+        Item sigil = new Item("sigil", "(key) A Sigil of sins", 0, 2, 2, Floor3Items);
+
 
         private static GameWorld _instance = null;
         public static GameWorld Instance
@@ -195,19 +201,25 @@ namespace Ascension
 
         private Floor CreateWorld()
         {
-            abandonedHospital = new Floor(Floor1Rooms, Floor1Items);
+            MonsterBuilder hospitalBuilder = new HospitalGhost();
+            MonsterBuilder schoolBuilder = new PossessedJanitor();
+            MonsterBuilder hellBuilder = new HellDemon();
+            abandonedHospital = new Floor(Floor1Rooms, Floor1Items, hospitalBuilder);
             abandonedHospital.Unlocked = true;
             abandonedHospital.FloorMap[0, 2].items.Add(mdID);
             abandonedHospital.FloorMap[0, 2].MakeLockedRoom(jID.Name);
             abandonedHospital.FloorMap[1, 2].MakeBossRoom(mdID.Name);
             Room room = new Room("Blank", "blank test", Floor1Items);
             Room [] blankRoomLists = new Room[] {room, room, room, room, room, room, room, room, room };
-            abandonedSchool = new Floor(Floor2Rooms, Floor2Items);
+            abandonedSchool = new Floor(Floor2Rooms, Floor2Items, schoolBuilder);
             abandonedSchool.FloorMap[1, 1].items.Add(masterKey);
             abandonedSchool.FloorMap[1, 1].MakeLockedRoom(lanyard.Name);
             abandonedSchool.FloorMap[1, 2].MakeBossRoom(masterKey.Name);
-            hell = new Floor(Floor3Rooms, Floor3Items);
-            winZone = new Floor(blankRoomLists, Floor1Items);
+            hell = new Floor(Floor3Rooms, Floor3Items, hellBuilder);
+            hell.FloorMap[0, 2].items.Add(rune);
+            hell.FloorMap[0, 2].MakeLockedRoom(sigil.Name);
+            hell.FloorMap[1, 2].MakeBossRoom(rune.Name);
+            winZone = new Floor(blankRoomLists, Floor1Items, hospitalBuilder);
             Character AB = new Character(abandonedHospital, "A", "B");
 
             AB.CurrentRoom = abandonedHospital.FloorMap[0, 2]; 

@@ -17,7 +17,7 @@ namespace Ascension
 
         public SaveSystem(Character player)
         {
-            PlayerSave = JsonConvert.SerializeObject(player);
+            PlayerSave = JsonConvert.SerializeObject(player, Formatting.Indented);
             //NOTE : the problem is with character and how chara current room is done
             //if i try to call character.currentRoom it returns a null point exception
         }
@@ -58,15 +58,15 @@ namespace Ascension
         //change to take txt file
         public void SavePlayerinfo()
         {
-            //TODO: REVERT back FOR TESting
-            //*String path = "SaveGame\\saveGame.json"; //needs to save in a specfic path
+            //String path = "SaveGame\\saveGame.json"; //needs to save in a specfic path
             //also eventually have it so player can name file
             //and check if player is overwriting file
-            //*Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
-            //*StreamWriter writer = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), false); //true appends onto file
-            String path = "saveGame.json";
-            StreamWriter writer = new StreamWriter(path,false);
-            writer.Write(PlayerSave,Formatting.Indented);
+            Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
+            DirectoryInfo dInfo = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
+            FileInfo[] files = dInfo.GetFiles("*_save.json");
+            string path = String.Format("SaveGame\\saveGame.json", files.Length);
+            StreamWriter writer = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), false); //true appends onto file
+            writer.Write(PlayerSave);
             writer.Close(); 
         }
 

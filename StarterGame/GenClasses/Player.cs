@@ -112,8 +112,61 @@ namespace Ascension
                     WarningMessage("Nothing to pick up");
                 }
             }
-     
-        
+
+        public override void Die(Character killer)
+        {
+            var plForXp = killer as Player;
+            this.Alive = false;
+            if (plForXp != null)
+            {
+                plForXp.Eyriskel += this.Eyriskel;
+            }
+            foreach (Item item in Inventory)
+            {
+                CurrentRoom.items.Add(item);
+            }
+            Inventory.Clear();
+            heldVolume = 0;
+            heldWeight = 0;
+            ElevatorAttendant.Instance.NameAttendant(this.Name);
+            ErrorMessage(String.Format("You DIED!!!!\n Your items are on floor {0} at position ({1}, {2}).", Elevator.Instance.floorLvl, CurrentRoom.pos[0], CurrentRoom.pos[1]));
+            this.Alive = true;
+            CurrentHealth = aptitudeLvl.health;
+            this.CurrentRoom = Elevator.Instance;
+            this.State = States.CHARCREATION;
+        }
+
+        public override void EquipWeapon(Weapon weapon)
+        {
+            if (EquippedWeapon != null)
+            {
+                Inventory.Add(EquippedWeapon);
+                heldWeight += EquippedWeapon.Weight;
+                heldVolume += EquippedWeapon.Volume;
+
+            }
+            EquippedWeapon = weapon;
+            Inventory.Remove(weapon);
+            heldWeight -= weapon.Weight;
+            heldVolume -= weapon.Volume;
+            InfoMessage("You Equipped the weapon " + weapon.Name);
+        }
+
+        public override void EquipArmor(Armor armor)
+        {
+            if (EquippedArmor != null)
+            {
+                Inventory.Add(EquippedArmor);
+                heldWeight += EquippedArmor.Weight;
+                heldVolume += EquippedArmor.Volume;
+            }
+            EquippedArmor = armor;
+            Inventory.Remove(armor);
+            heldWeight -= armor.Weight;
+            heldVolume -= armor.Volume;
+            InfoMessage("You Equipped the armor " + armor.Name);
+        }
+
         //CHANGED HERE
         public void TakeOne(string item)
         {//TODO: custom warrning messages based on if too heavy or if item does not exist
@@ -138,10 +191,16 @@ namespace Ascension
                             heldVolume += i.Volume;
                             break;
                         }
+                            else
+                            {
+                                WarningMessage("Cannot fit " + item + " into your inventory.");
+                                break;
+                            }
                     }
                 }
                 }
             }
+            CurrentRoom.MonsterAttack(this);
         }
 
         public void equip(string SecondWord) {
@@ -234,7 +293,7 @@ namespace Ascension
                 _prevAptReq = _aptReq - _prevAptReq;
                 i++;
             }
-            this.InfoMessage("+" + i + " Aptitude Points.\nYou now have " + this.aptPoints + " Aptitude Points.You get your next Aptitude point at " + _aptReq + " EXP.");
+            this.InfoMessage("+" + i + " Aptitude Points.\nYou now have " + this.aptPoints + " Aptitude Points. You get your next Aptitude point at " + _aptReq + " EXP.");
         }
 
         //TODO: Check if works
@@ -481,6 +540,39 @@ namespace Ascension
             {
                 InfoMessage("You're finally Free");
             }
+        }
+        public void HitMonster()
+        {
+            if(CurrentRoom.monster != null)
+            {
+                double damage = EquippedWeapon.GetDamage(this);
+                if(EquippedWeapon.enchanted) { EquippedWeapon.enchanted = false; }
+                int remainingHealth = CurrentRoom.monster.GetMonster().MonsterHurt(damage);
+                string status = "still alive";
+                if(remainingHealth <= 0)
+                {
+                    status = "dead";
+                    CurrentRoom.monster.GetMonster().Die();
+                    Eyriskel += CurrentRoom.monster.GetMonster().Eyriskel;
+                    InfoMessage(String.Format("You did {0} damage! The monster is {1}.", (int)Math.Ceiling(damage), status));
+                    XpUp(Elevator.Instance.floorLvl * 2);
+                    Item drop = CurrentRoom.monster.GetMonster().GetItem();
+                    if(drop != null)
+                    {
+                        CurrentRoom.items.Add(drop);
+                    }
+                    CurrentRoom.monster = null;
+                }
+                else{
+                    InfoMessage(String.Format("You did {0} damage! The monster is {1}.", (int)Math.Ceiling(damage), status));
+                }
+                
+            }
+            else
+            {
+                WarningMessage("There's no monster to hit!");
+            }
+            CurrentRoom.MonsterAttack(this);
         }
     }
 }
