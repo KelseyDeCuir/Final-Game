@@ -45,6 +45,8 @@ namespace Ascension
                 else
                 {
                     finished = command.Execute(_player);
+                    Notification notification = new Notification("SuccessfulCommand", _player);
+                    NotificationCenter.Instance.PostNotification(notification);
                 }
             }
         }

@@ -29,7 +29,6 @@ namespace Ascension
 
         public Player(GameWorld world) : base(world.Entrance, "player", "yourself")
         {
-            Character me = this;
             _aptReq = 2;
             _prevAptReq = 1;
             _volumeLimit = 40;
@@ -53,6 +52,27 @@ namespace Ascension
             //issue with this line when saving self ref loop 
             //also only locks south room
 
+            NotificationCenter.Instance.AddObserver("CharacterArrived", CharacterArrived);
+        }
+        public void CharacterArrived(Notification notification)
+        {
+            if (notification.Object as Character != null) {
+
+                Character namedChar = (Character)notification.Object;
+                if (namedChar.CurrentRoom.Equals(CurrentRoom))
+                {
+                    InfoMessage("\n" + namedChar.Name + " arrived in the room.");
+                    namedChar.inPlayerRoom = true;
+                }
+                else
+                {
+                    if (namedChar.inPlayerRoom)
+                    {
+                        InfoMessage("\n" + namedChar.Name + " departed.");
+                        namedChar.inPlayerRoom = false;
+                    }
+                }
+            }
         }
         public Player SelfRef()
         {
@@ -439,6 +459,7 @@ namespace Ascension
             if (SecondWord.Equals("room"))
             {
                 CurrentRoom.Description();
+                CheckCharacters();
                 //TODO: print characters in room
                 //print characters in room           
             }
@@ -504,6 +525,7 @@ namespace Ascension
                             State = States.GAME;
                         }
                         NormalMessage("\n" + this.CurrentRoom.Description());
+                        CheckCharacters();
                     }
                 }
                 else
@@ -522,12 +544,67 @@ namespace Ascension
                 {
                     State = States.GAME;
                 }
-                NormalMessage("\n" + this.CurrentRoom.Description());
+                    NormalMessage("\n" + this.CurrentRoom.Description());
+                    CheckCharacters();
                 }
             }
             else
             {
                 ErrorMessage("\nThere is no door to the " + direction + ".");
+            }
+        }
+        public void CheckCharacters()
+        {
+            foreach (Character character in World.U_hospitalCharacters)
+            {
+                if (character.CurrentRoom.Equals(CurrentRoom))
+                {
+                    InfoMessage(character.Name + " is in the room.");
+                    character.inPlayerRoom = true;
+                }
+                else
+                {
+                    if (character.inPlayerRoom)
+                    {
+                        InfoMessage(character.Name + " was left behind.");
+                        character.inPlayerRoom = false;
+                    }
+
+                }
+            }
+            foreach (Character character in World.U_schoolCharacters)
+            {
+                if (character.CurrentRoom.Equals(CurrentRoom))
+                {
+                    InfoMessage(character.Name + " is in the room.");
+                    character.inPlayerRoom = true;
+                }
+                else
+                {
+                    if (character.inPlayerRoom)
+                    {
+                        InfoMessage(character.Name + " was left behind.");
+                        character.inPlayerRoom = false;
+                    }
+
+                }
+            }
+            foreach (Character character in World.U_hellCharacters)
+            {
+                if (character.CurrentRoom.Equals(CurrentRoom))
+                {
+                    InfoMessage(character.Name + " is in the room.");
+                    character.inPlayerRoom = true;
+                }
+                else
+                {
+                    if (character.inPlayerRoom)
+                    {
+                        InfoMessage(character.Name + " was left behind.");
+                        character.inPlayerRoom = false;
+                    }
+
+                }
             }
         }
         public void WhenYouWin()
