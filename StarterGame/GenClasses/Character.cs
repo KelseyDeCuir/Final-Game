@@ -130,21 +130,7 @@ namespace Ascension
                 //ErrorMessage("\nThere is no door to the " + direction + ".");
             }
         }
-        public void Backto()
-        {
-            if (PastRooms.Count != 0 ) 
-            {
-              
-                _currentRoom = PastRooms.Pop();//gets most recent past room
-                NormalMessage("\n" + this.CurrentRoom.Description());
-            }
-            else 
-            {
-                ErrorMessage("\nCan't go Back!");
-            }
-
-
-        }
+      
 
         public void SetName(string name)
         {

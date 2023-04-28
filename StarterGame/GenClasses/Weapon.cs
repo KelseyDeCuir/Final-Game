@@ -8,7 +8,7 @@ namespace Ascension
     {
         public int damage;
         public bool enchanted;
-        public Weapon(string name, string description, int value, int weight, int volume, int dmg, List<Item> items) : base(name, description, value, weight, volume, items)
+        public Weapon(string name, string description, int value, int weight, int volume, int dmg) : base(name, description, value, weight, volume)
         {
             damage = dmg;
             enchanted = false;

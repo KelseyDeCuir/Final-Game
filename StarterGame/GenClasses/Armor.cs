@@ -9,7 +9,7 @@ namespace Ascension
     {
         public int defense;
         public bool enchanted;
-        public Armor(string name, string description, int value, int weight, int volume, int defense, List<Item> items) : base(name, description, value, weight, volume, items)
+        public Armor(string name, string description, int value, int weight, int volume, int defense) : base(name, description, value, weight, volume)
         {
             this.defense = defense;
         }

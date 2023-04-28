@@ -15,7 +15,7 @@ namespace Ascension
         private bool _found;
         public bool Found { get { return _found; } set { _found = value; } }
 
-        public Item(string name, string description, int value, int weight, int volume, List <Item> items)
+        public Item(string name, string description, int value, int weight, int volume)
         {
             this.Name = name;
             this.Description = description;
@@ -23,7 +23,7 @@ namespace Ascension
             this.Weight = weight;
             this.Volume = volume;
             this._found = false;
-            items.Add(this);
+          
         }
         public virtual string GetDescription(Character character)
         {

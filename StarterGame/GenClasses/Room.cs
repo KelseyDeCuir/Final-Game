@@ -19,6 +19,9 @@ namespace Ascension
         public string Tag { get { return _tag; } set { _tag = value; } }
         public string GeneralDescription { get { return _generaldescription; } set { _generaldescription = value; } }
         public List<Item> items = new List<Item>();
+        public string reqItemName;
+        public int type= 0;
+        [Newtonsoft.Json.JsonIgnore]
         public Conditional conditional;
         public MonsterBuilder monsterBuilder;
         public RoomMonster monster;
@@ -28,6 +31,17 @@ namespace Ascension
         [System.Runtime.Serialization.OnDeserialized]
         void OnDeserialized(System.Runtime.Serialization.StreamingContext context)
         {
+            switch (type)
+            {
+                case 1:
+                    conditional = new BossRoom(reqItemName);
+                    break;
+                case 2:
+                    conditional = new LockedRoom(reqItemName);
+                    break;
+                default:
+                    break;
+            }
             if(this.conditional != null)
             {
                 this.Condition = this.conditional.TryEnter;
@@ -129,11 +143,15 @@ namespace Ascension
         {
             conditional = new BossRoom(reqItem);
             Condition = conditional.TryEnter;
+            type = 1;
+            reqItemName = reqItem;
         }
         public void MakeLockedRoom(string reqItem)
         {
+            type = 2;
             conditional = new LockedRoom(reqItem);
             Condition = conditional.TryEnter;
+            reqItemName = reqItem;
         }
 
         public void MonsterAttack(Player player)

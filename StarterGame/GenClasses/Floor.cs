@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Ascension
 {
@@ -14,9 +16,14 @@ namespace Ascension
 
         /*Constructor takes an array of names for the rooms and changes that into a list
          * which is used to randomly name each of the generated rooms that are added to the matrix */
-        public Floor(Room[] rooms, List<Item> items, MonsterBuilder monsterBuilder)
+
+        [JsonConstructor]
+        public Floor() {
+        
+        }
+
+        public Floor(List<Room> roomList, List<Item> items, MonsterBuilder monsterBuilder)
         {
-            List<Room> roomList = rooms.ToList<Room>();
             FloorMap[0, 0] = Elevator.Instance;
             for (int i = 0; i < 2; i++)
             {

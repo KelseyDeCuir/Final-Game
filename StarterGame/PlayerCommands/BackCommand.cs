@@ -22,7 +22,8 @@ namespace Ascension
             }
             else
             {
-                player.Backto();
+                Player pl = (Player)player;
+                pl.Backto();
             }
             return false;
         }

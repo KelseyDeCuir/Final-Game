@@ -9,13 +9,13 @@ namespace Ascension
      */
     public class CommandWords
     {
-        private static Command[] _commandArrayInCreation = { new CharNameCommand()};
+        private static Command[] _commandArrayInCreation = { new CharNameCommand(),new LoadCommand()};
         private static Command[] _commandArrayInMenu = { new ReflectCommand(), new PlayCommand()};
-        private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new HitCommand(), new BackCommand(), new TakeCommand(), new MenuCommand()};
+        private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new HitCommand(), new BackCommand(), new TakeCommand(), new MenuCommand(), new SaveCommand(), new LoadCommand() };
         private static Command[] _commandArrayInCombat = {};
         private static Command[] _commandArrayInDialogue = {};
         private static Command[] _commandArrayInShop = { new ShopListCommand(), new SellCommand(), new BuyCommand(),  new PlayCommand()};
-        private static Command[] _commandArrayInElevator = { new GoCommand(), new AscendCommand(), new DescendCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new BackCommand(), new ShopCommand(), new MenuCommand(), new SaveCommand(), new LoadCommand()};
+        private static Command[] _commandArrayInElevator = { new GoCommand(), new AscendCommand(), new DescendCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new BackCommand(), new ShopCommand(), new MenuCommand(), new SaveCommand()};
         private static Dictionary<States, Command[]> _commandArrays = new Dictionary<States, Command[]>() { {States.CHARCREATION, _commandArrayInCreation }, {States.ELEVATOR, _commandArrayInElevator },{ States.MENU, _commandArrayInMenu }, { States.GAME, _commandArrayInGame }, { States.COMBAT, _commandArrayInCombat }, { States.DIALOGUE, _commandArrayInDialogue } , { States.SHOP, _commandArrayInShop } };
         private Dictionary<States, Dictionary<string, Command>> _commands;
 

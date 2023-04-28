@@ -39,22 +39,43 @@ namespace Ascension
             this.State = States.CHARCREATION; // so only the player starts in character creation
             CurrentRoom = Elevator.Instance;
             World = world;
-            stick = new Weapon("stick", "A plain stick", 0, 1, 3, 5, Inventory);
+            stick = new Weapon("stick", "A plain stick", 0, 1, 3, 5);
+            Inventory.Add(stick);
             stick.Found = true;
             EquippedWeapon = stick;
-            jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 2, Inventory);
+            jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 2);
+            Inventory.Add(jacket);  
             jacket.Found = true;
             EquippedArmor = jacket;
             Inventory.Remove(stick);
             Inventory.Remove(jacket);
             Eyriskel = 0;
+            NotificationCenter.Instance.AddObserver("PlayerMovedFloors", PlayerMovedFloors);
             //world.Entrance.FloorMap[0, 1].MakeLockedRoom("stick");
             //I also think that locked rooms should be in gameworld not player 
             //issue with this line when saving self ref loop 
             //also only locks south room
 
         }
-        public Player SelfRef()
+
+
+        
+        public void PlayerMovedFloors(Notification notification)
+        {
+            Player player = (Player)notification.Object;
+            if (player != null)
+            {
+                PastRooms.Clear();
+                player.NormalMessage("\n" + "Player cleared pastrooms list.");
+            }
+            else
+            {
+                player.ErrorMessage("\n" + "Player cannot clear pastrooms list");
+            }
+
+        }
+
+            public Player SelfRef()
         {
             return this;
         }
@@ -65,9 +86,29 @@ namespace Ascension
             sv.SavePlayerinfo();
         }
         public void Loadinfo() {
-            SaveSystem sv = new SaveSystem(this);
-            Console.WriteLine(sv.LoadPlayerinfo());
+
+
+            Notification notification = new Notification("PlayerLoadedFile", this);
+            NotificationCenter.Instance.PostNotification(notification);
+            //SaveSystem sv = new SaveSystem(this);
+            //Console.WriteLine(sv.LoadPlayerinfo());
+            //State = States.ELEVATOR;
             
+        }
+        public void Backto()
+        {
+            if (PastRooms.Count != 0)
+            {
+
+                _currentRoom = PastRooms.Pop();//gets most recent past room
+                NormalMessage("\n" + this.CurrentRoom.Description());
+            }
+            else
+            {
+                ErrorMessage("\nCan't go Back!");
+            }
+
+
         }
 
         //CHANGED HERE
@@ -300,6 +341,8 @@ namespace Ascension
         public void Ascend() {
             if (World.floors[Elevator.Instance.floorLvl].Unlocked)
             {
+                Notification notification = new Notification("PlayerMovedFloors", this);
+                NotificationCenter.Instance.PostNotification(notification);
                 CurrentFloor = World.floors[Elevator.Instance.floorLvl];
                 Elevator.Instance.floorLvl += 1;
                 //var pl = player as Player;
@@ -308,7 +351,7 @@ namespace Ascension
                     if (Elevator.Instance.floorLvl.Equals(4))
                     {
                         WhenYouWin();
-                        Notification notification = new Notification("YouWinTrue", this);
+                         notification = new Notification("YouWinTrue", this);
                         NotificationCenter.Instance.PostNotification(notification);
                     }
                 }
@@ -325,6 +368,8 @@ namespace Ascension
             int floorNum = Elevator.Instance.floorLvl - 2;
             if (floorNum <= 0)
             {
+                Notification notification = new Notification("PlayerMovedFloors", this);
+                NotificationCenter.Instance.PostNotification(notification);
                 floorNum = GameWorld.Instance.floors.Count + floorNum;
             }
             if (GameWorld.Instance.floors[floorNum].Unlocked)

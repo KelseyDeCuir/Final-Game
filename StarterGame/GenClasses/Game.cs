@@ -9,7 +9,7 @@ namespace Ascension
      */
     public class Game
     {
-        private Character _player;
+        private Player _player; //changes from Character to Player
         private Parser _parser;
         private bool _playing;
 
@@ -22,7 +22,29 @@ namespace Ascension
             // the player should only be able to create a new game if they type create new game
             //therefore Game() will likely have to change
             _player = new Player(GameWorld.Instance);
+            NotificationCenter.Instance.AddObserver("PlayerLoadedFile", PlayerLoadedFile);
         }
+
+
+        //OBSERVER FOR PLAYER HERE WHEN LOADING A :)
+        public void PlayerLoadedFile(Notification notification)
+        {
+            
+            if (_player != null)
+            {
+                SaveSystem sv = new SaveSystem(_player);
+                _player.InfoMessage(sv.LoadPlayerinfo().Name);
+                _player = sv.LoadPlayerinfo();
+                _player.State = States.ELEVATOR;
+                _player.NormalMessage("\n" + "Player CAN load File!");
+            }
+            else
+            {
+                _player.ErrorMessage("\n" + "Player cannot load File!");
+            }
+        }
+
+
 
         /**
      *  Main play routine.  Loops until end of play.

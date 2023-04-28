@@ -78,14 +78,14 @@ namespace Ascension
         }
     }
 
-    public interface MonsterBuilder
+    public class MonsterBuilder
     {
-        public Monster GetMonster();
-        public void BuildEyriskel();
-        public void BuildPossibleItem();
-        public void BuildDamage();
-        public void BuildHealth();
-        public void BuildName();
+        public virtual Monster GetMonster() { return new Monster(); }
+        public virtual void BuildEyriskel() { }
+        public virtual void BuildPossibleItem() { }
+        public virtual void BuildDamage() { }
+        public virtual void BuildHealth() { }
+        public virtual void BuildName() { }
 
     }
 
@@ -97,26 +97,26 @@ namespace Ascension
             this.monster = new Monster();
         }
 
-        public void BuildDamage()
+        public override void BuildDamage()
         {
             monster.SetDamage(6);
         }
 
-        public void BuildEyriskel()
+        public override void BuildEyriskel()
         {
             monster.SetEyriskel(4);
         }
 
-        public void BuildHealth()
+        public override void BuildHealth()
         {
             monster.SetHealth(15);
         }
-        public void BuildName()
+        public override void BuildName()
         {
             monster.SetName("Ghost");
         }
 
-        public void BuildPossibleItem()
+        public override void BuildPossibleItem()
         {
             Random rnd = new Random();
             List<Item> itemsList = GameWorld.Floor1Items;
@@ -126,7 +126,7 @@ namespace Ascension
             monster.SetPossibleItem(item, percentChance);
         }
 
-        public Monster GetMonster()
+        public override Monster GetMonster()
         {
             return this.monster;
         }
@@ -140,26 +140,26 @@ namespace Ascension
             this.monster = new Monster();
         }
 
-        public void BuildDamage()
+        public override void BuildDamage()
         {
             monster.SetDamage(10);
         }
 
-        public void BuildEyriskel()
+        public override void BuildEyriskel()
         {
             monster.SetEyriskel(8);
         }
 
-        public void BuildHealth()
+        public override void BuildHealth()
         {
             monster.SetHealth(25);
         }
-        public void BuildName()
+        public override void BuildName()
         {
             monster.SetName("Evil Janitor");
         }
 
-        public void BuildPossibleItem()
+        public override void BuildPossibleItem()
         {
             Random rnd = new Random();
             List<Item> itemsList = GameWorld.Floor2Items;
@@ -169,7 +169,7 @@ namespace Ascension
             monster.SetPossibleItem(item, percentChance);
         }
 
-        public Monster GetMonster()
+        public override Monster GetMonster()
         {
             return this.monster;
         }
@@ -183,26 +183,26 @@ namespace Ascension
             this.monster = new Monster();
         }
 
-        public void BuildDamage()
+        public override void BuildDamage()
         {
             monster.SetDamage(20);
         }
 
-        public void BuildEyriskel()
+        public override void BuildEyriskel()
         {
             monster.SetEyriskel(10);
         }
 
-        public void BuildHealth()
+        public override void BuildHealth()
         {
             monster.SetHealth(40);
         }
-        public void BuildName()
+        public override void BuildName()
         {
             monster.SetName("Demon");
         }
 
-        public void BuildPossibleItem()
+        public override void BuildPossibleItem()
         {
             Random rnd = new Random();
             List<Item> itemsList = GameWorld.Floor3Items;
@@ -212,7 +212,7 @@ namespace Ascension
             monster.SetPossibleItem(item, percentChance);
         }
 
-        public Monster GetMonster()
+        public override Monster GetMonster()
         {
             return this.monster;
         }

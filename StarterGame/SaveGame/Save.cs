@@ -13,11 +13,12 @@ namespace Ascension
         //WILL BECOME STATIC POSSIBLY
     {
         String PlayerSave;
+        Character player;
         //Simpleton for now
 
         public SaveSystem(Character player)
         {
-            PlayerSave = JsonConvert.SerializeObject(player, Formatting.Indented);
+           this.player = player;
             //NOTE : the problem is with character and how chara current room is done
             //if i try to call character.currentRoom it returns a null point exception
         }
@@ -61,10 +62,14 @@ namespace Ascension
             //String path = "SaveGame\\saveGame.json"; //needs to save in a specfic path
             //also eventually have it so player can name file
             //and check if player is overwriting file
-            Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
-            DirectoryInfo dInfo = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
-            FileInfo[] files = dInfo.GetFiles("*_save.json");
-            string path = String.Format("SaveGame\\saveGame.json", files.Length);
+            PlayerSave = JsonConvert.SerializeObject(player
+                );
+            // Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
+            //DirectoryInfo dInfo = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
+            //FileInfo[] files = dInfo.GetFiles("*_save.json");
+            //string path = String.Format("SaveGame\\saveGame.json", files.Length);
+
+            String path = "saveGame.json";
             StreamWriter writer = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), false); //true appends onto file
             writer.Write(PlayerSave);
             writer.Close(); 
@@ -77,7 +82,11 @@ namespace Ascension
             String json = reader.ReadToEnd();
             //NOTE: reader is reading object but deserliaing is problem
             //detecing empty list in item and no priting
-            return JsonConvert.DeserializeObject<Player>(json);
+
+            Player newp = JsonConvert.DeserializeObject<Player>(json);
+            newp.InfoMessage(newp.Name);
+            //TODO: FIX DESERIALIZATION :(
+            return newp;
           
             //turns words from json file into a list of stuff to be shoved into player
         }

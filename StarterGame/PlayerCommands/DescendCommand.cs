@@ -11,7 +11,6 @@ namespace Ascension
             this.Name = "descend";
         }
 
-        //TODO: Refactor Descend Command
         public override bool Execute(Character player)
         {
             if (this.HasSecondWord())
