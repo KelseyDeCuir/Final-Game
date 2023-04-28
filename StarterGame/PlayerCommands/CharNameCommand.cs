@@ -23,7 +23,6 @@ namespace Ascension
                 {
                     player.SetName(SecondWord);
                     player.State = States.ELEVATOR;
-                    player.CurrentRoom = Elevator.Instance;
                     Command reflect = new ReflectCommand(); // Check with Prof Obando
                     reflect.Execute(player);
                 }

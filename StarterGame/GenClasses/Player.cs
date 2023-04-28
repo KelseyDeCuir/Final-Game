@@ -128,8 +128,10 @@ namespace Ascension
             heldVolume = 0;
             heldWeight = 0;
             ElevatorAttendant.Instance.NameAttendant(this.Name);
+            ErrorMessage(String.Format("You DIED!!!!\n Your items are on floor {0} at position ({1}, {2}).", Elevator.Instance.floorLvl, CurrentRoom.pos[0], CurrentRoom.pos[1]));
             this.Alive = true;
             CurrentHealth = aptitudeLvl.health;
+            this.CurrentRoom = Elevator.Instance;
             this.State = States.CHARCREATION;
         }
 
