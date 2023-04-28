@@ -13,28 +13,8 @@ namespace Ascension
         public override bool Execute(Character player)
         {
             if (this.HasSecondWord()) {
-                if (player.Inventory.Exists(item => item.Name.ToLower().Equals(this.SecondWord)))
-                {
-                    Item item = player.Inventory.Find(item => item.Name.ToLower().Equals(this.SecondWord));
-                    var weapon = item as Weapon;
-                    var armor = item as Armor;
-                    if (weapon != null)
-                    {
-                        player.EquipWeapon(weapon);
-                    }
-                    else if (armor != null)
-                    {
-                        player.EquipArmor(armor);
-                    }
-                    else
-                    {
-                        player.WarningMessage("Cannot equip " + this.SecondWord + " it is neither weapon not armor.");
-                    }
-                }
-                else
-                {
-                    player.WarningMessage("Could not find " + this.SecondWord);
-                }
+                Player pl = (Player)player;
+                pl.equip(this.SecondWord);
             }
             else
             {

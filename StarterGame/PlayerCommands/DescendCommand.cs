@@ -10,31 +10,18 @@ namespace Ascension
         {
             this.Name = "descend";
         }
+
+        //TODO: Refactor Descend Command
         public override bool Execute(Character player)
         {
-            int floorNum = Elevator.Instance.floorLvl - 2;
-            if (floorNum <= 0)
+            if (this.HasSecondWord())
             {
-                floorNum = GameWorld.Instance.floors.Count + floorNum;
-            }
-            if (GameWorld.Instance.floors[floorNum].Unlocked)
-            {
-                player.CurrentFloor = GameWorld.Instance.floors[floorNum];
-                Elevator.Instance.floorLvl = floorNum+1;
-                var pl = player as Player;
-                if (pl != null)
-                {
-                    if (Elevator.Instance.floorLvl.Equals(4))
-                    {
-                        pl.WhenYouWin();
-                        Notification notification = new Notification("YouWinGenocide", this);
-                        NotificationCenter.Instance.PostNotification(notification);
-                    }
-                }
+                player.WarningMessage("Cannot descend with" + this.SecondWord);
             }
             else
             {
-                player.ErrorMessage(GameWorld.Instance.floors[floorNum] + " is still locked, you must beat any bosses left on this floor.");
+                Player pl = (Player)player;
+                pl.Descend();
             }
             return false;
         }

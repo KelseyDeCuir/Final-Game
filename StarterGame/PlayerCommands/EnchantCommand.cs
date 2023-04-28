@@ -14,34 +14,11 @@ namespace Ascension
         {
             if (this.HasSecondWord())
             {
-                if (this.SecondWord.Equals("weapon"))
-                {
-                    if (player.EquippedWeapon != null)
-                    {
-                        player.InfoMessage("You enchanted " + player.EquippedWeapon.Name);
-                        player.EquippedWeapon.enchanted = true;
-                    }
-                    else
-                    {
-                        player.WarningMessage("No Weapon to Enchant");
-                    }
-                }
-                else if (this.SecondWord.Equals("armor"))
-                {
-                    if (player.EquippedArmor != null)
-                    {
-                        player.InfoMessage("You enchanted " + player.EquippedArmor.Name);
-                        player.EquippedArmor.enchanted = true;
-                    }
-                    else
-                    {
-                        player.WarningMessage("No Armor to Enchant");
-                    }
-                }
-                else
-                {
-                    player.WarningMessage("Cannot enchant that.");
-                }
+                Player pl = (Player)player;
+                pl.enchant(this.SecondWord);
+            }
+            else {
+                player.WarningMessage("Cannot enchant nothing");
             }
             return false;
         }

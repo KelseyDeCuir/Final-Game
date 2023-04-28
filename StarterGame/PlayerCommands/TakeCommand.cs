@@ -15,8 +15,7 @@ namespace Ascension
         {
             Player pl = (Player)player;
             if (this.HasSecondWord())
-            {//Note: I think this is breaking a command as the command class should only execute the actor method
-             //we should put this in player
+            {
                 pl.TakeOne(this.SecondWord);
             }
            else

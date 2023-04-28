@@ -9,6 +9,7 @@ namespace Ascension
 {
     [Serializable]
     public class Player : Character
+        //player should take combat txt file
     {
         public bool genocide;
         private double _weightLimit;
@@ -143,6 +144,83 @@ namespace Ascension
             }
         }
 
+        public void equip(string SecondWord) {
+            if (Inventory.Exists(item => item.Name.ToLower().Equals(SecondWord)))
+            {
+                Item item = Inventory.Find(item => item.Name.ToLower().Equals(SecondWord));
+                var weapon = item as Weapon;
+                var armor = item as Armor;
+                if (weapon != null)
+                {
+                    EquipWeapon(weapon);
+                }
+                else if (armor != null)
+                {
+                    EquipArmor(armor);
+                }
+                else
+                {
+                    WarningMessage("Cannot equip " + SecondWord + " it is neither weapon not armor.");
+                }
+            }
+            else
+            {
+                WarningMessage("Could not find " + SecondWord);
+            }
+        }
+
+        public void unequip(string SecondWord) {
+            if (SecondWord.Equals("armor"))
+            {
+                if (EquippedArmor != null)
+                {
+                    if (heldWeight + EquippedArmor.Weight <= WeightLimit && heldVolume + EquippedArmor.Volume <= VolumeLimit)
+                    {
+                        Inventory.Add(EquippedArmor);
+                        InfoMessage("Unequipped " + EquippedArmor.Name);
+                        heldWeight += EquippedArmor.Weight;
+                        heldVolume += EquippedArmor.Volume;
+                        EquippedArmor = null;
+                    }
+                    else
+                    {
+                        WarningMessage("Cannot fit " + EquippedArmor.Name + " into your inventory.");
+                    }
+                }
+                else
+                {
+                    InfoMessage("Nothing equipped there.");
+                }
+            }
+            else if (SecondWord.Equals("weapon"))
+            {
+                if (EquippedWeapon != null)
+                {
+                    if (heldWeight + EquippedWeapon.Weight <= WeightLimit && heldVolume + EquippedWeapon.Volume <= VolumeLimit)
+                    {
+                        Inventory.Add(EquippedWeapon);
+                        InfoMessage("Unequipped " + EquippedWeapon.Name);
+                        heldWeight += EquippedWeapon.Weight;
+                        heldVolume += EquippedWeapon.Volume;
+                        EquippedWeapon = null;
+                    }
+                    else
+                    {
+                        WarningMessage("Cannot fit " + EquippedWeapon.Name + " into your inventory.");
+                    }
+                }
+                else
+                {
+                    InfoMessage("Nothing equipped there.");
+                }
+            }
+            else
+            {
+                WarningMessage("Cannot unequip " + SecondWord);
+            }
+
+
+        }
 
         public void XpUp(int exp)
         {
@@ -158,7 +236,190 @@ namespace Ascension
             }
             this.InfoMessage("+" + i + " Aptitude Points.\nYou now have " + this.aptPoints + " Aptitude Points.You get your next Aptitude point at " + _aptReq + " EXP.");
         }
-            
+
+        //TODO: Check if works
+        public void Ascend() {
+            if (World.floors[Elevator.Instance.floorLvl].Unlocked)
+            {
+                CurrentFloor = World.floors[Elevator.Instance.floorLvl];
+                Elevator.Instance.floorLvl += 1;
+                //var pl = player as Player;
+                if (this != null)
+                {
+                    if (Elevator.Instance.floorLvl.Equals(4))
+                    {
+                        WhenYouWin();
+                        Notification notification = new Notification("YouWinTrue", this);
+                        NotificationCenter.Instance.PostNotification(notification);
+                    }
+                }
+            }
+            else
+            {
+                ErrorMessage("That floor is still locked, you must beat any bosses left on this floor.");
+            }
+        }
+
+
+        public void Descend()
+        {
+            int floorNum = Elevator.Instance.floorLvl - 2;
+            if (floorNum <= 0)
+            {
+                floorNum = GameWorld.Instance.floors.Count + floorNum;
+            }
+            if (GameWorld.Instance.floors[floorNum].Unlocked)
+            {
+                CurrentFloor = GameWorld.Instance.floors[floorNum];
+                Elevator.Instance.floorLvl = floorNum + 1;
+                if (this != null)
+                {
+                    if (Elevator.Instance.floorLvl.Equals(4))
+                    {
+                        WhenYouWin();
+                        Notification notification = new Notification("YouWinGenocide", this);
+                        NotificationCenter.Instance.PostNotification(notification);
+                    }
+                }
+            }
+            else
+            {
+                ErrorMessage(GameWorld.Instance.floors[floorNum] + " is still locked, you must beat any bosses left on this floor.");
+            }
+        }
+
+
+        //TODO: Check if works
+        public void enchant(string SecondWord) {
+            //only enchants exisitng items
+            if (SecondWord.Equals("weapon"))
+            {
+                if (EquippedWeapon != null)
+                {
+                    InfoMessage("You enchanted " + EquippedWeapon.Name);
+                    EquippedWeapon.enchanted = true;
+                }
+                else
+                {
+                    WarningMessage("No Weapon to Enchant");
+                }
+            }
+            else if (SecondWord.Equals("armor"))
+            {
+                if (EquippedArmor != null)
+                {
+                    InfoMessage("You enchanted " + EquippedArmor.Name);
+                    EquippedArmor.enchanted = true;
+                }
+                else
+                {
+                    WarningMessage("No Armor to Enchant");
+                }
+            }
+            else
+            {
+                WarningMessage("Cannot enchant that.");
+            }
+
+        }
+
+        //TODO: Check if works
+        public void levelup(string SecondWord) { 
+        
+                if (aptPoints > 0)
+                {
+                    Skills skills = aptitudeLvl;
+                    if (SecondWord.Equals("health"))
+                    {
+                        skills.health += (int)Math.Ceiling(skills.health * .12);
+                        aptPoints -= 1;
+                        InfoMessage("Your health: " + skills.health + "\nAptitude Points Remaining: " + aptPoints);
+                    }
+                    else if (SecondWord.Equals("strength"))
+                    {
+                        skills.strength += 2;
+                            aptPoints -= 1;
+                            InfoMessage("Your strength: " + skills.strength + "\nAptitude Points Remaining: " + aptPoints);
+                    }
+                    else if (SecondWord.Equals("intelligence"))
+                    {
+                        skills.intelligence += 2;
+                        aptPoints -= 1;
+                        InfoMessage("Your intelligence: " + skills.intelligence + "\nAptitude Points Remaining: " + aptPoints);
+                    }
+                    else if (SecondWord.Equals("magic"))
+                    {
+                        skills.magic += 2;
+                        aptPoints -= 1;
+                        InfoMessage("Your magic: " + skills.magic + "\nAptitude Points Remaining: " + aptPoints);
+                    }
+                    else if (SecondWord.Equals("speed"))
+                    {
+                        skills.speed += 2;
+                        aptPoints -= 1;
+                        InfoMessage("Your speed: " + skills.speed + "\nAptitude Points Remaining: " + aptPoints);
+                    }
+                    else
+                    {
+                        WarningMessage("Cannot level " + SecondWord);
+                    }
+                    aptitudeLvl = skills;
+                }
+                else
+                {
+                    WarningMessage("No Apt Points to level with.");
+                }
+        
+        
+        }
+
+        public void lookgeneral(string SecondWord) { //looks at room or inventory
+            //how look works
+            //look (room or inventory) (insert thing here)
+            //(insert thing here is optional)
+            if (SecondWord.Equals("room"))
+            {
+                CurrentRoom.Description();
+                //TODO: print characters in room
+                //print characters in room           
+            }
+            else if (SecondWord.Equals("inventory")) {
+                InfoMessage("\nEyriskel (coins): " + Eyriskel + "\nYour Inventory currently contains:\n" + GetInventory() +
+                "\nYou have " + heldVolume + "/" + VolumeLimit + " Volume taken up.\nYou have " + heldWeight + "/" +
+                WeightLimit + " Weight taken up.");
+            }
+            }
+
+        public void lookSpecfic(string SecondWord,string ThirdWord) {
+            if (SecondWord.Equals("room"))
+            {
+                if (CurrentRoom.items.Exists(item => item.Name.ToLower().Equals(ThirdWord)))
+                {
+                    Item item = CurrentRoom.items.Find(item => item.Name.ToLower().Equals(ThirdWord));
+                    NormalMessage("\nItem in Room:\n" + item.Name + ": " + item.Description);
+                }
+                else
+                {
+                    WarningMessage("Could not find " + ThirdWord);
+                }
+            }
+            else if (SecondWord.Equals("inventory"))
+            {
+                if (Inventory.Exists(item => item.Name.ToLower().Equals(ThirdWord)))
+                {
+                    Item item = Inventory.Find(item => item.Name.ToLower().Equals(ThirdWord));
+                    NormalMessage("\nItem in Inventory:\n" + item.Name + ": " + item.Description);
+                }
+                else
+                {
+                    WarningMessage("Could not find " + ThirdWord);
+                }
+             }
+
+           }
+
+   
+
 
         public override void WalkTo(string direction) 
         {

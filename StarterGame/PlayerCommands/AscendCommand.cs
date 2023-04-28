@@ -12,24 +12,14 @@ namespace Ascension
         }
         public override bool Execute(Character player)
         {
-            if (GameWorld.Instance.floors[Elevator.Instance.floorLvl].Unlocked)
+            if (this.HasSecondWord())
             {
-                player.CurrentFloor = GameWorld.Instance.floors[Elevator.Instance.floorLvl];
-                Elevator.Instance.floorLvl += 1;
-                var pl = player as Player;
-                if(pl != null)
-                {
-                    if (Elevator.Instance.floorLvl.Equals(4))
-                    {
-                        pl.WhenYouWin();
-                        Notification notification = new Notification("YouWinTrue", this);
-                        NotificationCenter.Instance.PostNotification(notification);
-                    }
-                }
+                player.WarningMessage("Cannot ascend with" + this.SecondWord);
             }
             else
             {
-                player.ErrorMessage("That floor is still locked, you must beat any bosses left on this floor.");
+                Player pl = (Player)player;
+                pl.Ascend();
             }
             return false;
         }

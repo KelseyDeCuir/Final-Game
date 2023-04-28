@@ -10,17 +10,18 @@ namespace Ascension
     {
 
         //string text = File.ReadAllText(@"./person.json");
+
+        //public String NPCStarter { get; set; }
+
+        //public string PlayerOp { get; set; }
+        private string txtfile;
+        private Character character;
   
-        public String NPCStarter { get; set; }
-        
 
-        private string textFileName;
-   
-        public string PlayerOp { get; set; }
-
-        public DialogueParser(string textFileName)
+        public DialogueParser(string txtfile, Character character)
         {
-            this.textFileName = "@\"./" + textFileName + ".json\"";
+            this.txtfile = "@\"./" + txtfile + ".json\"";
+            this.character = character;
         }
 
         public void readfile()
@@ -30,15 +31,13 @@ namespace Ascension
             //kinda of too over complicated try to find a way
             //to remove dialogue class and just have
             //dailougeparser
-            StreamReader reader = new StreamReader(textFileName);
+            StreamReader reader = new StreamReader(txtfile);
             String json = reader.ReadToEnd();
             PlayerOptions dialogue = JsonConvert.DeserializeObject<PlayerOptions>(json); //puts everything in playeroptions //need to specfiiy lsit in jso file
-            Console.WriteLine();
+            //check if player state is in dialouge or combat
+
+            //Console.WriteLine(); //for testing purposes
             reader.Close();
-
-
-            //try to write something that goes in a for loop
-            //and recognizes 
 
 
 

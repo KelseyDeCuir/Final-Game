@@ -7,6 +7,7 @@ namespace Ascension
 {
     public class PlayerOptions
     {
+        public Character character;
         public string BodyTxt { get; set; }
         public string Endtxt { get; set; }
 
@@ -37,7 +38,7 @@ namespace Ascension
         public void ContinueDialouge() {
             if (NextTxtFile != null)
             {
-                DialogueParser dialogueParser = new DialogueParser(NextTxtFile);
+                DialogueParser dialogueParser = new DialogueParser(NextTxtFile,character);
                 dialogueParser.readfile();
             }
             else { Console.WriteLine("No more txt!"); }

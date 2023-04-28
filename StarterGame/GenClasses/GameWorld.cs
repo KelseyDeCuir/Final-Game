@@ -209,6 +209,8 @@ namespace Ascension
             hell = new Floor(Floor3Rooms, Floor3Items);
             winZone = new Floor(blankRoomLists, Floor1Items);
             Character AB = new Character(abandonedHospital, "A", "B");
+
+            AB.CurrentRoom = abandonedHospital.FloorMap[0, 2]; 
             Character BC = new Character(abandonedHospital, "B", "C");
             Character CD = new Character(abandonedHospital, "C", "D");
             Character DE = new Character(abandonedHospital, "D", "E");

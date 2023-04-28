@@ -50,7 +50,8 @@ namespace Ascension
         public int Eyriskel { set; get; }
         public int aptPoints;
         BossDelegate bossDelegate;
-        public string textfile;
+        public string generalDialouge;
+        public string combatDialouge;
 
         public Character(Floor floor, string name, string desc)
         {
