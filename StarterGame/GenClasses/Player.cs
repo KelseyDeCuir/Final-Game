@@ -672,8 +672,17 @@ namespace Ascension
         {
             if(CurrentRoom.monster != null)
             {
-                double damage = EquippedWeapon.GetDamage(this);
-                if(EquippedWeapon.enchanted) { EquippedWeapon.enchanted = false; }
+                double damage = 0;
+                if (EquippedWeapon != null)
+                {
+                    damage = EquippedWeapon.GetDamage(this);
+                    if (EquippedWeapon.enchanted) { EquippedWeapon.enchanted = false; }
+                }
+                else
+                {
+                    damage = (double)aptitudeLvl.strength / 10;
+                }
+
                 int remainingHealth = CurrentRoom.monster.GetMonster().MonsterHurt(damage);
                 string status = "still alive";
                 if(remainingHealth <= 0)
