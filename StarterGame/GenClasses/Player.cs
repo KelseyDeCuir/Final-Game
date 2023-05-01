@@ -172,7 +172,8 @@ namespace Ascension
                 {
                     WarningMessage("Nothing to pick up");
                 }
-            }
+            CurrentRoom.MonsterAttack(this);
+        }
 
         public override void Die(Character killer)
         {
@@ -211,6 +212,7 @@ namespace Ascension
             heldWeight -= weapon.Weight;
             heldVolume -= weapon.Volume;
             InfoMessage("You Equipped the weapon " + weapon.Name);
+            CurrentRoom.MonsterAttack(this);
         }
 
         public override void EquipArmor(Armor armor)
@@ -226,6 +228,7 @@ namespace Ascension
             heldWeight -= armor.Weight;
             heldVolume -= armor.Volume;
             InfoMessage("You Equipped the armor " + armor.Name);
+            CurrentRoom.MonsterAttack(this);
         }
 
         //CHANGED HERE
@@ -287,6 +290,7 @@ namespace Ascension
             {
                 WarningMessage("Could not find " + SecondWord);
             }
+            CurrentRoom.MonsterAttack(this);
         }
 
         public void unequip(string SecondWord) {
@@ -338,7 +342,7 @@ namespace Ascension
             {
                 WarningMessage("Cannot unequip " + SecondWord);
             }
-
+            CurrentRoom.MonsterAttack(this);
 
         }
 
@@ -380,6 +384,7 @@ namespace Ascension
             {
                 ErrorMessage("That floor is still locked, you must beat any bosses left on this floor.");
             }
+
         }
 
 
@@ -444,7 +449,7 @@ namespace Ascension
             {
                 WarningMessage("Cannot enchant that.");
             }
-
+            CurrentRoom.MonsterAttack(this);
         }
 
         //TODO: Check if works
@@ -513,7 +518,8 @@ namespace Ascension
                 "\nYou have " + heldVolume + "/" + VolumeLimit + " Volume taken up.\nYou have " + heldWeight + "/" +
                 WeightLimit + " Weight taken up.");
             }
-            }
+            CurrentRoom.MonsterAttack(this);
+        }
 
         public void lookSpecfic(string SecondWord,string ThirdWord) {
             if (SecondWord.Equals("room"))
@@ -540,8 +546,8 @@ namespace Ascension
                     WarningMessage("Could not find " + ThirdWord);
                 }
              }
-
-           }
+            CurrentRoom.MonsterAttack(this);
+        }
 
    
 
@@ -651,6 +657,7 @@ namespace Ascension
 
                 }
             }
+            CurrentRoom.MonsterAttack(this);
         }
         public void WhenYouWin()
         {
