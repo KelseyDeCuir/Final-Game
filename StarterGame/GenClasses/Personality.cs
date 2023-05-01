@@ -18,6 +18,7 @@ namespace Ascension
         Dictionary<Personality, Dictionary<Command, double>> personalities = new Dictionary<Personality, Dictionary<Command, double>>() { { Personality.COWARD, cowardCommands }, { Personality.AGRESSIVE, agroCommands }, { Personality.KIND, kindCommands }, { Personality.BRAVE, braveCommands } };
         private Dictionary<Command, double> _commands;
         Random rnd = new Random();
+        [Newtonsoft.Json.JsonIgnore]
         public Command AIcommand { get { double check = rnd.NextDouble(); foreach (Command command in _commands.Keys) { if (_commands[command] > check){ return command; } } return new NullCommand(); } }
         public CPersonality(Personality personality)
         {

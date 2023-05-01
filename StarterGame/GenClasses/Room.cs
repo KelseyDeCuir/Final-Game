@@ -21,12 +21,13 @@ namespace Ascension
         public List<Item> items = new List<Item>();
         public string reqItemName;
         public int type= 0;
-        [Newtonsoft.Json.JsonIgnore]
-        public Conditional conditional;
         public MonsterBuilder monsterBuilder;
         public RoomMonster monster;
         [Newtonsoft.Json.JsonIgnore]
         public RoomCondition Condition;
+
+        [Newtonsoft.Json.JsonIgnore]
+        public Conditional conditional;
 
         [System.Runtime.Serialization.OnDeserialized]
         void OnDeserialized(System.Runtime.Serialization.StreamingContext context)

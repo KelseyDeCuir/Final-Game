@@ -25,9 +25,9 @@ namespace Ascension
         public double possibleChance { get; set; }
         public int Eyriskel { get; set; }
         public string name { get; set; }
-        private int _baseDamage;
-        private int _health;
-        private bool _alive = true;
+        public int _baseDamage;
+        public int _health;
+        public bool _alive = true;
 
         public void Die()
         {
@@ -80,7 +80,8 @@ namespace Ascension
 
     public class MonsterBuilder
     {
-        public virtual Monster GetMonster() { return new Monster(); }
+        public Monster monster;
+        public virtual Monster GetMonster() { return monster; }
         public virtual void BuildEyriskel() { }
         public virtual void BuildPossibleItem() { }
         public virtual void BuildDamage() { }
@@ -91,7 +92,6 @@ namespace Ascension
 
     public class HospitalGhost : MonsterBuilder
     {
-        private Monster monster;
         public HospitalGhost()
         {
             this.monster = new Monster();
@@ -134,7 +134,6 @@ namespace Ascension
 
     public class PossessedJanitor : MonsterBuilder
     {
-        private Monster monster;
         public PossessedJanitor()
         {
             this.monster = new Monster();
@@ -177,7 +176,6 @@ namespace Ascension
 
     public class HellDemon : MonsterBuilder
     {
-        private Monster monster;
         public HellDemon()
         {
             this.monster = new Monster();
@@ -220,7 +218,7 @@ namespace Ascension
 
     public class RoomMonster
     {
-        private MonsterBuilder monsterBuilder;
+        public MonsterBuilder monsterBuilder;
         public RoomMonster(MonsterBuilder monsterBuilder)
         {
             this.monsterBuilder = monsterBuilder;

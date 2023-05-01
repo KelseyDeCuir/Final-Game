@@ -8,6 +8,11 @@ using Newtonsoft.Json;
 namespace Ascension
 {
     [Serializable]
+    public class saveRoot
+    {
+        public Player player { get; set; }
+    }
+    [Serializable]
     public class Player : Character
         //player should take combat txt file
     {
@@ -18,12 +23,12 @@ namespace Ascension
         public double VolumeLimit { get { return _volumeLimit; } }
         public double heldVolume;
         public double heldWeight;
-        private int _exp;
+        public int _exp;
         public GameWorld World;
         public int Exp {get {return _exp; } }
-        private int _aptReq;
+        public int _aptReq;
         public int AptReq { get { return _aptReq; } }
-        private int _prevAptReq;
+        public int _prevAptReq;
         Weapon stick;
         Armor jacket;
 

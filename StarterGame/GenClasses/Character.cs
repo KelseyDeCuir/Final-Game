@@ -23,6 +23,7 @@ namespace Ascension
             this.magic = mag;
         }
     }
+
     public class Character : ICharacter
     {
         public States State;
@@ -36,7 +37,7 @@ namespace Ascension
         //the intended purpose for actions is to store
         //comamands for npcs based on their personality
         public Command[] actions { set; get; }
-        protected string _name = null;
+        public string _name = null;
         private string _description = null;
         public string Name { get { return _name; } }
         public string Description { get { return _description; } }
@@ -54,7 +55,6 @@ namespace Ascension
         public string generalDialouge;
         public string combatDialouge;
         public CPersonality personality;
-
         public Character(Floor floor, string name, string desc)
         {
             _currentFloor = floor;

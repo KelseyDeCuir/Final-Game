@@ -62,8 +62,10 @@ namespace Ascension
             //String path = "SaveGame\\saveGame.json"; //needs to save in a specfic path
             //also eventually have it so player can name file
             //and check if player is overwriting file
-            PlayerSave = JsonConvert.SerializeObject(player
-                );
+            saveRoot root = new saveRoot();
+            root.player = (Player)player;
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            PlayerSave = JsonConvert.SerializeObject((Player)player);
             // Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
             //DirectoryInfo dInfo = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
             //FileInfo[] files = dInfo.GetFiles("*_save.json");
@@ -84,6 +86,7 @@ namespace Ascension
             //detecing empty list in item and no priting
 
             Player newp = JsonConvert.DeserializeObject<Player>(json);
+            //Player newp = nep;//.player;
             newp.InfoMessage(newp.Name);
             //TODO: FIX DESERIALIZATION :(
             return newp;
