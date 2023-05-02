@@ -701,7 +701,7 @@ namespace Ascension
                 InfoMessage("You're finally Free");
             }
         }
-        public void HitMonster()
+        public override void HitMonster()
         {
             if(CurrentRoom.monster != null)
             {
