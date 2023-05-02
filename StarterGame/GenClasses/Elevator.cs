@@ -27,6 +27,16 @@ namespace Ascension
         {
             pos = new int[] { 0, 0 };
             floorLvl = 1;
+            Weapon sword = new Weapon("sword", "A plain sword.", 7, 3, 2, 10);
+            Armor shield = new Armor("shield", "A small shield.", 8, 2, 4, 7);
+            Weapon staff = new Weapon("staff", "A heavy staff.", 12, 6, 3, 14);
+            Armor helm = new Armor("helm", "How this is better than a shield, that's best not to ask.", 13, 4, 2, 10);
+            Weapon clarent = new Weapon("clarent", "Arthur's sword of peace was not made for war... but you have no choice.", 95, 10, 10, 30);
+            items.Add(sword);
+            items.Add(shield);
+            items.Add(staff);
+            items.Add(helm);
+            items.Add(clarent);
         }
         public override string Description() //overrides because there are never any items in the elevator save for the shop
         {
