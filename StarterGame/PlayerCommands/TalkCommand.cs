@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ascension.PlayerCommands
+namespace Ascension
 {
     public class TalkCommand : Command
     {

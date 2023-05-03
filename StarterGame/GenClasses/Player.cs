@@ -15,7 +15,7 @@ namespace Ascension
     }
     [Serializable]
     public class Player : Character
-        //player should take combat txt file
+    //player should take combat txt file
     {
         public bool genocide;
         private double _weightLimit;
@@ -26,7 +26,7 @@ namespace Ascension
         public double heldWeight;
         public int _exp;
         public GameWorld World;
-        public int Exp {get {return _exp; } }
+        public int Exp { get { return _exp; } }
         public int _aptReq;
         public int AptReq { get { return _aptReq; } }
         public int _prevAptReq;
@@ -49,7 +49,7 @@ namespace Ascension
             stick.Found = true;
             EquippedWeapon = stick;
             jacket = new Armor("jacket", "A musty old jacket", 0, 2, 4, 2);
-            Inventory.Add(jacket);  
+            Inventory.Add(jacket);
             jacket.Found = true;
             EquippedArmor = jacket;
             Inventory.Remove(stick);
@@ -65,7 +65,8 @@ namespace Ascension
         }
         public void CharacterArrived(Notification notification)
         {
-            if (notification.Object as Character != null) {
+            if (notification.Object as Character != null)
+            {
 
                 Character namedChar = (Character)notification.Object;
                 if (namedChar.CurrentRoom.Equals(CurrentRoom))
@@ -85,7 +86,7 @@ namespace Ascension
         }
 
 
-        
+
         public void PlayerMovedFloors(Notification notification)
         {
             Player player = (Player)notification.Object;
@@ -101,17 +102,19 @@ namespace Ascension
 
         }
 
-            public Player SelfRef()
+        public Player SelfRef()
         {
             return this;
         }
 
-        public void Saveinfo() { //really cheap way to save ask teacher about it
+        public void Saveinfo()
+        { //really cheap way to save ask teacher about it
             //Simpleton for now
             SaveSystem sv = new SaveSystem(this); //never actually saves just stops here
             sv.SavePlayerinfo();
         }
-        public void Loadinfo() {
+        public void Loadinfo()
+        {
 
 
             Notification notification = new Notification("PlayerLoadedFile", this);
@@ -119,7 +122,7 @@ namespace Ascension
             //SaveSystem sv = new SaveSystem(this);
             //Console.WriteLine(sv.LoadPlayerinfo());
             //State = States.ELEVATOR;
-            
+
         }
         public void Backto()
         {
@@ -137,7 +140,8 @@ namespace Ascension
 
         }
 
-        public void Enddialouge() {
+        public void Enddialouge()
+        {
             Notification notification = new Notification("EndDialouge", this);
             NotificationCenter.Instance.PostNotification(notification);
 
@@ -150,46 +154,48 @@ namespace Ascension
         }
 
         //CHANGED HERE
-        public void TakeAll(string secondword) {
-            List<Item> temp= new List<Item>();
-       
-                if (CurrentRoom.items.Count > 0)
-                {
-                    foreach (Item item in CurrentRoom.items) //gettign an exception her due to removeing while modifying
-                 
-                    {
-                        if (heldWeight + item.Weight <= WeightLimit && heldVolume + item.Volume <= VolumeLimit)
-                        {
+        public void TakeAll(string secondword)
+        {
+            List<Item> temp = new List<Item>();
 
-                            Notification notification = new Notification("ItemObtained", this);
-                            NotificationCenter.Instance.PostNotification(notification);
-                            InfoMessage("You picked up " + item.Name);
-                            if (item.Found != true)
-                            {
-                                XpUp(2);
-                                item.Found = true;
-                            }
-                            Inventory.Add(item);
-                            temp.Add(item); 
-                  
-                            heldWeight += item.Weight;
-                            heldVolume += item.Volume;
-                        }
-                        else
-                        {
-                            WarningMessage("Cannot fit " + item.Name + " into your inventory.");
-                            break;
-                        }
-                    }
-                    foreach (Item tempItem in temp) { 
-                        CurrentRoom.items.Remove(tempItem); 
-                    }
-                    temp.Clear();
-                }
-                else
+            if (CurrentRoom.items.Count > 0)
+            {
+                foreach (Item item in CurrentRoom.items) //gettign an exception her due to removeing while modifying
+
                 {
-                    WarningMessage("Nothing to pick up");
+                    if (heldWeight + item.Weight <= WeightLimit && heldVolume + item.Volume <= VolumeLimit)
+                    {
+
+                        Notification notification = new Notification("ItemObtained", this);
+                        NotificationCenter.Instance.PostNotification(notification);
+                        InfoMessage("You picked up " + item.Name);
+                        if (item.Found != true)
+                        {
+                            XpUp(2);
+                            item.Found = true;
+                        }
+                        Inventory.Add(item);
+                        temp.Add(item);
+
+                        heldWeight += item.Weight;
+                        heldVolume += item.Volume;
+                    }
+                    else
+                    {
+                        WarningMessage("Cannot fit " + item.Name + " into your inventory.");
+                        break;
+                    }
                 }
+                foreach (Item tempItem in temp)
+                {
+                    CurrentRoom.items.Remove(tempItem);
+                }
+                temp.Clear();
+            }
+            else
+            {
+                WarningMessage("Nothing to pick up");
+            }
             CurrentRoom.MonsterAttack(this);
         }
 
@@ -253,15 +259,15 @@ namespace Ascension
         {
             if (Inventory.Count > 0)
             {
-                    if (Inventory.Exists(item => item.Name.ToLower().Equals(itemName)))
-                    {
+                if (Inventory.Exists(item => item.Name.ToLower().Equals(itemName)))
+                {
                     Item item = Inventory.Find(item => item.Name.ToLower().Equals(itemName));
                     InfoMessage("You set down " + item.Name);
-                        CurrentRoom.items.Add(item);
-                        Inventory.Remove(item);
-                        heldWeight -= item.Weight;
-                        heldVolume -= item.Volume;
-                        }
+                    CurrentRoom.items.Add(item);
+                    Inventory.Remove(item);
+                    heldWeight -= item.Weight;
+                    heldVolume -= item.Volume;
+                }
                 else
                 {
                     WarningMessage("No " + itemName + " to set down");
@@ -278,8 +284,10 @@ namespace Ascension
         public void TakeOne(string itemName)
         {//TODO: custom warrning messages based on if too heavy or if item does not exist
             if (itemName == null || itemName == "" || itemName == "all") { TakeAll(itemName); }
-            else { 
-            if (CurrentRoom.items.Count > 0) {
+            else
+            {
+                if (CurrentRoom.items.Count > 0)
+                {
                     if (CurrentRoom.items.Exists(item => item.Name.ToLower().Equals(itemName)))
                     {
                         Item item = CurrentRoom.items.Find(item => item.Name.ToLower().Equals(itemName));
@@ -311,7 +319,8 @@ namespace Ascension
             }
         }
 
-        public void equip(string SecondWord) {
+        public void equip(string SecondWord)
+        {
             if (Inventory.Exists(item => item.Name.ToLower().Equals(SecondWord)))
             {
                 Item item = Inventory.Find(item => item.Name.ToLower().Equals(SecondWord));
@@ -337,7 +346,8 @@ namespace Ascension
             CurrentRoom.MonsterAttack(this);
         }
 
-        public void unequip(string SecondWord) {
+        public void unequip(string SecondWord)
+        {
             if (SecondWord.Equals("armor"))
             {
                 if (EquippedArmor != null)
@@ -406,7 +416,8 @@ namespace Ascension
         }
 
         //TODO: Check if works
-        public void Ascend() {
+        public void Ascend()
+        {
             if (World.floors[Elevator.Instance.floorLvl].Unlocked)
             {
                 Notification notification = new Notification("PlayerMovedFloors", this);
@@ -419,7 +430,7 @@ namespace Ascension
                     if (Elevator.Instance.floorLvl.Equals(4))
                     {
                         WhenYouWin();
-                         notification = new Notification("YouWinTrue", this);
+                        notification = new Notification("YouWinTrue", this);
                         NotificationCenter.Instance.PostNotification(notification);
                     }
                 }
@@ -463,7 +474,8 @@ namespace Ascension
 
 
         //TODO: Check if works
-        public void enchant(string SecondWord) {
+        public void enchant(string SecondWord)
+        {
             //only enchants exisitng items
             if (SecondWord.Equals("weapon"))
             {
@@ -497,65 +509,68 @@ namespace Ascension
         }
 
         //TODO: Check if works
-        public void levelup(string SecondWord) { 
-        
-                if (aptPoints > 0)
+        public void levelup(string SecondWord)
+        {
+
+            if (aptPoints > 0)
+            {
+                Skills skills = aptitudeLvl;
+                if (SecondWord.Equals("health"))
                 {
-                    Skills skills = aptitudeLvl;
-                    if (SecondWord.Equals("health"))
-                    {
-                        skills.health += (int)Math.Ceiling(skills.health * .12);
-                        aptPoints -= 1;
-                        InfoMessage("Your health: " + skills.health + "\nAptitude Points Remaining: " + aptPoints);
-                    }
-                    else if (SecondWord.Equals("strength"))
-                    {
-                        skills.strength += 2;
-                            aptPoints -= 1;
-                            InfoMessage("Your strength: " + skills.strength + "\nAptitude Points Remaining: " + aptPoints);
-                    }
-                    else if (SecondWord.Equals("intelligence"))
-                    {
-                        skills.intelligence += 2;
-                        aptPoints -= 1;
-                        InfoMessage("Your intelligence: " + skills.intelligence + "\nAptitude Points Remaining: " + aptPoints);
-                    }
-                    else if (SecondWord.Equals("magic"))
-                    {
-                        skills.magic += 2;
-                        aptPoints -= 1;
-                        InfoMessage("Your magic: " + skills.magic + "\nAptitude Points Remaining: " + aptPoints);
-                    }
-                    else if (SecondWord.Equals("speed"))
-                    {
-                        skills.speed += 2;
-                        aptPoints -= 1;
-                        InfoMessage("Your speed: " + skills.speed + "\nAptitude Points Remaining: " + aptPoints);
-                    }
-                    else
-                    {
-                        WarningMessage("Cannot level " + SecondWord);
-                    }
-                    aptitudeLvl = skills;
+                    skills.health += (int)Math.Ceiling(skills.health * .12);
+                    aptPoints -= 1;
+                    InfoMessage("Your health: " + skills.health + "\nAptitude Points Remaining: " + aptPoints);
+                }
+                else if (SecondWord.Equals("strength"))
+                {
+                    skills.strength += 2;
+                    aptPoints -= 1;
+                    InfoMessage("Your strength: " + skills.strength + "\nAptitude Points Remaining: " + aptPoints);
+                }
+                else if (SecondWord.Equals("intelligence"))
+                {
+                    skills.intelligence += 2;
+                    aptPoints -= 1;
+                    InfoMessage("Your intelligence: " + skills.intelligence + "\nAptitude Points Remaining: " + aptPoints);
+                }
+                else if (SecondWord.Equals("magic"))
+                {
+                    skills.magic += 2;
+                    aptPoints -= 1;
+                    InfoMessage("Your magic: " + skills.magic + "\nAptitude Points Remaining: " + aptPoints);
+                }
+                else if (SecondWord.Equals("speed"))
+                {
+                    skills.speed += 2;
+                    aptPoints -= 1;
+                    InfoMessage("Your speed: " + skills.speed + "\nAptitude Points Remaining: " + aptPoints);
                 }
                 else
                 {
-                    WarningMessage("No Apt Points to level with.");
+                    WarningMessage("Cannot level " + SecondWord);
                 }
-        
-        
+                aptitudeLvl = skills;
+            }
+            else
+            {
+                WarningMessage("No Apt Points to level with.");
+            }
+
+
         }
 
-        public void lookgeneral(string SecondWord) { //looks at room or inventory
+        public void lookgeneral(string SecondWord)
+        { //looks at room or inventory
             //how look works
             //look (room or inventory) (insert thing here)
             //(insert thing here is optional)
             if (SecondWord.Equals("room"))
             {
                 CurrentRoom.Description();
-                CheckCharacters();    
+                CheckCharacters();
             }
-            else if (SecondWord.Equals("inventory")) {
+            else if (SecondWord.Equals("inventory"))
+            {
                 InfoMessage("\nEyriskel (coins): " + Eyriskel + "\nYour Inventory currently contains:\n" + GetInventory() +
                 "\nYou have " + heldVolume + "/" + VolumeLimit + " Volume taken up.\nYou have " + heldWeight + "/" +
                 WeightLimit + " Weight taken up.");
@@ -563,7 +578,8 @@ namespace Ascension
             CurrentRoom.MonsterAttack(this);
         }
 
-        public void lookSpecfic(string SecondWord,string ThirdWord) {
+        public void lookSpecfic(string SecondWord, string ThirdWord)
+        {
             if (SecondWord.Equals("room"))
             {
                 if (CurrentRoom.items.Exists(item => item.Name.ToLower().Equals(ThirdWord)))
@@ -587,88 +603,70 @@ namespace Ascension
                 {
                     WarningMessage("Could not find " + ThirdWord);
                 }
-             }
+            }
             CurrentRoom.MonsterAttack(this);
         }
 
- 
+
 
         public void talkto(string npc)
         {
-            //quick and dirty but works
-            foreach (Character character in World.U_hospitalCharacters)
+            switch (Elevator.Instance.floorLvl)
             {
-                if (character.CurrentRoom.Equals(CurrentRoom) && character.Name == npc)
-                {
-                    InfoMessage(character.Name + " is in the room.");
-                    character.inPlayerRoom = true;
-                    State = States.DIALOGUE;
-                    DialogueParser dp = new DialogueParser(character);
-                    return;
-                }
-                else
-                {
-                    if (character.inPlayerRoom)
+                case 1:
+                    if (World.U_hospitalCharacters.Exists(character => character.Name.ToLower() == npc && character.inPlayerRoom))
                     {
-                        InfoMessage(character.Name + " is not in room.");
-                        character.inPlayerRoom = false;
+                        Character character = World.U_hospitalCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
+                        State = States.DIALOGUE;
+                        DialogueParser dp = new DialogueParser(character);
+                        return;
                     }
-                    
-                }
-            }
-            foreach (Character character in World.U_schoolCharacters)
-            {
-                if (character.CurrentRoom.Equals(CurrentRoom) && character.Name == npc)
-                {
-                    InfoMessage(character.Name + " is in the room.");
-                    character.inPlayerRoom = true;
-                    State = States.DIALOGUE;
-                    DialogueParser dp = new DialogueParser(character);
-                    return;
-                }
-                else
-                {
-                    if (character.inPlayerRoom)
+                    else
                     {
-                        InfoMessage(character.Name + " is not in room.");
-                        character.inPlayerRoom = false;
-
+                        WarningMessage(npc + " is not in the room!");
                     }
-
-                }
-            }
-            foreach (Character character in World.U_hellCharacters)
-            {
-                if (character.CurrentRoom.Equals(CurrentRoom))
-                {
-                    InfoMessage(character.Name + " is in the room.");
-                    character.inPlayerRoom = true;
-                    State = States.DIALOGUE;
-                    DialogueParser dp = new DialogueParser(character);
-                    return;
-                }
-                else
-                {
-                    if (character.inPlayerRoom)
+                    break;
+                case 2:
+                    if (World.U_schoolCharacters.Exists(character => character.Name.ToLower() == npc && character.inPlayerRoom))
                     {
-                        InfoMessage(character.Name + " is not in room.");
-                        character.inPlayerRoom = false;
+                        Character character = World.U_schoolCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
+                        State = States.DIALOGUE;
+                        DialogueParser dp = new DialogueParser(character);
+                        return;
                     }
-
-                }
+                    else
+                    {
+                        WarningMessage(npc + " is not in the room!");
+                    }
+                    break;
+                case 3:
+                    if (World.U_hellCharacters.Exists(character => character.Name.ToLower() == npc && character.inPlayerRoom))
+                    {
+                        Character character = World.U_hellCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
+                        State = States.DIALOGUE;
+                        DialogueParser dp = new DialogueParser(character);
+                        return;
+                    }
+                    else
+                    {
+                        WarningMessage(npc + " is not in the room!");
+                    }
+                    break;
+                default:
+                    break;
 
             }
         }
-                
-            
 
 
-        public override void WalkTo(string direction) 
+
+
+        public override void WalkTo(string direction)
         {
             int[] newPos = validRoomPos(direction);
             if (newPos != null)
             {
-                if(CurrentFloor.FloorMap[newPos[0], newPos[1]].Condition != null)
+                if (CurrentFloor.FloorMap[newPos[0], newPos[1]].Condition != null)
                 {
                     if (CurrentFloor.FloorMap[newPos[0], newPos[1]].Condition(this))
                     {
@@ -693,19 +691,19 @@ namespace Ascension
                 else
                 {
                     PastRooms.Push(CurrentRoom); //stores current room as a past room
-                CurrentRoom = CurrentFloor.FloorMap[newPos[0],newPos[1]]; //Move rooms
-                Notification notification = new Notification("PlayerMovedRooms", this);
-                NotificationCenter.Instance.PostNotification(notification); //Move rooms
-                if (CurrentRoom.pos[0] == 0 && CurrentRoom.pos[1] == 0)
-                {
-                    notification = new Notification("PlayerEnteredElevator", this);
-                    NotificationCenter.Instance.PostNotification(notification);
-                    State = States.ELEVATOR;
-                }
-                else if (State == States.ELEVATOR)
-                {
-                    State = States.GAME;
-                }
+                    CurrentRoom = CurrentFloor.FloorMap[newPos[0], newPos[1]]; //Move rooms
+                    Notification notification = new Notification("PlayerMovedRooms", this);
+                    NotificationCenter.Instance.PostNotification(notification); //Move rooms
+                    if (CurrentRoom.pos[0] == 0 && CurrentRoom.pos[1] == 0)
+                    {
+                        notification = new Notification("PlayerEnteredElevator", this);
+                        NotificationCenter.Instance.PostNotification(notification);
+                        State = States.ELEVATOR;
+                    }
+                    else if (State == States.ELEVATOR)
+                    {
+                        State = States.GAME;
+                    }
                     NormalMessage("\n" + this.CurrentRoom.Description());
                     CheckCharacters();
                 }
@@ -783,7 +781,7 @@ namespace Ascension
         }
         public override void HitMonster()
         {
-            if(CurrentRoom.monster != null)
+            if (CurrentRoom.monster != null)
             {
                 double damage = 0;
                 if (EquippedWeapon != null)
@@ -798,7 +796,7 @@ namespace Ascension
 
                 int remainingHealth = CurrentRoom.monster.GetMonster().MonsterHurt(damage);
                 string status = "still alive";
-                if(remainingHealth <= 0)
+                if (remainingHealth <= 0)
                 {
                     status = "dead";
                     CurrentRoom.monster.GetMonster().Die();
@@ -806,16 +804,17 @@ namespace Ascension
                     InfoMessage(String.Format("You did {0} damage! The monster is {1}.", (int)Math.Ceiling(damage), status));
                     XpUp(Elevator.Instance.floorLvl * 2);
                     Item drop = CurrentRoom.monster.GetMonster().GetItem();
-                    if(drop != null)
+                    if (drop != null)
                     {
                         CurrentRoom.items.Add(drop);
                     }
                     CurrentRoom.monster = null;
                 }
-                else{
+                else
+                {
                     InfoMessage(String.Format("You did {0} damage! The monster is {1}.", (int)Math.Ceiling(damage), status));
                 }
-                
+
             }
             else
             {
