@@ -27,6 +27,7 @@ namespace Ascension
         public List<Character> U_schoolCharacters = new List<Character>();
         public List<Character> A_hellCharacters = new List<Character>();
         public List<Character> U_hellCharacters = new List<Character>();
+        public List<Character> Bosses = new List<Character>();
 
         public void GenCharacters(Floor floor, List<Character> A, List<Character> U)
         {
@@ -263,7 +264,6 @@ namespace Ascension
             hell.FloorMap[1, 2].MakeBossRoom(rune.Name);
             winZone = new Floor(blankRoomLists, Floor1Items, hospitalBuilder);
             Character AB = new Character(abandonedHospital, "A", "B");
-
             Character BC = new Character(abandonedHospital, "B", "C");
             Character CD = new Character(abandonedHospital, "C", "D");
             Character DE = new Character(abandonedHospital, "D", "E");
@@ -282,7 +282,9 @@ namespace Ascension
             Character Servant = new Character(hell, "Servant", "Servant of ▓░▒░▓▒. They look like you, except for the eyes. Please not the EYES.");
             Servant.CurrentRoom = Servant.CurrentFloor.FloorMap[1, 2];
             Servant.MakeBoss(winZone, 50);
-
+            Bosses.Add(Boss1);
+            Bosses.Add(Boss2);
+            Bosses.Add(Servant);
             //todo: either characters have lowercase names or talk command is change to check for names as lower case or parser is changes
 
     
