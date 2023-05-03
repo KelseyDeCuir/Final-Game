@@ -11,9 +11,9 @@ namespace Ascension
     public class CPersonality
     {
         static Dictionary<Command, double> cowardCommands = new Dictionary<Command, double>() { {new GoCommand(), 0.25 } };
-        static Dictionary<Command, double> agroCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 } };
+        static Dictionary<Command, double> agroCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, { new CHitCommand(), 0.5 } };
         static Dictionary<Command, double> kindCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 } };
-        static Dictionary<Command, double> braveCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 } };
+        static Dictionary<Command, double> braveCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, {new CHitCommand(), 0.65 } };
 
         Dictionary<Personality, Dictionary<Command, double>> personalities = new Dictionary<Personality, Dictionary<Command, double>>() { { Personality.COWARD, cowardCommands }, { Personality.AGRESSIVE, agroCommands }, { Personality.KIND, kindCommands }, { Personality.BRAVE, braveCommands } };
         private Dictionary<Command, double> _commands;

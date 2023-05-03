@@ -237,40 +237,66 @@ namespace Ascension
             CurrentRoom.MonsterAttack(this);
         }
 
-        //CHANGED HERE
-        public void TakeOne(string item)
-        {//TODO: custom warrning messages based on if too heavy or if item does not exist
-            if (item == null || item == "" || item == "all") { TakeAll(item); }
-            else { 
-            if (CurrentRoom.items.Count > 0) {
-                foreach (Item i in CurrentRoom.items)
-                {
-                    if (i.Name == item)
+        public void Drop(string itemName)
+        {
+            if (Inventory.Count > 0)
+            {
+                    if (Inventory.Exists(item => item.Name.ToLower().Equals(itemName)))
                     {
-                        if (heldWeight + i.Weight <= WeightLimit && heldVolume + i.Volume <= VolumeLimit)
-                        {
-                            InfoMessage("You picked up " + i.Name);
-                            if (i.Found != true)
-                            {
-                                XpUp(2);
-                                i.Found = true;
-                            }
-                            Inventory.Add(i);
-                            CurrentRoom.items.Remove(i);
-                            heldWeight += i.Weight;
-                            heldVolume += i.Volume;
-                            break;
+                    Item item = Inventory.Find(item => item.Name.ToLower().Equals(itemName));
+                    InfoMessage("You set down " + item.Name);
+                        CurrentRoom.items.Add(item);
+                        Inventory.Remove(item);
+                        heldWeight -= item.Weight;
+                        heldVolume -= item.Volume;
                         }
-                            else
-                            {
-                                WarningMessage("Cannot fit " + item + " into your inventory.");
-                                break;
-                            }
-                    }
-                }
+                else
+                {
+                    WarningMessage("No " + itemName + " to set down");
                 }
             }
+            else
+            {
+                WarningMessage("No " + itemName + " to set down");
+            }
             CurrentRoom.MonsterAttack(this);
+        }
+
+        //CHANGED HERE
+        public void TakeOne(string itemName)
+        {//TODO: custom warrning messages based on if too heavy or if item does not exist
+            if (itemName == null || itemName == "" || itemName == "all") { TakeAll(itemName); }
+            else { 
+            if (CurrentRoom.items.Count > 0) {
+                    if (CurrentRoom.items.Exists(item => item.Name.ToLower().Equals(itemName)))
+                    {
+                        Item item = CurrentRoom.items.Find(item => item.Name.ToLower().Equals(itemName));
+                        if (heldWeight + item.Weight <= WeightLimit && heldVolume + item.Volume <= VolumeLimit)
+                        {
+                            InfoMessage("You picked up " + item.Name);
+                            if (item.Found != true)
+                            {
+                                XpUp(2);
+                                item.Found = true;
+                            }
+                            Inventory.Add(item);
+                            CurrentRoom.items.Remove(item);
+                            heldWeight += item.Weight;
+                            heldVolume += item.Volume;
+                        }
+                        else
+                        {
+                            WarningMessage("Cannot fit " + itemName + " into your inventory.");
+                        }
+                    }
+                    else
+                    {
+                        WarningMessage("There is no " + itemName + " to pick up");
+                    }
+
+                }
+                CurrentRoom.MonsterAttack(this);
+            }
         }
 
         public void equip(string SecondWord) {
@@ -740,12 +766,21 @@ namespace Ascension
                 InfoMessage("You're finally Free");
             }
         }
-        public void HitMonster()
+        public override void HitMonster()
         {
             if(CurrentRoom.monster != null)
             {
-                double damage = EquippedWeapon.GetDamage(this);
-                if(EquippedWeapon.enchanted) { EquippedWeapon.enchanted = false; }
+                double damage = 0;
+                if (EquippedWeapon != null)
+                {
+                    damage = EquippedWeapon.GetDamage(this);
+                    if (EquippedWeapon.enchanted) { EquippedWeapon.enchanted = false; }
+                }
+                else
+                {
+                    damage = (double)aptitudeLvl.strength / 10;
+                }
+
                 int remainingHealth = CurrentRoom.monster.GetMonster().MonsterHurt(damage);
                 string status = "still alive";
                 if(remainingHealth <= 0)

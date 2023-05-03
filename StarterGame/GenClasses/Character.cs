@@ -348,6 +348,57 @@ namespace Ascension
                     }
                     CommandToExcecute.Execute(this);
                 }
+                else if(CommandToExcecute as CHitCommand!= null)
+                {
+                    CommandToExcecute.Execute(this);
+                }
+            }
+        }
+        public virtual void HitMonster()
+        {
+            if (CurrentRoom.monster != null)
+            {
+                double damage = 0;
+                if (EquippedWeapon != null)
+                {
+                    damage = EquippedWeapon.GetDamage(this);
+                    if (EquippedWeapon.enchanted) { EquippedWeapon.enchanted = false; }
+                }
+                else
+                {
+                    damage = (double)aptitudeLvl.strength / 10;
+                }
+
+                int remainingHealth = CurrentRoom.monster.GetMonster().MonsterHurt(damage);
+                string status = "still alive";
+                if (remainingHealth <= 0)
+                {
+                    status = "dead";
+                    CurrentRoom.monster.GetMonster().Die();
+                    Eyriskel += CurrentRoom.monster.GetMonster().Eyriskel;
+                    if (inPlayerRoom)
+                    {
+                        InfoMessage(String.Format("{2} did {0} damage! The monster is {1}.", (int)Math.Ceiling(damage), status, Name));
+                    }
+                    Item drop = CurrentRoom.monster.GetMonster().GetItem();
+                    if (drop != null)
+                    {
+                        CurrentRoom.items.Add(drop);
+                    }
+                    CurrentRoom.monster = null;
+                }
+                else
+                {
+                    if (inPlayerRoom)
+                    {
+                        InfoMessage(String.Format("{2} did {0} damage! The monster is {1}.", (int)Math.Ceiling(damage), status, Name));
+                    }
+                }
+
+            }
+            else
+            {
+                //WarningMessage("There's no monster to hit!");
             }
         }
     }
