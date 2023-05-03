@@ -137,6 +137,18 @@ namespace Ascension
 
         }
 
+        public void Enddialouge() {
+            Notification notification = new Notification("EndDialouge", this);
+            NotificationCenter.Instance.PostNotification(notification);
+
+        }
+
+        public void continuedialouge()
+        {
+            Notification notification = new Notification("ContinueDialouge", this);
+            NotificationCenter.Instance.PostNotification(notification);
+        }
+
         //CHANGED HERE
         public void TakeAll(string secondword) {
             List<Item> temp= new List<Item>();
@@ -583,21 +595,22 @@ namespace Ascension
 
         public void talkto(string npc)
         {
-
+            //quick and dirty but works
             foreach (Character character in World.U_hospitalCharacters)
             {
                 if (character.CurrentRoom.Equals(CurrentRoom) && character.Name == npc)
                 {
                     InfoMessage(character.Name + " is in the room.");
                     character.inPlayerRoom = true;
-                    DialogueParser dp = new DialogueParser(character.generalDialouge,this);
+                    State = States.DIALOGUE;
+                    DialogueParser dp = new DialogueParser(character);
                     return;
                 }
                 else
                 {
                     if (character.inPlayerRoom)
                     {
-                        InfoMessage(character.Name + " was left behind.");
+                        InfoMessage(character.Name + " is not in room.");
                         character.inPlayerRoom = false;
                     }
                     
@@ -609,14 +622,15 @@ namespace Ascension
                 {
                     InfoMessage(character.Name + " is in the room.");
                     character.inPlayerRoom = true;
-                    DialogueParser dp = new DialogueParser(character.generalDialouge, this);
+                    State = States.DIALOGUE;
+                    DialogueParser dp = new DialogueParser(character);
                     return;
                 }
                 else
                 {
                     if (character.inPlayerRoom)
                     {
-                        InfoMessage(character.Name + " was left behind.");
+                        InfoMessage(character.Name + " is not in room.");
                         character.inPlayerRoom = false;
 
                     }
@@ -629,14 +643,15 @@ namespace Ascension
                 {
                     InfoMessage(character.Name + " is in the room.");
                     character.inPlayerRoom = true;
-                    DialogueParser dp = new DialogueParser(character.generalDialouge, this);
+                    State = States.DIALOGUE;
+                    DialogueParser dp = new DialogueParser(character);
                     return;
                 }
                 else
                 {
                     if (character.inPlayerRoom)
                     {
-                        InfoMessage(character.Name + " was left behind.");
+                        InfoMessage(character.Name + " is not in room.");
                         character.inPlayerRoom = false;
                     }
 

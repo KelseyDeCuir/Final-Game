@@ -99,7 +99,6 @@ namespace Ascension
             NotificationCenter.Instance.AddObserver("YouWinGenocide", YouWinGenocide);
             NotificationCenter.Instance.AddObserver("YouWinTrue", YouWinTrue);
             NotificationCenter.Instance.AddObserver("CharactersInRoom", CharactersInRoom);
-            NotificationCenter.Instance.AddObserver("PlayerEndedDialouge", PlayerEndedDialouge);
             NotificationCenter.Instance.AddObserver("SuccessfulCommand", SuccessfulCommand);
         }
 
@@ -265,7 +264,6 @@ namespace Ascension
             winZone = new Floor(blankRoomLists, Floor1Items, hospitalBuilder);
             Character AB = new Character(abandonedHospital, "A", "B");
 
-            AB.CurrentRoom = abandonedHospital.FloorMap[0, 2]; 
             Character BC = new Character(abandonedHospital, "B", "C");
             Character CD = new Character(abandonedHospital, "C", "D");
             Character DE = new Character(abandonedHospital, "D", "E");
@@ -284,6 +282,12 @@ namespace Ascension
             Character Servant = new Character(hell, "Servant", "Servant of ▓░▒░▓▒. They look like you, except for the eyes. Please not the EYES.");
             Servant.CurrentRoom = Servant.CurrentFloor.FloorMap[1, 2];
             Servant.MakeBoss(winZone, 50);
+
+            //todo: either characters have lowercase names or talk command is change to check for names as lower case or parser is changes
+
+    
+
+
 
             A_hospitalCharacters.Add(AB);
             A_hospitalCharacters.Add(BC);

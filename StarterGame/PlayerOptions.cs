@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Newtonsoft.Json;
@@ -37,29 +38,49 @@ namespace Ascension
         public void ReadOptions() {
             foreach (OptionandEvent e in optionsAndEvents)
             {
-                Console.WriteLine("\n" + e.PlayerOp);
+                Console.WriteLine("\n" + e.PlayerOp);//need to add usuable options to list
+                CommandWords._commandArrayInDialogue.Append(e.DialougeEvent);           
             }
+            CommandWords._commandArrayInDialogue.Append(new QuitCommand()); //todo: add end dialouge
         }
+
+        public void clearoptions() {
+          Array.Clear(CommandWords._commandArrayInDialogue,0, CommandWords._commandArrayInDialogue.Length);
+          CommandWords._commandArrayInDialogue.Append(new QuitCommand()); //todo add exit dialouge
+
+        }
+
+        public void starter() {
+            clearoptions();
+            ReadBodyTxt();
+            ReadOptions();
+        
+        }
+       
 
         public void ContinueDialouge() {
             if (NextTxtFile != null)
             {
-                DialogueParser dialogueParser = new DialogueParser(NextTxtFile, player);
+                clearoptions();
+                DialogueParser dialogueParser = new DialogueParser(NextTxtFile);
                 dialogueParser.readfile();
+
             }
-            else { Console.WriteLine("No more txt!"); }
+            else { Console.WriteLine("Can't continue dialouge"); }
         }
 
         public void EndDialouge() {
-            
+            clearoptions();
+
             Console.WriteLine(Endtxt);
             //use observer
             Notification notification = new Notification("PlayerEndedDialouge", this);
             NotificationCenter.Instance.PostNotification(notification);
+            player.State = States.GAME;
             //Switch State to gameplay but not here
         }
 
-        public void setNewCharFile() {
+
             //obserever on Dialouge end switchs npc currenttxtfile to nexttxtfile
           
             //should be called if you want to go to the next file without having to
@@ -68,7 +89,7 @@ namespace Ascension
             //uses an observer to check if dialouge has ended, recvies message that it has ended
             //AND no option to continue txt is present
             //sets char file so when you talk to npc again something new comes out
-        }
+        
         public void PlayerEndedDialouge(Notification notification)
         {
             PlayerOptions playeroptions = (PlayerOptions)notification.Object;
@@ -77,7 +98,7 @@ namespace Ascension
                 Console.WriteLine("\n" + "Player ended dialouge");
                 if (NewResponseTxtFile != null)
                 {
-                    StreamReader reader = new StreamReader(NewResponseTxtFile);
+                    character.generalDialouge = NewResponseTxtFile;
                     
                 }
                 else {
@@ -87,7 +108,7 @@ namespace Ascension
             }
             else
             {
-                Console.WriteLine("\n" + "Player did not end dialouge");
+                Console.WriteLine("\n" + "Player ended dialouge without NPC file switch");
             }
         }
 

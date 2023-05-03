@@ -16,17 +16,29 @@ namespace Ascension
         //public string PlayerOp { get; set; }
         private string txtfile;
         private Player player;
-  
+        private Character npc;
+        private CombatDialogue cdialogue;
+        private PlayerOptions pdialogue;
 
-        public DialogueParser(string txtfile, Player player)
+
+
+        public DialogueParser(Character npc)
         {
+            this.npc = npc;
+            this.txtfile = "@\"./" + npc.generalDialouge + ".json\"";
+            NotificationCenter.Instance.AddObserver("ContinueDialouge", ContinueDialouge);
+            NotificationCenter.Instance.AddObserver("EndDialouge", EndDialouge);
+
+        }
+        public DialogueParser(string txtfile) {
             this.txtfile = "@\"./" + txtfile + ".json\"";
-            this.player = player;
+            NotificationCenter.Instance.AddObserver("ContinueDialouge", ContinueDialouge);
+            NotificationCenter.Instance.AddObserver("EndDialouge", EndDialouge);
+
         }
 
         public void readfile()
         {
-
             //opens up files and reads out Dialouge and player optiopns
             //kinda of too over complicated try to find a way
             //to remove dialogue class and just have
@@ -37,21 +49,32 @@ namespace Ascension
 
             //check if player state is in dialouge or combat
             if (player.State == States.COMBAT) {
-                CombatDialogue dialogue = JsonConvert.DeserializeObject<CombatDialogue>(json);
-                CombatDialogue CD = dialogue;
+                CombatDialogue cdialogue = JsonConvert.DeserializeObject<CombatDialogue>(json);
             }
             else if (player.State == States.DIALOGUE) {
-                //PlayerOptions dialogue = JsonConvert.DeserializeObject<PlayerOptions>(json);
-                //PlayerOptions PlyOp = dialogue;
+                PlayerOptions pdialogue = JsonConvert.DeserializeObject<PlayerOptions>(json);
+                pdialogue.starter();
+                //observer based on which command is called 
+                //example player types in continue dialouge
+                //dp is notified by player and does continue dialouge
+
             }
-
-
             //Console.WriteLine(); //for testing purposes
             reader.Close();
 
 
+        }
+
+        public void ContinueDialouge(Notification notification)
+        {
+            pdialogue.ContinueDialouge();
 
         }
+        public void EndDialouge(Notification notification) { 
+            pdialogue.EndDialouge();    
+        }
+
+        
 
 
     }

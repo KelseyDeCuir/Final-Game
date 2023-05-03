@@ -8,9 +8,9 @@ namespace Ascension
     public class OptionandEvent
     {
         public string PlayerOp { get; set; }
-        public string DialougeEvent { get; set; }
+        public Command DialougeEvent { get; set; }
 
-        public OptionandEvent(string PlayerOp,string DialougeEvent) 
+        public OptionandEvent(string PlayerOp, Command DialougeEvent) 
         { 
             this.PlayerOp = PlayerOp;
             this.DialougeEvent= DialougeEvent;
