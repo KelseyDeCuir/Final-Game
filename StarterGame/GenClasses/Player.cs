@@ -618,6 +618,7 @@ namespace Ascension
                     {
                         Character character = World.U_hospitalCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
                         State = States.DIALOGUE;
+                        character.State = States.DIALOGUE;
                         DialogueParser dp = new DialogueParser(character);
                         return;
                     }
@@ -631,6 +632,7 @@ namespace Ascension
                     {
                         Character character = World.U_schoolCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
                         State = States.DIALOGUE;
+                        character.State = States.DIALOGUE;
                         DialogueParser dp = new DialogueParser(character);
                         return;
                     }
@@ -644,6 +646,7 @@ namespace Ascension
                     {
                         Character character = World.U_hellCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
                         State = States.DIALOGUE;
+                        character.State = States.DIALOGUE;
                         DialogueParser dp = new DialogueParser(character);
                         return;
                     }

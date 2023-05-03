@@ -320,7 +320,7 @@ namespace Ascension
 
         public void AI()
         {
-            Command CommandToExcecute = personality.AIcommand;
+            Command CommandToExcecute = personality.AIcommand(State);
             NullCommand nC = CommandToExcecute as NullCommand;
             if(nC == null)
             {
