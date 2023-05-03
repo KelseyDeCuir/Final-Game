@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace Ascension
 {
     public class PlayerOptions
     {
+        public Player player;
         public Character character;
         public string BodyTxt { get; set; }
         public string Endtxt { get; set; }
 
         public string NextTxtFile { get; set; } //when continueing dialouge
-        public string NewResponseTxtFile { get; set; } //when you end dialouge but want a new response after ending dialouge
+        public string? NewResponseTxtFile { get; set; } //when you end dialouge but want a new response after ending dialouge
+        //is nullable 
         public List<OptionandEvent> optionsAndEvents = new List<OptionandEvent>();
         //could be state?
 
@@ -20,6 +24,8 @@ namespace Ascension
           
             this.BodyTxt = BodyTxt;
             this.optionsAndEvents = optionsAndEvents;
+            NotificationCenter.Instance.AddObserver("PlayerEndedDialouge", PlayerEndedDialouge);
+           // NotificationCenter.Instance.AddObserver("PlayerContinuesDialouge", PlayerContinuesDialouge);
         }
 
         //use observer based on option to notify to switch
@@ -38,7 +44,7 @@ namespace Ascension
         public void ContinueDialouge() {
             if (NextTxtFile != null)
             {
-                DialogueParser dialogueParser = new DialogueParser(NextTxtFile,character);
+                DialogueParser dialogueParser = new DialogueParser(NextTxtFile, player);
                 dialogueParser.readfile();
             }
             else { Console.WriteLine("No more txt!"); }
@@ -55,18 +61,13 @@ namespace Ascension
 
         public void setNewCharFile() {
             //obserever on Dialouge end switchs npc currenttxtfile to nexttxtfile
-            NotificationCenter.Instance.AddObserver("PlayerEndedDialouge", PlayerEndedDialouge);
-
-
-
+          
             //should be called if you want to go to the next file without having to
             //have pc manually type in ContinueDialouge
             //how it goes:
             //uses an observer to check if dialouge has ended, recvies message that it has ended
             //AND no option to continue txt is present
             //sets char file so when you talk to npc again something new comes out
-
-
         }
         public void PlayerEndedDialouge(Notification notification)
         {
@@ -74,8 +75,13 @@ namespace Ascension
             if (playeroptions != null)
             {
                 Console.WriteLine("\n" + "Player ended dialouge");
-                if (NewResponseTxtFile != null) {
+                if (NewResponseTxtFile != null)
+                {
+                    StreamReader reader = new StreamReader(NewResponseTxtFile);
                     
+                }
+                else {
+                    Console.WriteLine("Cannot not switch dialouge");
                 }
 
             }

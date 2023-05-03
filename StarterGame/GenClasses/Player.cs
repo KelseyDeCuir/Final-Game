@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -514,9 +515,7 @@ namespace Ascension
             if (SecondWord.Equals("room"))
             {
                 CurrentRoom.Description();
-                CheckCharacters();
-                //TODO: print characters in room
-                //print characters in room           
+                CheckCharacters();    
             }
             else if (SecondWord.Equals("inventory")) {
                 InfoMessage("\nEyriskel (coins): " + Eyriskel + "\nYour Inventory currently contains:\n" + GetInventory() +
@@ -554,7 +553,73 @@ namespace Ascension
             CurrentRoom.MonsterAttack(this);
         }
 
-   
+ 
+
+        public void talkto(string npc)
+        {
+
+            foreach (Character character in World.U_hospitalCharacters)
+            {
+                if (character.CurrentRoom.Equals(CurrentRoom) && character.Name == npc)
+                {
+                    InfoMessage(character.Name + " is in the room.");
+                    character.inPlayerRoom = true;
+                    DialogueParser dp = new DialogueParser(character.generalDialouge,this);
+                    return;
+                }
+                else
+                {
+                    if (character.inPlayerRoom)
+                    {
+                        InfoMessage(character.Name + " was left behind.");
+                        character.inPlayerRoom = false;
+                    }
+                    
+                }
+            }
+            foreach (Character character in World.U_schoolCharacters)
+            {
+                if (character.CurrentRoom.Equals(CurrentRoom) && character.Name == npc)
+                {
+                    InfoMessage(character.Name + " is in the room.");
+                    character.inPlayerRoom = true;
+                    DialogueParser dp = new DialogueParser(character.generalDialouge, this);
+                    return;
+                }
+                else
+                {
+                    if (character.inPlayerRoom)
+                    {
+                        InfoMessage(character.Name + " was left behind.");
+                        character.inPlayerRoom = false;
+
+                    }
+
+                }
+            }
+            foreach (Character character in World.U_hellCharacters)
+            {
+                if (character.CurrentRoom.Equals(CurrentRoom))
+                {
+                    InfoMessage(character.Name + " is in the room.");
+                    character.inPlayerRoom = true;
+                    DialogueParser dp = new DialogueParser(character.generalDialouge, this);
+                    return;
+                }
+                else
+                {
+                    if (character.inPlayerRoom)
+                    {
+                        InfoMessage(character.Name + " was left behind.");
+                        character.inPlayerRoom = false;
+                    }
+
+                }
+
+            }
+        }
+                
+            
 
 
         public override void WalkTo(string direction) 

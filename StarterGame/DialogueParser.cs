@@ -15,13 +15,13 @@ namespace Ascension
 
         //public string PlayerOp { get; set; }
         private string txtfile;
-        private Character character;
+        private Player player;
   
 
-        public DialogueParser(string txtfile, Character character)
+        public DialogueParser(string txtfile, Player player)
         {
             this.txtfile = "@\"./" + txtfile + ".json\"";
-            this.character = character;
+            this.player = player;
         }
 
         public void readfile()
@@ -33,8 +33,18 @@ namespace Ascension
             //dailougeparser
             StreamReader reader = new StreamReader(txtfile);
             String json = reader.ReadToEnd();
-            PlayerOptions dialogue = JsonConvert.DeserializeObject<PlayerOptions>(json); //puts everything in playeroptions //need to specfiiy lsit in jso file
+            //puts everything in playeroptions //need to specfiiy lsit in jso file
+
             //check if player state is in dialouge or combat
+            if (player.State == States.COMBAT) {
+                CombatDialogue dialogue = JsonConvert.DeserializeObject<CombatDialogue>(json);
+                CombatDialogue CD = dialogue;
+            }
+            else if (player.State == States.DIALOGUE) {
+                //PlayerOptions dialogue = JsonConvert.DeserializeObject<PlayerOptions>(json);
+                //PlayerOptions PlyOp = dialogue;
+            }
+
 
             //Console.WriteLine(); //for testing purposes
             reader.Close();
