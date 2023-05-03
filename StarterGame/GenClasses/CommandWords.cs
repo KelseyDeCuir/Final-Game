@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using Ascension.PlayerCommands;
 
 namespace Ascension
 {
@@ -14,6 +15,7 @@ namespace Ascension
         private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new HitCommand(), new BackCommand(), new TakeCommand(), new DropCommand(), new MenuCommand(), new SaveCommand(), new LoadCommand() };
         private static Command[] _commandArrayInCombat = {};
         public static Command[] _commandArrayInDialogue = new Command[20]; //todo: ISSUE???? special command
+        
         private static Command[] _commandArrayInShop = { new ShopListCommand(), new SellCommand(), new BuyCommand(),  new PlayCommand()};
         private static Command[] _commandArrayInElevator = { new GoCommand(), new AscendCommand(), new DescendCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new BackCommand(), new ShopCommand(), new MenuCommand(), new SaveCommand()};
         private static Dictionary<States, Command[]> _commandArrays = new Dictionary<States, Command[]>() { {States.CHARCREATION, _commandArrayInCreation }, {States.ELEVATOR, _commandArrayInElevator },{ States.MENU, _commandArrayInMenu }, { States.GAME, _commandArrayInGame }, { States.COMBAT, _commandArrayInCombat }, { States.DIALOGUE, _commandArrayInDialogue } , { States.SHOP, _commandArrayInShop } };

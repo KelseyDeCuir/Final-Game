@@ -88,7 +88,6 @@ namespace Ascension
             Player newp = JsonConvert.DeserializeObject<Player>(json);
             //Player newp = nep;//.player;
             newp.InfoMessage(newp.Name);
-            //TODO: FIX DESERIALIZATION :(
             return newp;
           
             //turns words from json file into a list of stuff to be shoved into player

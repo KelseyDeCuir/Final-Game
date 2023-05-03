@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using Ascension.PlayerCommands;
 using Newtonsoft.Json;
 
 namespace Ascension
@@ -41,12 +42,13 @@ namespace Ascension
                 Console.WriteLine("\n" + e.PlayerOp);//need to add usuable options to list
                 CommandWords._commandArrayInDialogue.Append(e.DialougeEvent);           
             }
-            CommandWords._commandArrayInDialogue.Append(new QuitCommand()); //todo: add end dialouge
+  
+
         }
 
         public void clearoptions() {
           Array.Clear(CommandWords._commandArrayInDialogue,0, CommandWords._commandArrayInDialogue.Length);
-          CommandWords._commandArrayInDialogue.Append(new QuitCommand()); //todo add exit dialouge
+            CommandWords._commandArrayInDialogue.Append(new EndDialougeCommand());
 
         }
 

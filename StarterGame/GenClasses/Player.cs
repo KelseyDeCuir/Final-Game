@@ -596,6 +596,9 @@ namespace Ascension
         public void talkto(string npc)
         {
             //quick and dirty but works
+
+
+
             foreach (Character character in World.U_hospitalCharacters)
             {
                 if (character.CurrentRoom.Equals(CurrentRoom) && character.Name == npc)
