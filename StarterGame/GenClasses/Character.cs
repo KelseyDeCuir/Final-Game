@@ -51,7 +51,7 @@ namespace Ascension
         public Armor EquippedArmor { set; get; }
         public int Eyriskel { set; get; }
         public int aptPoints;
-        BossDelegate bossDelegate;
+        public BossDelegate bossDelegate;
         public string generalDialouge;
         public string combatDialouge;
         public CPersonality personality;
