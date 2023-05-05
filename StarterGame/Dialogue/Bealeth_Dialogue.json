@@ -1,0 +1,14 @@
+{
+  {
+    "BodyTxt": [
+      "Welcome to hell foolish one.",
+      "Do you remember how you got here? (You do not)",
+      "A shame, be wary of those that would feast on your soul.",
+      "I said be wary, foolish one.",
+      "You truly are a fool, and now you are my snack."
+    ]
+  },
+  { "Endtxt": "I ended my txt" },
+  { "NewResponseTxtFile": "newRepsonsetxtFileName" }
+
+}

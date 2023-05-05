@@ -1,0 +1,15 @@
+﻿{
+  {
+    "BodyTxt": [
+      "Why are you here?",
+      "You are not among those I have come to kill.",
+      "You do not serve ▓░▒░▓▒ do you?",
+      "You do not know.",
+      "How Curious.",
+      "You should leave me to my job"
+    ]
+  },
+  { "Endtxt": "I ended my txt" },
+  { "NewResponseTxtFile": "newRepsonsetxtFileName" }
+
+}

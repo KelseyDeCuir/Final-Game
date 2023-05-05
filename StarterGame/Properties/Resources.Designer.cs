@@ -63,6 +63,36 @@ namespace Ascension.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] Abaddon_Dialogue {
+            get {
+                object obj = ResourceManager.GetObject("Abaddon_Dialogue", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Aseroth_Dialogue {
+            get {
+                object obj = ResourceManager.GetObject("Aseroth_Dialogue", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Bealeth_Dialogue {
+            get {
+                object obj = ResourceManager.GetObject("Bealeth_Dialogue", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Ernie_Dialogue {
             get {
                 object obj = ResourceManager.GetObject("Ernie_Dialogue", resourceCulture);

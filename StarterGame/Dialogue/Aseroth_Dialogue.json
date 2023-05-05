@@ -1,0 +1,20 @@
+{
+  {
+    "BodyTxt": [
+      "Poor child.",
+      "All humans are children to me.",
+      "You should not have come here.",
+      "I once was like you. I wish I could help you more. I wish…",
+      " I wonder if you will finally escape…",
+      "Will you Ascend and be free?",
+      "Or will you Descend like me?",
+      "It’s a shame that god is dead.",
+      "Didn’t you know?",
+      "She’s been dead longer than humanity was alive.",
+      "God died before us all."
+    ]
+  },
+  { "Endtxt": "I ended my txt" },
+  { "NewResponseTxtFile": "newRepsonsetxtFileName" }
+
+}
