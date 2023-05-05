@@ -281,6 +281,7 @@ namespace Ascension
             Boss2.CurrentRoom = Boss2.CurrentFloor.FloorMap[1, 2];
             Boss2.MakeBoss(hell, 25);
 
+
             Character Ernie = new Character(hell, "Ernie", "Ernie the Imp. A small twisted creature whose mouth doesn’t work all the way.");
             Ernie.personality = new CPersonality(Personality.COWARD);
             Character Bealeth = new Character(hell, "Bealeth", "Bealeth the Consumer. A tall cloaked figure wearing a deer skull, though the antlers seem to be growing from its own head.");
@@ -289,6 +290,8 @@ namespace Ascension
             Aseroth.personality = new CPersonality(Personality.KIND);
             Character Abaddon = new Character(hell, "Abaddon", "Abaddon the Destroyer. The incomprehensible limb of an ever present death to all things.");
             Abaddon.personality = new CPersonality(Personality.BRAVE);
+
+
             Character Servant = new Character(hell, "Servant", "Servant of ▓░▒░▓▒. They look like you, except for the eyes. Please not the EYES.");
             Servant.CurrentRoom = Servant.CurrentFloor.FloorMap[1, 2];
             Servant.MakeBoss(winZone, 50);
@@ -321,6 +324,16 @@ namespace Ascension
             JK.generalDialouge = "Test_File";
             A_hospitalCharacters.Add(JK);
             GenCharacters(abandonedHospital, A_hospitalCharacters, U_hospitalCharacters); //Generates characters
+
+            Ernie.generalDialouge = "Ernie_Dialogue";
+            A_hellCharacters.Add(Ernie);
+            Bealeth.generalDialouge = "Bealeth";
+            A_hellCharacters.Add(Bealeth);
+            Aseroth.generalDialouge = "Aseroth_Dialogue";
+            A_hellCharacters.Add(Aseroth);
+            Abaddon.generalDialouge = "Abaddon_Dialogue";
+            A_hellCharacters.Add(Abaddon);
+
             Notification notification = new Notification("CharactersInRoom", this);
             NotificationCenter.Instance.PostNotification(notification);
             floors = new List<Floor>();
