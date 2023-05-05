@@ -7,6 +7,8 @@ using System.IO;
 namespace Ascension
 {
     public class DialogueParser
+
+       //TODO:CONVER TO SINGLETON :((((
     {
 
         //string text = File.ReadAllText(@"./person.json");
@@ -20,6 +22,20 @@ namespace Ascension
         private CombatDialogue cdialogue;
         private PlayerOptions pdialogue;
 
+        //convert DP to singleton
+
+        //private static DialogueParser _instance = null;
+        //public static DialogueParser Instance
+        //{
+            //get
+            //{
+                //if (_instance == null)
+                //{
+              //      _instance = new DialogueParser("The Elevator", "Elevator Description");
+            //    }
+          //      return _instance;
+        //    }
+      //  }
 
 
         public DialogueParser(Player player, Character npc)
@@ -29,14 +45,14 @@ namespace Ascension
             this.txtfile =   npc.generalDialouge + ".json";
             NotificationCenter.Instance.AddObserver("ContinueDialouge", ContinueDialouge);
             NotificationCenter.Instance.AddObserver("EndDialouge", EndDialouge);
-            NotificationCenter.Instance.AddObserver("StartDialouge", StartDialouge);
+       
 
         }
         public DialogueParser(string txtfile) {
             this.txtfile = "@\"./" + txtfile + ".json\"";
             NotificationCenter.Instance.AddObserver("ContinueDialouge", ContinueDialouge);
             NotificationCenter.Instance.AddObserver("EndDialouge", EndDialouge);
-            NotificationCenter.Instance.AddObserver("StartDialouge", StartDialouge);
+        
 
         }
 
@@ -46,18 +62,14 @@ namespace Ascension
             //kinda of too over complicated try to find a way
             //to remove dialogue class and just have
             //dailougeparser
-            Console.WriteLine(txtfile);
             StreamReader reader = new StreamReader(txtfile);
             String json = reader.ReadToEnd();
             //puts everything in playeroptions //need to specfiiy lsit in jso file
 
             //check if player state is in dialouge or combat
             if (player.State == States.DIALOGUE) {
-                Console.WriteLine("Deserializing objects");
-                 pdialogue = JsonConvert.DeserializeObject<PlayerOptions>(json);
+                pdialogue = JsonConvert.DeserializeObject<PlayerOptions>(json);
                 pdialogue.player = player;
-                Console.WriteLine(pdialogue.BodyTxt);
-                
             }
             else if (player.State == States.COMBAT) {
                 CombatDialogue cdialogue = JsonConvert.DeserializeObject<CombatDialogue>(json);
@@ -68,16 +80,15 @@ namespace Ascension
 
             }
             //Console.WriteLine(); //for testing purposes
-            Console.WriteLine("I closed");
+            Console.WriteLine("I closed my txt file");
             reader.Close();
 
 
         }
-        public void StartDialouge(Notification notification) {
-            Console.WriteLine(txtfile);
+        public void StartDialouge() {
             if (pdialogue != null)
             {
-                pdialogue.starter();
+                pdialogue.ReadBodyTxt();
             }
             else { Console.WriteLine("Don't talk to me"); }
         }
@@ -89,6 +100,8 @@ namespace Ascension
         }
         public void EndDialouge(Notification notification) { 
             pdialogue.EndDialouge();    
+
+            
         }
 
         

@@ -669,8 +669,7 @@ namespace Ascension
                       
                             character.State = States.DIALOGUE;
                             dp.readfile();
-                            Notification notification = new Notification("StartDialouge", this);
-                            NotificationCenter.Instance.PostNotification(notification);
+                            dp.StartDialouge();
                         }
                         else {
                             WarningMessage("NPC does not have dialouge");

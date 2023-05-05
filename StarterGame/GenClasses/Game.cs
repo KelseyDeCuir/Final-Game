@@ -15,7 +15,6 @@ namespace Ascension
 
         public Game()
         {
-            //TODO: EDIT GAME() TO IMPLEMENT MENUS
             _playing = false;
             _parser = new Parser(new CommandWords());
             //_player creates a new game however, if we want to have a save and load system 

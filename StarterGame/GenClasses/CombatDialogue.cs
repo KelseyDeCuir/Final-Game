@@ -78,6 +78,11 @@ namespace Ascension
             int index = rnd.Next(onEnemyMissDialouge.Count);
             character.NormalMessage(onEnemyMissDialouge[index]);
         }
+
+        public void onRun() {
+            int index = rnd.Next(onRunDialouge.Count);
+            character.NormalMessage(onRunDialouge[index]);
+        }
   
 
     }

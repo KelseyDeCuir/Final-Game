@@ -15,6 +15,7 @@ namespace Ascension
             if (this.HasSecondWord())
             {
                 Player pl = (Player)player;
+                
                 pl.talkto(SecondWord);
             }
             else

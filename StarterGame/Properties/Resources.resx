@@ -121,4 +121,7 @@
   <data name="Ernie_Dialogue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\dialogue\ernie_dialogue.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Test_File" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\netcoreapp3.1\Test_File.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
