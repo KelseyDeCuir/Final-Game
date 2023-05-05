@@ -280,6 +280,15 @@ namespace Ascension
             Character Boss2 = new Character(abandonedSchool, "School Boss", "School boss desc");
             Boss2.CurrentRoom = Boss2.CurrentFloor.FloorMap[1, 2];
             Boss2.MakeBoss(hell, 25);
+
+            Character Ernie = new Character(hell, "Ernie", "Ernie the Imp. A small twisted creature whose mouth doesn’t work all the way.");
+            Ernie.personality = new CPersonality(Personality.COWARD);
+            Character Bealeth = new Character(hell, "Bealeth", "Bealeth the Consumer. A tall cloaked figure wearing a deer skull, though the antlers seem to be growing from its own head.");
+            Bealeth.personality = new CPersonality(Personality.AGRESSIVE);
+            Character Aseroth = new Character(hell, "Aseroth", "Aseroth the Fallen. This was once an angel, but you cannot tell what kind. Their wings are charred and rotten.");
+            Aseroth.personality = new CPersonality(Personality.KIND);
+            Character Abaddon = new Character(hell, "Abaddon", "Abaddon the Destroyer. The incomprehensible limb of an ever present death to all things.");
+            Abaddon.personality = new CPersonality(Personality.BRAVE);
             Character Servant = new Character(hell, "Servant", "Servant of ▓░▒░▓▒. They look like you, except for the eyes. Please not the EYES.");
             Servant.CurrentRoom = Servant.CurrentFloor.FloorMap[1, 2];
             Servant.MakeBoss(winZone, 50);
