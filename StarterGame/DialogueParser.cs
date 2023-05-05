@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Text;
 using System.IO;
+using System.Reflection;
 
 namespace Ascension
 {
@@ -24,6 +25,9 @@ namespace Ascension
 
         public DialogueParser(Character npc)
         {
+            string resourceName = "MyLibrary.Resources."+npc.Name+"_Dialogue.json";
+            var assembly = Assembly.GetExecutingAssembly();
+            Stream stream = assembly.GetManifestResourceStream(resourceName);
             this.npc = npc;
             this.txtfile = "@\"./" + npc.generalDialouge + ".json\"";
             NotificationCenter.Instance.AddObserver("ContinueDialouge", ContinueDialouge);
