@@ -793,6 +793,16 @@ namespace Ascension
         }
         public void CheckCharacters()
         {
+            foreach (Character character in World.Bosses)
+            {
+                if (character.CurrentRoom.Equals(CurrentRoom))
+                {
+                    character.inPlayerRoom = true;
+                    ErrorMessage("BOSS ROOM!"); 
+                    CombatSystem cs = new CombatSystem(this, character);
+                    cs.Attack(character);
+                }
+            }
             foreach (Character character in World.U_hospitalCharacters)
             {
                 if (character.CurrentRoom.Equals(CurrentRoom))
