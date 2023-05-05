@@ -51,7 +51,7 @@ namespace Ascension
         public Armor EquippedArmor { set; get; }
         public int Eyriskel { set; get; }
         public int aptPoints;
-        BossDelegate bossDelegate;
+        public BossDelegate bossDelegate;
         public string generalDialouge;
         public string combatDialouge;
         public CPersonality personality;
@@ -320,7 +320,7 @@ namespace Ascension
 
         public void AI()
         {
-            Command CommandToExcecute = personality.AIcommand;
+            Command CommandToExcecute = personality.AIcommand(State);
             NullCommand nC = CommandToExcecute as NullCommand;
             if(nC == null)
             {

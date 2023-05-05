@@ -15,11 +15,20 @@ namespace Ascension
         static Dictionary<Command, double> kindCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 } };
         static Dictionary<Command, double> braveCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, {new CHitCommand(), 0.65 } };
 
-        Dictionary<Personality, Dictionary<Command, double>> personalities = new Dictionary<Personality, Dictionary<Command, double>>() { { Personality.COWARD, cowardCommands }, { Personality.AGRESSIVE, agroCommands }, { Personality.KIND, kindCommands }, { Personality.BRAVE, braveCommands } };
-        private Dictionary<Command, double> _commands;
+        Dictionary<Personality,Dictionary<States, Dictionary<Command, double>>> personalities = new Dictionary<Personality, Dictionary<States, Dictionary<Command, double>>>() { { Personality.COWARD, new Dictionary<States, Dictionary<Command, double>>() { { States.GAME, cowardCommands } } },{ Personality.AGRESSIVE, new Dictionary<States, Dictionary<Command, double>>() { { States.GAME, agroCommands } } }, { Personality.KIND, new Dictionary<States, Dictionary<Command, double>>() { { States.GAME, kindCommands } } }, { Personality.BRAVE, new Dictionary<States, Dictionary<Command, double>>() {{States.GAME, braveCommands } } } };
+        public Dictionary<States,Dictionary<Command, double>> _commands;
         Random rnd = new Random();
-        [Newtonsoft.Json.JsonIgnore]
-        public Command AIcommand { get { double check = rnd.NextDouble(); foreach (Command command in _commands.Keys) { if (_commands[command] > check){ return command; } } return new NullCommand(); } }
+        public Command AIcommand(States state) { 
+            double check = rnd.NextDouble();
+            foreach (Command command in _commands[state].Keys)
+            {
+                if (_commands[state][command] > check)
+                {
+                    return command;
+                }
+            } 
+            return new NullCommand();
+        }
         public CPersonality(Personality personality)
         {
             _commands = personalities[personality];

@@ -85,8 +85,6 @@ namespace Ascension
             }
         }
 
-
-
         public void PlayerMovedFloors(Notification notification)
         {
             Player player = (Player)notification.Object;
@@ -124,6 +122,53 @@ namespace Ascension
             //State = States.ELEVATOR;
 
         }
+        public void AttackEnemy(String name)
+        {
+
+            switch (Elevator.Instance.floorLvl)
+            {
+                case 1:
+                    if (World.U_hospitalCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
+                    {
+                        Character character = World.U_hospitalCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
+                        CombatSystem cs = new CombatSystem(this, character);
+                        cs.Attack(character);
+                    }
+                    break;
+                case 2:
+                    if (World.U_schoolCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
+                    {
+                        Character character = World.U_schoolCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
+                        CombatSystem cs = new CombatSystem(this, character);
+                        cs.Attack(character);
+                    }
+                    break;
+                case 3:
+                    if (World.U_hellCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
+                    {
+                        Character character = World.U_hellCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
+                        CombatSystem cs = new CombatSystem(this, character);
+                        cs.Attack(character);
+                    }
+                    break;
+
+                default:
+                    break;
+
+            }
+        }
+        public void RunFromEnemy()
+        {
+            CombatSystem cs = new CombatSystem();
+            cs.Run();
+
+        }
+        public void DodgeAttack()
+        {
+            CombatSystem cs = new CombatSystem();
+            cs.Dodge();
+        }
+
         public void Backto()
         {
             if (PastRooms.Count != 0)
@@ -619,6 +664,7 @@ namespace Ascension
                         Character character = World.U_hospitalCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
                         State = States.DIALOGUE;
                         DialogueParser dp = new DialogueParser(this,character);
+                        character.State = States.DIALOGUE;
                         dp.readfile();
                         Notification notification = new Notification("StartDialouge", this);
                         NotificationCenter.Instance.PostNotification(notification);
@@ -637,6 +683,7 @@ namespace Ascension
                         DialogueParser dp = new DialogueParser(this, character);
                         Notification notification = new Notification("StartDialouge", this);
                         NotificationCenter.Instance.PostNotification(notification);
+                        character.State = States.DIALOGUE;
                         return;
                     }
                     else
@@ -652,6 +699,7 @@ namespace Ascension
                         DialogueParser dp = new DialogueParser(this, character);
                         Notification notification = new Notification("StartDialouge", this);
                         NotificationCenter.Instance.PostNotification(notification);
+                        character.State = States.DIALOGUE;
                         return;
                     }
                     else
