@@ -663,9 +663,20 @@ namespace Ascension
                     {
                         Character character = World.U_hospitalCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
                         State = States.DIALOGUE;
-                        character.State = States.DIALOGUE;
-                        DialogueParser dp = new DialogueParser(character);
+                        if (character.generalDialouge != null)
+                        {
+                            DialogueParser dp = new DialogueParser(this,character);
+                      
+                            character.State = States.DIALOGUE;
+                            dp.readfile();
+                            Notification notification = new Notification("StartDialouge", this);
+                            NotificationCenter.Instance.PostNotification(notification);
+                        }
+                        else {
+                            WarningMessage("NPC does not have dialouge");
+                        }
                         return;
+
                     }
                     else
                     {
@@ -675,10 +686,20 @@ namespace Ascension
                 case 2:
                     if (World.U_schoolCharacters.Exists(character => character.Name.ToLower() == npc && character.inPlayerRoom))
                     {
+
                         Character character = World.U_schoolCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
                         State = States.DIALOGUE;
-                        character.State = States.DIALOGUE;
-                        DialogueParser dp = new DialogueParser(character);
+                        if (character.generalDialouge != null)
+                        {
+                            DialogueParser dp = new DialogueParser(this, character);
+                            Notification notification = new Notification("StartDialouge", this);
+                            NotificationCenter.Instance.PostNotification(notification);
+                            character.State = States.DIALOGUE;
+                        }
+                        else
+                        {
+                            WarningMessage("NPC does not have dialouge");
+                        }
                         return;
                     }
                     else
@@ -691,8 +712,17 @@ namespace Ascension
                     {
                         Character character = World.U_hellCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
                         State = States.DIALOGUE;
-                        character.State = States.DIALOGUE;
-                        DialogueParser dp = new DialogueParser(character);
+                        if (character.generalDialouge != null)
+                        {
+                            DialogueParser dp = new DialogueParser(this, character);
+                            Notification notification = new Notification("StartDialouge", this);
+                            NotificationCenter.Instance.PostNotification(notification);
+                            character.State = States.DIALOGUE;
+                        }
+                        else
+                        {
+                            WarningMessage("NPC does not have dialouge");
+                        }
                         return;
                     }
                     else

@@ -23,21 +23,24 @@ namespace Ascension
 
 
 
-        public DialogueParser(Character npc)
+        public DialogueParser(Player player, Character npc)
         {
+            this.player = player;
             string resourceName = "MyLibrary.Resources."+npc.Name+"_Dialogue.json";
             var assembly = Assembly.GetExecutingAssembly();
             Stream stream = assembly.GetManifestResourceStream(resourceName);
             this.npc = npc;
-            this.txtfile = "@\"./" + npc.generalDialouge + ".json\"";
+            this.txtfile =   npc.generalDialouge + ".json";
             NotificationCenter.Instance.AddObserver("ContinueDialouge", ContinueDialouge);
             NotificationCenter.Instance.AddObserver("EndDialouge", EndDialouge);
+            NotificationCenter.Instance.AddObserver("StartDialouge", StartDialouge);
 
         }
         public DialogueParser(string txtfile) {
             this.txtfile = "@\"./" + txtfile + ".json\"";
             NotificationCenter.Instance.AddObserver("ContinueDialouge", ContinueDialouge);
             NotificationCenter.Instance.AddObserver("EndDialouge", EndDialouge);
+            NotificationCenter.Instance.AddObserver("StartDialouge", StartDialouge);
 
         }
 
@@ -47,26 +50,40 @@ namespace Ascension
             //kinda of too over complicated try to find a way
             //to remove dialogue class and just have
             //dailougeparser
+            Console.WriteLine(txtfile);
             StreamReader reader = new StreamReader(txtfile);
             String json = reader.ReadToEnd();
             //puts everything in playeroptions //need to specfiiy lsit in jso file
 
             //check if player state is in dialouge or combat
-            if (player.State == States.COMBAT) {
-                CombatDialogue cdialogue = JsonConvert.DeserializeObject<CombatDialogue>(json);
+            if (player.State == States.DIALOGUE) {
+                Console.WriteLine("Deserializing objects");
+                 pdialogue = JsonConvert.DeserializeObject<PlayerOptions>(json);
+                pdialogue.player = player;
+                Console.WriteLine(pdialogue.BodyTxt);
+                
             }
-            else if (player.State == States.DIALOGUE) {
-                PlayerOptions pdialogue = JsonConvert.DeserializeObject<PlayerOptions>(json);
-                pdialogue.starter();
+            else if (player.State == States.COMBAT) {
+                CombatDialogue cdialogue = JsonConvert.DeserializeObject<CombatDialogue>(json);
+                //Console.Write("MY STATE CHANGED >:)");
                 //observer based on which command is called 
                 //example player types in continue dialouge
                 //dp is notified by player and does continue dialouge
 
             }
             //Console.WriteLine(); //for testing purposes
+            Console.WriteLine("I closed");
             reader.Close();
 
 
+        }
+        public void StartDialouge(Notification notification) {
+            Console.WriteLine(txtfile);
+            if (pdialogue != null)
+            {
+                pdialogue.starter();
+            }
+            else { Console.WriteLine("Don't talk to me"); }
         }
 
         public void ContinueDialouge(Notification notification)
