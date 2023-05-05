@@ -19,14 +19,18 @@ namespace Ascension
         public Dictionary<States,Dictionary<Command, double>> _commands;
         Random rnd = new Random();
         public Command AIcommand(States state) { 
+
             double check = rnd.NextDouble();
-            foreach (Command command in _commands[state].Keys)
+            if (state == States.GAME)
             {
-                if (_commands[state][command] > check)
+                foreach (Command command in _commands[state].Keys)
                 {
-                    return command;
+                    if (_commands[state][command] > check)
+                    {
+                        return command;
+                    }
                 }
-            } 
+            }
             return new NullCommand();
         }
         public CPersonality(Personality personality)

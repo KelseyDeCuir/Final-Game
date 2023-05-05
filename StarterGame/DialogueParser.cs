@@ -55,6 +55,7 @@ namespace Ascension
             if (player.State == States.DIALOGUE) {
                 Console.WriteLine("Deserializing objects");
                  pdialogue = JsonConvert.DeserializeObject<PlayerOptions>(json);
+                pdialogue.player = player;
                 Console.WriteLine(pdialogue.BodyTxt);
                 
             }
@@ -67,6 +68,7 @@ namespace Ascension
 
             }
             //Console.WriteLine(); //for testing purposes
+            Console.WriteLine("I closed");
             reader.Close();
 
 

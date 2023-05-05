@@ -105,6 +105,7 @@ namespace Ascension
 
         public void SuccessfulCommand(Notification notification)
         {
+            
             foreach(Character character in U_hospitalCharacters)
             {
                 character.AI();

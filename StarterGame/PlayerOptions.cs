@@ -30,6 +30,7 @@ namespace Ascension
            // NotificationCenter.Instance.AddObserver("PlayerContinuesDialouge", PlayerContinuesDialouge);
         }
 
+
         //use observer based on option to notify to switch
 
         public void ReadBodyTxt() {

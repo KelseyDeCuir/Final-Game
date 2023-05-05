@@ -19,7 +19,7 @@ namespace Ascension
             else
             {
                 Player pl = (Player)player;
-                pl.RunFromEnemy();
+               // pl.RunFromEnemy();
             }
             return false;
         }
