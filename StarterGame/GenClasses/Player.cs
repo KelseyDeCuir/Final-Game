@@ -618,7 +618,10 @@ namespace Ascension
                     {
                         Character character = World.U_hospitalCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
                         State = States.DIALOGUE;
-                        DialogueParser dp = new DialogueParser(character);
+                        DialogueParser dp = new DialogueParser(this,character);
+                        dp.readfile();
+                        Notification notification = new Notification("StartDialouge", this);
+                        NotificationCenter.Instance.PostNotification(notification);
                         return;
                     }
                     else
@@ -631,7 +634,9 @@ namespace Ascension
                     {
                         Character character = World.U_schoolCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
                         State = States.DIALOGUE;
-                        DialogueParser dp = new DialogueParser(character);
+                        DialogueParser dp = new DialogueParser(this, character);
+                        Notification notification = new Notification("StartDialouge", this);
+                        NotificationCenter.Instance.PostNotification(notification);
                         return;
                     }
                     else
@@ -644,7 +649,9 @@ namespace Ascension
                     {
                         Character character = World.U_hellCharacters.Find(charact => charact.Name.ToLower() == npc && charact.inPlayerRoom);
                         State = States.DIALOGUE;
-                        DialogueParser dp = new DialogueParser(character);
+                        DialogueParser dp = new DialogueParser(this, character);
+                        Notification notification = new Notification("StartDialouge", this);
+                        NotificationCenter.Instance.PostNotification(notification);
                         return;
                     }
                     else

@@ -292,14 +292,23 @@ namespace Ascension
 
 
             A_hospitalCharacters.Add(AB);
+            AB.generalDialouge = "Test_File";
             A_hospitalCharacters.Add(BC);
+            CD.generalDialouge = "Test_File";
             A_hospitalCharacters.Add(CD);
+            DE.generalDialouge = "Test_File";
             A_hospitalCharacters.Add(DE);
+            EF.generalDialouge = "Test_File";
             A_hospitalCharacters.Add(EF);
+            FG.generalDialouge = "Test_File";
             A_hospitalCharacters.Add(FG);
+            GH.generalDialouge = "Test_File";
             A_hospitalCharacters.Add(GH);
+            HI.generalDialouge = "Test_File";
             A_hospitalCharacters.Add(HI);
+            IJ.generalDialouge = "Test_File";
             A_hospitalCharacters.Add(IJ);
+            JK.generalDialouge = "Test_File";
             A_hospitalCharacters.Add(JK);
             GenCharacters(abandonedHospital, A_hospitalCharacters, U_hospitalCharacters); //Generates characters
             Notification notification = new Notification("CharactersInRoom", this);

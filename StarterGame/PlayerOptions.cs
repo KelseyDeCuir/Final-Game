@@ -37,18 +37,26 @@ namespace Ascension
         }
 
         public void ReadOptions() {
-            foreach (OptionandEvent e in optionsAndEvents)
+            if (optionsAndEvents != null)
             {
-                Console.WriteLine("\n" + e.PlayerOp);//need to add usuable options to list
-                CommandWords._commandArrayInDialogue.Append(e.DialougeEvent);           
+                clearoptions();
+                foreach (OptionandEvent e in optionsAndEvents) //TODO: check if optionsandevents exist if it does then clear out Options and Events :)
+                {
+                    Console.WriteLine("\n" + e.PlayerOp);//need to add usuable options to list
+
+                    CommandWords._commandArrayInDialogue.Append(e.DialougeEvent);
+                }
             }
+            else {
+                Console.WriteLine("no options sadge");
+                    }
   
 
         }
 
         public void clearoptions() {
           Array.Clear(CommandWords._commandArrayInDialogue,0, CommandWords._commandArrayInDialogue.Length);
-            CommandWords._commandArrayInDialogue.Append(new EndDialougeCommand());
+          CommandWords._commandArrayInDialogue.Append(new EndDialougeCommand());
 
         }
 
@@ -78,7 +86,8 @@ namespace Ascension
             //use observer
             Notification notification = new Notification("PlayerEndedDialouge", this);
             NotificationCenter.Instance.PostNotification(notification);
-            player.State = States.GAME;
+            player.State = States.GAME; //player is null have it not be null 
+            //TODO: npc should only move in game state 
             //Switch State to gameplay but not here
         }
 
