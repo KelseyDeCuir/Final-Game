@@ -205,18 +205,18 @@ namespace Ascension
         }
 
         //TODO: PLAYER OPTIONS
-        public void PlayerEndedDialouge(Notification notification)
-        {
-            PlayerOptions playeroptions = (PlayerOptions)notification.Object;
-            if (playeroptions != null)
-            {
-                Console.WriteLine("\n" + "Player ended dialouge");
-            }
-            else
-            {
-                Console.WriteLine("\n" + "Player did not end dialouge");
-            }
-        }
+        //public void PlayerEndedDialouge(Notification notification)
+        //{
+            //PlayerOptions playeroptions = (PlayerOptions)notification.Object;
+            //if (playeroptions != null)
+            //{
+              //  Console.WriteLine("\n" + "Player ended dialouge");
+            //}
+            //else
+           // {
+            //    Console.WriteLine("\n" + "Player did not end dialouge");
+          //  }
+        //}
         public void DamageTaken(Notification notification)
         {
             Character character = (Character)notification.Object;

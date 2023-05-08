@@ -38,13 +38,13 @@ namespace Ascension
         }
 
 
-        public void setCurrentItems(Player player, Character npc) {
+        public void setCurrentItems(Player player, Character character) {
             this.player = player;
-            this.npc = npc;
-            string resourceName = "MyLibrary.Resources." + npc.Name + "_Dialogue.json";
+            this.character = character;
+            string resourceName = "MyLibrary.Resources." + character.Name + "_Dialogue.json";
             var assembly = Assembly.GetExecutingAssembly();
             Stream stream = assembly.GetManifestResourceStream(resourceName);
-            this.txtfile = npc.generalDialouge + ".json";
+            this.txtfile = character.generalDialouge + ".json";
 
         }
 
