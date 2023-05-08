@@ -10,10 +10,10 @@ namespace Ascension
     }
     public class CPersonality
     {
-        static Dictionary<Command, double> cowardCommands = new Dictionary<Command, double>() { {new GoCommand(), 0.25 } };
-        static Dictionary<Command, double> agroCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, { new CHitCommand(), 0.5 }, {new CAttackCommand(), 0.50 } };
-        static Dictionary<Command, double> kindCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 } };
-        static Dictionary<Command, double> braveCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, {new CHitCommand(), 0.65 }, {new CAttackCommand(), 0.50 } };
+        static Dictionary<Command, double> cowardCommands = new Dictionary<Command, double>() { {new GoCommand(), 0.25 }, { new AttackCommand(), 1 } };
+        static Dictionary<Command, double> agroCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, { new CHitCommand(), 0.5 }, { new AttackCommand(), 1} };
+        static Dictionary<Command, double> kindCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, { new AttackCommand(), 1 } };
+        static Dictionary<Command, double> braveCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, {new CHitCommand(), 0.65 }, { new AttackCommand(), 1 } };
 
         Dictionary<Personality,Dictionary<States, Dictionary<Command, double>>> personalities = new Dictionary<Personality, Dictionary<States, Dictionary<Command, double>>>() { { Personality.COWARD, new Dictionary<States, Dictionary<Command, double>>() { { States.GAME, cowardCommands } } },{ Personality.AGRESSIVE, new Dictionary<States, Dictionary<Command, double>>() { { States.GAME, agroCommands } } }, { Personality.KIND, new Dictionary<States, Dictionary<Command, double>>() { { States.GAME, kindCommands } } }, { Personality.BRAVE, new Dictionary<States, Dictionary<Command, double>>() {{States.GAME, braveCommands } } } };
         public Dictionary<States,Dictionary<Command, double>> _commands;

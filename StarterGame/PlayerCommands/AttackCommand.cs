@@ -17,9 +17,33 @@ namespace Ascension
         {
             if (this.HasSecondWord())
             {
-                Player pl = (Player)player;
-                pl.AttackEnemy(this.SecondWord);
+                try
+                {
+                    Player pl = (Player)player;
+                    if (pl != null)
+                    {
+                        pl.AttackEnemy(this.SecondWord);
+                    }
+                }
+                catch (System.InvalidCastException ex)
+                {
+                    player.AttackEnemy(this.SecondWord);
+                }
+            }
+            else
+            {
+                try
+                {
+                    Player pl = (Player)player;
+                    if (pl != null)
+                    {
+                        pl.WarningMessage("\nAttack What?");
+                    }
+                }
+                catch (System.InvalidCastException ex)
+                {
 
+                }
             }
             return false;
         }

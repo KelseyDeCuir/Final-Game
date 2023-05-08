@@ -133,7 +133,7 @@ namespace Ascension
             //Console.WriteLine(sv.LoadPlayerinfo());
             //State = States.ELEVATOR;
         }
-        public void AttackEnemy(String name)
+        public override void AttackEnemy(String name)
         {
 
             switch (Elevator.Instance.floorLvl)
@@ -167,6 +167,7 @@ namespace Ascension
                     break;
             }
         }
+        //TODO: Implement player fight command, look at talkto in player as reference
         public void DodgeAttack()
         {
             CombatSystem cs = new CombatSystem();
