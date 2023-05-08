@@ -6,19 +6,9 @@ namespace Ascension
 {
     class CAttackCommand : Command
     {
-        public CAttackCommand() : base()
+      public override bool Execute(Character character)
         {
-            this.Name = "characterattack";
-        }
-        override
-      public bool Execute(Character character)
-        {
-            if (this.HasSecondWord())
-            {
-                Character ch = (Character)character;
-                ch.AttackPlayer(this.SecondWord);
-
-            }
+            character.AttackPlayer(Player.Instance);
             return false;
         }
     }

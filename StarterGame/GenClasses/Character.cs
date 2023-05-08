@@ -282,14 +282,14 @@ namespace Ascension
             this.Eyriskel += moneyBonus;
             bossDelegate = new BossDelegate(obj.UnlockFloor);
         }
-        public void AttackPlayer(String name)
+        public void AttackPlayer(Player player)
         {
             switch (Elevator.Instance.floorLvl)
             {
                 case 1:
-                    if (name != null)
+                    if (player != null)
                     {
-                        Player player = this.player;
+                        player = Player.Instance;
                         
                         CombatSystem cs = new CombatSystem(player, this);
                         cs.AttackPlayer(player);

@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 namespace Ascension
 {
     [Serializable]
+
+
     public class saveRoot
     {
         public Player player { get; set; }
@@ -62,6 +64,18 @@ namespace Ascension
             //also only locks south room
 
             NotificationCenter.Instance.AddObserver("CharacterArrived", CharacterArrived);
+        }
+        private static Player _instance = null;
+        public static Player Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new Player(GameWorld.Instance);
+                }
+                return _instance;
+            }
         }
         public void CharacterArrived(Notification notification)
         {

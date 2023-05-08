@@ -18,12 +18,21 @@ namespace Ascension
 
         public CombatSystem()
         {
-
+            NotificationCenter.Instance.AddObserver("CharacterTurn", CharacterTurn);
         }
         public CombatSystem(Player player, Character character)
         {
             this.player = player;
             this.character = character;
+        }
+
+        public void CharacterTurn(Notification notification)
+        {
+            Player player = (Player)notification.Object;
+            if (player != null)
+            {
+                character.State = States.COMBAT;
+            }
         }
         public void Attack(Character character)
         {
@@ -43,11 +52,12 @@ namespace Ascension
                     player.WeaponlessAttack(player, character);
                     player.InfoMessage(player.Name + " did " + player.WeaponlessAttack(player, character) + " damage");
                 }
+                notification = new Notification("CharacterTurn", this);
+                NotificationCenter.Instance.PostNotification(notification);
                 if (playerHealth == 0)
                 {
                     combatOngoing = false;
                 }
-
             }
             
         }

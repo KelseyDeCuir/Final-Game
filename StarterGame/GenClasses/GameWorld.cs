@@ -102,6 +102,7 @@ namespace Ascension
             NotificationCenter.Instance.AddObserver("CharactersInRoom", CharactersInRoom);
             NotificationCenter.Instance.AddObserver("SuccessfulCommand", SuccessfulCommand);
             NotificationCenter.Instance.AddObserver("DamageTaken", DamageTaken);
+            
         }
 
         public void SuccessfulCommand(Notification notification)
@@ -224,7 +225,6 @@ namespace Ascension
                 character.InfoMessage(character.Name + " health: " +  character.CurrentHealth);
             }
         }
-
         private Floor CreateWorld()
         {
             Floor1Items.Add(rustyScalpel);
