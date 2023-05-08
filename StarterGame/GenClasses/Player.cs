@@ -113,14 +113,11 @@ namespace Ascension
         }
         public void Loadinfo()
         {
-
-
             Notification notification = new Notification("PlayerLoadedFile", this);
             NotificationCenter.Instance.PostNotification(notification);
             //SaveSystem sv = new SaveSystem(this);
             //Console.WriteLine(sv.LoadPlayerinfo());
             //State = States.ELEVATOR;
-
         }
         public void AttackEnemy(String name)
         {
@@ -154,14 +151,7 @@ namespace Ascension
 
                 default:
                     break;
-
             }
-        }
-        public void RunFromEnemy()
-        {
-            CombatSystem cs = new CombatSystem();
-            cs.Run();
-
         }
         public void DodgeAttack()
         {

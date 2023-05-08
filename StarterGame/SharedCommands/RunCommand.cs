@@ -10,11 +10,11 @@ namespace Ascension
         {
             this.Name = "run";
         }
-        public override bool Execute(Character player)
+        public override bool Execute(Character character)
         {
             if (this.HasSecondWord())
             {
-                player.WarningMessage("\n Can't use run with " + this.SecondWord);
+                character.WarningMessage("\n Can't use run with " + this.SecondWord);
             }
             else
             {

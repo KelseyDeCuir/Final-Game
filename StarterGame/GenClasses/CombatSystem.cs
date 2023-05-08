@@ -12,6 +12,7 @@ namespace Ascension
         private int playerDamageTaken;
         private int characterHealth;
         private int characterDamageTaken;
+        private double damage = 0;
         public Player player { get; }
         public Character character { get; }
 
@@ -30,26 +31,45 @@ namespace Ascension
             while (combatOngoing)
             {
                 player.State = States.COMBAT;
-                player.NormalMessage("Your health is currently at: " + playerHealth);
-                player.NormalMessage("The enemy's health is currently at: " + characterHealth);
-                if (player.EquippedWeapon == null)
+                Notification notification = new Notification("DamageTaken", player);
+                NotificationCenter.Instance.PostNotification(notification);
+                if (player.EquippedWeapon != null)
                 {
-                    characterDamageTaken = player.aptitudeLvl.strength / 10;
+                    player.EquippedWeapon.Used(player, character);
+                    player.InfoMessage(player.Name + " did " + player.EquippedWeapon.GetDamage(player) + " damage");
                 }
-                player.EquippedWeapon.Used(player, character);
-                player.NormalMessage("Enemy health remaining " + characterHealth);
-                character.EquippedWeapon.Used(character, player);
-                player.NormalMessage("Player health remaining " + playerHealth);
+                else
+                {
+                    player.WeaponlessAttack(player, character);
+                    player.InfoMessage(player.Name + " did " + player.WeaponlessAttack(player, character) + " damage");
+                }
                 if (playerHealth == 0)
                 {
                     combatOngoing = false;
-                    player.Die(character);
                 }
-                else if (characterHealth == 0)
+
+            }
+            
+        }
+        public void AttackPlayer(Player player)
+        {
+            while (combatOngoing)
+            {
+                Notification notification = new Notification("DamageTaken", character);
+                NotificationCenter.Instance.PostNotification(notification);
+                if (character.EquippedWeapon != null)
+                {
+                    character.EquippedWeapon.Used(character, player);
+                    character.InfoMessage(character.Name + " did " + character.EquippedWeapon.GetDamage(character) + " damage");
+                }
+                else
+                {
+                    character.WeaponlessAttack(character, player);
+                    character.InfoMessage(character.Name + " did " + character.WeaponlessAttack(character, player) + " damage");
+                }
+                if (characterHealth == 0)
                 {
                     combatOngoing = false;
-                    character.Die(player);
-                    player.State = States.GAME;
                 }
             }
         }
@@ -59,21 +79,28 @@ namespace Ascension
         {
             while (combatOngoing)
             {
-                player.State = States.COMBAT;
+                character.State = States.COMBAT;
                 if (player.aptitudeLvl.speed >= character.aptitudeLvl.speed)
                 {
-                    player.NormalMessage("You flee the battle field immediately!");
+                    character.NormalMessage("You flee the battle field immediately!");
                     combatOngoing = false;
                 }
                 else if (character.bossDelegate != null)
                 {
-                    player.ErrorMessage("You cannot flee battle field! You are in the middle of a Boss Fight!");
+                    character.ErrorMessage("You cannot flee battle field! You are in the middle of a Boss Fight!");
                 }
                 else
                 {
-                    player.ErrorMessage("You cannot flee the battle field. Your speed is not high enough.");
+                    character.ErrorMessage("You cannot flee the battle field. Your speed is not high enough.");
                 }
+                
             }
+            /*
+            if (playerHealth == 0 || characterHealth == 0)
+            {
+                combatOngoing = false;
+            }
+            */
         }
         //Player can dodge an enemy attack if their speed is higher or equal to an enemy's
         public void Dodge()
@@ -92,19 +119,13 @@ namespace Ascension
                 {
                     player.ErrorMessage("You failed to dodge the enemy attack. Damage taken " + character.aptitudeLvl.strength);
                 }
-
-                if (playerHealth == 0)
-                {
-                    combatOngoing = false;
-                    player.Die(character);
-                }
-                else if (characterHealth == 0)
-                {
-                    combatOngoing = false;
-                    character.Die(player);
-                    player.State = States.GAME;
-                }
             }
+            /*
+            if (playerHealth == 0 || characterHealth == 0)
+            {
+                combatOngoing = false;
+            }
+            */
         }
         /* Player can enchant themselves or their weapon damage dealt will change depending on which option
          * is chosen
@@ -124,19 +145,14 @@ namespace Ascension
                 {
                     player.enchant(SecondWord);
                 }
-
-                if (playerHealth == 0)
-                {
-                    combatOngoing = false;
-                    player.Die(character);
-                }
-                else if (characterHealth == 0)
-                {
-                    combatOngoing = false;
-                    character.Die(player);
-                    player.State = States.GAME;
-                }
+               
             }
+            /*
+            if (playerHealth == 0 || characterHealth == 0)
+            {
+                combatOngoing = false;
+            }
+            */
 
         }
 

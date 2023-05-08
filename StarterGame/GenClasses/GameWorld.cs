@@ -101,6 +101,7 @@ namespace Ascension
             NotificationCenter.Instance.AddObserver("YouWinTrue", YouWinTrue);
             NotificationCenter.Instance.AddObserver("CharactersInRoom", CharactersInRoom);
             NotificationCenter.Instance.AddObserver("SuccessfulCommand", SuccessfulCommand);
+            NotificationCenter.Instance.AddObserver("DamageTaken", DamageTaken);
         }
 
         public void SuccessfulCommand(Notification notification)
@@ -213,6 +214,14 @@ namespace Ascension
             else
             {
                 Console.WriteLine("\n" + "Player did not end dialouge");
+            }
+        }
+        public void DamageTaken(Notification notification)
+        {
+            Character character = (Character)notification.Object;
+            if (character != null)
+            {
+                character.InfoMessage(character.Name + " health: " +  character.CurrentHealth);
             }
         }
 

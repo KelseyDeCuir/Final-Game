@@ -229,8 +229,10 @@ namespace Ascension
                 {
                     CurrentHealth = 0;
                 }
-                this.InfoMessage(this.Name + " health: " + CurrentHealth);
-                if(CurrentHealth == 0)
+                //this.InfoMessage(this.Name + " health: " + CurrentHealth);
+               Notification notification = new Notification("DamageTaken", this);
+                NotificationCenter.Instance.PostNotification(notification);
+                if (CurrentHealth == 0)
                 {
                     var pl = this as Player;
                     if (pl == null)
@@ -280,7 +282,30 @@ namespace Ascension
             this.Eyriskel += moneyBonus;
             bossDelegate = new BossDelegate(obj.UnlockFloor);
         }
+        public void AttackPlayer(String name)
+        {
+            switch (Elevator.Instance.floorLvl)
+            {
+                case 1:
+                    if (name != null)
+                    {
+                        Player player = this.player;
+                        
+                        CombatSystem cs = new CombatSystem(player, this);
+                        cs.AttackPlayer(player);
+                    }
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+        public void RunFromEnemy()
+        {
+            CombatSystem cs = new CombatSystem();
+            cs.Run();
 
+        }
         public void OutputMessage(string message)
         {
             Console.WriteLine(message);
@@ -400,6 +425,13 @@ namespace Ascension
             {
                 //WarningMessage("There's no monster to hit!");
             }
+        }
+        public int WeaponlessAttack(Character character, Character target)
+        {
+            int damageDone = 0;
+            double StrengthDamage = (double)character.aptitudeLvl.strength / 10;
+            damageDone = target.TakeDamage(character, StrengthDamage);
+            return  damageDone;
         }
     }
 
