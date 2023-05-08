@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 namespace Ascension
 {
     [Serializable]
+
+
     public class saveRoot
     {
         public Player player { get; set; }
@@ -63,6 +65,18 @@ namespace Ascension
 
             NotificationCenter.Instance.AddObserver("CharacterArrived", CharacterArrived);
         }
+        private static Player _instance = null;
+        public static Player Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new Player(GameWorld.Instance);
+                }
+                return _instance;
+            }
+        }
         public void CharacterArrived(Notification notification)
         {
             if (notification.Object as Character != null)
@@ -113,14 +127,11 @@ namespace Ascension
         }
         public void Loadinfo()
         {
-
-
             Notification notification = new Notification("PlayerLoadedFile", this);
             NotificationCenter.Instance.PostNotification(notification);
             //SaveSystem sv = new SaveSystem(this);
             //Console.WriteLine(sv.LoadPlayerinfo());
             //State = States.ELEVATOR;
-
         }
         public void AttackEnemy(String name)
         {
@@ -154,14 +165,7 @@ namespace Ascension
 
                 default:
                     break;
-
             }
-        }
-        public void RunFromEnemy()
-        {
-            CombatSystem cs = new CombatSystem();
-            cs.Run();
-
         }
         public void DodgeAttack()
         {

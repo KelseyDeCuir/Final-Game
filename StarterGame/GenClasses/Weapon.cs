@@ -46,5 +46,6 @@ namespace Ascension
             }
             return "Damage done: " + damageDone;
         }
+        
     }
 }
