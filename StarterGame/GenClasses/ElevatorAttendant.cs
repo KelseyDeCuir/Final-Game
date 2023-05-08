@@ -6,7 +6,7 @@ namespace Ascension
 {
     
     //Elevator attendant is also the final boss so it will have special abilities
-    //todo: add ability to trade 
+
     public class ElevatorAttendant : Character 
     {
         private static ElevatorAttendant _instance = null;

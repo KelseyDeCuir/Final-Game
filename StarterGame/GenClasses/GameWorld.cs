@@ -298,7 +298,6 @@ namespace Ascension
             Bosses.Add(Boss1);
             Bosses.Add(Boss2);
             Bosses.Add(Servant);
-            //todo: either characters have lowercase names or talk command is change to check for names as lower case or parser is changes
 
     
 

@@ -92,8 +92,7 @@ namespace Ascension
           
             //turns words from json file into a list of stuff to be shoved into player
         }
-  
-        //TODO: load gameworld
+
 
     }
 

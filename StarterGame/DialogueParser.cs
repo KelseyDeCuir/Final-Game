@@ -9,56 +9,50 @@ namespace Ascension
 {
     public class DialogueParser
 
-       //TODO:CONVER TO SINGLETON :((((
     {
 
-        //string text = File.ReadAllText(@"./person.json");
 
-        //public String NPCStarter { get; set; }
-
-        //public string PlayerOp { get; set; }
         private string txtfile;
+       
         private Player player;
-        private Character npc;
         private CombatDialogue cdialogue;
-        private PlayerOptions pdialogue;
-
-        //convert DP to singleton
-
-        //private static DialogueParser _instance = null;
-        //public static DialogueParser Instance
-        //{
-            //get
-            //{
-                //if (_instance == null)
-                //{
-              //      _instance = new DialogueParser("The Elevator", "Elevator Description");
-            //    }
-          //      return _instance;
-        //    }
-      //  }
 
 
-        public DialogueParser(Player player, Character npc)
+        public Character character;
+        public List<string> BodyTxt;
+        public int TXTnum = 0;
+        public string? Endtxt { get; set; }
+        public string? NewResponseTxtFile { get; set; }
+
+        private static DialogueParser _instance = null;
+        public static DialogueParser Instance
         {
+        get
+        {
+        if (_instance == null)
+        {
+              _instance = new DialogueParser();
+            }
+              return _instance;
+            }
+        }
+
+
+        public void setCurrentItems(Player player, Character npc) {
             this.player = player;
-            string resourceName = "MyLibrary.Resources."+npc.Name+"_Dialogue.json";
+            this.npc = npc;
+            string resourceName = "MyLibrary.Resources." + npc.Name + "_Dialogue.json";
             var assembly = Assembly.GetExecutingAssembly();
             Stream stream = assembly.GetManifestResourceStream(resourceName);
-            this.npc = npc;
-            this.txtfile =   npc.generalDialouge + ".json";
-            NotificationCenter.Instance.AddObserver("ContinueDialouge", ContinueDialouge);
-            NotificationCenter.Instance.AddObserver("EndDialouge", EndDialouge);
-       
+            this.txtfile = npc.generalDialouge + ".json";
 
         }
-        public DialogueParser(string txtfile) {
+
+        public void setnewtxtFile(string txtfile) {
             this.txtfile = "@\"./" + txtfile + ".json\"";
-            NotificationCenter.Instance.AddObserver("ContinueDialouge", ContinueDialouge);
-            NotificationCenter.Instance.AddObserver("EndDialouge", EndDialouge);
-        
 
         }
+
 
         public void readfile()
         {
@@ -72,8 +66,8 @@ namespace Ascension
 
             //check if player state is in dialouge or combat
             if (player.State == States.DIALOGUE) {
-                pdialogue = JsonConvert.DeserializeObject<PlayerOptions>(json);
-                pdialogue.player = player;
+                _instance = JsonConvert.DeserializeObject<DialogueParser>(json);
+              
             }
             else if (player.State == States.COMBAT) {
                 CombatDialogue cdialogue = JsonConvert.DeserializeObject<CombatDialogue>(json);
@@ -90,27 +84,54 @@ namespace Ascension
 
         }
         public void StartDialouge() {
-            if (pdialogue != null)
+            if (txtfile != null)
             {
-                pdialogue.ReadBodyTxt();
+                TXTnum = 0;
+                ReadBodyTxt();
             }
             else { Console.WriteLine("Don't talk to me"); }
         }
 
-        public void ContinueDialouge(Notification notification)
+        public void ReadBodyTxt() {
+            if (TXTnum >= 0 && TXTnum < BodyTxt.Count)
+            {
+                Console.WriteLine(BodyTxt[TXTnum]);
+                TXTnum = TXTnum + 1;
+            }
+            else { Console.WriteLine("Cannot read anything"); }
+
+        }
+
+        public void ContinueDialouge()
         {
-            pdialogue.ContinueDialouge();
+            if (TXTnum >= 0 && TXTnum < BodyTxt.Count)
+            {
+                ReadBodyTxt();
+            }
+            else
+            {
+                Console.WriteLine("I have finished my dialouge"); //insert events here :) 
 
+            }
         }
-        public void EndDialouge(Notification notification) { 
-            pdialogue.EndDialouge();    
+        public void EndDialouge() {
+            Console.WriteLine(Endtxt);
+          
+                Console.WriteLine("\n" + "Player ended dialouge");
+                if (NewResponseTxtFile != null)
+                {
+                    setnewtxtFile(NewResponseTxtFile);
+                    character.generalDialouge = NewResponseTxtFile;
 
-            
+                }
+                else
+                {
+                    Console.WriteLine("Player ended dialouge without file switch");
+                }
+          
         }
 
-        
-
+    }
 
     }
   
-}

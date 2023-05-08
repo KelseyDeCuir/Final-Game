@@ -187,15 +187,14 @@ namespace Ascension
 
         public void Enddialouge()
         {
-            Notification notification = new Notification("EndDialouge", this);
-            NotificationCenter.Instance.PostNotification(notification);
+           DialogueParser.Instance.EndDialouge();
+            this.State = States.GAME;
 
         }
 
         public void continuedialouge()
         {
-            Notification notification = new Notification("ContinueDialouge", this);
-            NotificationCenter.Instance.PostNotification(notification);
+            DialogueParser.Instance.ContinueDialouge();
         }
 
         //CHANGED HERE
@@ -665,11 +664,12 @@ namespace Ascension
                         State = States.DIALOGUE;
                         if (character.generalDialouge != null)
                         {
-                            DialogueParser dp = new DialogueParser(this,character);
+                            
                       
                             character.State = States.DIALOGUE;
-                            dp.readfile();
-                            dp.StartDialouge();
+                            DialogueParser.Instance.setCurrentItems(this,character);
+                            DialogueParser.Instance.readfile();
+                            DialogueParser.Instance.StartDialouge();
                         }
                         else {
                             WarningMessage("NPC does not have dialouge");
@@ -690,10 +690,11 @@ namespace Ascension
                         State = States.DIALOGUE;
                         if (character.generalDialouge != null)
                         {
-                            DialogueParser dp = new DialogueParser(this, character);
-                            Notification notification = new Notification("StartDialouge", this);
-                            NotificationCenter.Instance.PostNotification(notification);
+                           
                             character.State = States.DIALOGUE;
+                            DialogueParser.Instance.setCurrentItems(this, character);
+                            DialogueParser.Instance.readfile();
+                            DialogueParser.Instance.StartDialouge();
                         }
                         else
                         {
@@ -713,10 +714,11 @@ namespace Ascension
                         State = States.DIALOGUE;
                         if (character.generalDialouge != null)
                         {
-                            DialogueParser dp = new DialogueParser(this, character);
-                            Notification notification = new Notification("StartDialouge", this);
-                            NotificationCenter.Instance.PostNotification(notification);
+                  
                             character.State = States.DIALOGUE;
+                            DialogueParser.Instance.setCurrentItems(this, character);
+                            DialogueParser.Instance.readfile();
+                            DialogueParser.Instance.StartDialouge();
                         }
                         else
                         {
