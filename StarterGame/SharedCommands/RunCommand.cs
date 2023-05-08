@@ -18,8 +18,8 @@ namespace Ascension
             }
             else
             {
-                Player pl = (Player)player;
-               // pl.RunFromEnemy();
+                Character ch = (Character)character;
+                ch.RunFromEnemy();
             }
             return false;
         }
