@@ -43,7 +43,7 @@ namespace Ascension
         public string Name { get { return _name; } }
         public string Description { get { return _description; } }
         private Floor _currentFloor = null; //rooms are separated by floors so that is stored instead
-        public Floor CurrentFloor { get { return _currentFloor;} set { _currentFloor = value;} }
+        public Floor CurrentFloor { get { return _currentFloor; } set { _currentFloor = value; } }
         protected Room _currentRoom;
         public Room CurrentRoom { get { return _currentRoom; } set { _currentRoom = value; } }
         //PastRoom Locations, 
@@ -98,7 +98,7 @@ namespace Ascension
                 case "north":
                     if (_currentRoom.pos[1] != 0)
                     {
-                        return new int[] {_currentRoom.pos[0], _currentRoom.pos[1] -1};
+                        return new int[] { _currentRoom.pos[0], _currentRoom.pos[1] - 1 };
                     }
                     else
                     {
@@ -107,7 +107,7 @@ namespace Ascension
                 case "east":
                     if (_currentRoom.pos[0] != 1)
                     {
-                        return new int[] {_currentRoom.pos[0] +1 , _currentRoom.pos[1]};
+                        return new int[] { _currentRoom.pos[0] + 1, _currentRoom.pos[1] };
                     }
                     else
                     {
@@ -116,7 +116,7 @@ namespace Ascension
                 case "south":
                     if (_currentRoom.pos[1] != 2)
                     {
-                        return new int[] {_currentRoom.pos[0], _currentRoom.pos[1] +1};
+                        return new int[] { _currentRoom.pos[0], _currentRoom.pos[1] + 1 };
                     }
                     else
                     {
@@ -125,7 +125,7 @@ namespace Ascension
                 case "west":
                     if (_currentRoom.pos[0] != 0)
                     {
-                        return new int[] {_currentRoom.pos[0] -1, _currentRoom.pos[1]};
+                        return new int[] { _currentRoom.pos[0] - 1, _currentRoom.pos[1] };
                     }
                     else
                     {
@@ -152,7 +152,7 @@ namespace Ascension
                 //ErrorMessage("\nThere is no door to the " + direction + ".");
             }
         }
-      
+
 
         public void SetName(string name)
         {
@@ -239,14 +239,15 @@ namespace Ascension
             {
                 damagetoTake = (int)Math.Ceiling((double)damage * (1 - (double)aptitudeLvl.speed / 100));
             }
-            if (damagetoTake > 0) {
+            if (damagetoTake > 0)
+            {
                 CurrentHealth -= damagetoTake;
-                if(CurrentHealth < 0)
+                if (CurrentHealth < 0)
                 {
                     CurrentHealth = 0;
                 }
                 //this.InfoMessage(this.Name + " health: " + CurrentHealth);
-               Notification notification = new Notification("DamageTaken", this);
+                Notification notification = new Notification("DamageTaken", this);
                 NotificationCenter.Instance.PostNotification(notification);
                 if (CurrentHealth == 0)
                 {
@@ -299,20 +300,18 @@ namespace Ascension
             this.Eyriskel += moneyBonus;
             bossDelegate = new BossDelegate(obj.UnlockFloor);
         }
-        public void AttackPlayer(Player player)
+        public virtual void AttackEnemy(String name)
         {
             switch (Elevator.Instance.floorLvl)
             {
                 case 1:
-                    if (player != null)
+                    if (name != null)
                     {
-                        player = Player.Instance;
-                        
-                        CombatSystem cs = new CombatSystem(player, this);
-                        cs.AttackPlayer(player);
+                        CombatSystem cs = new CombatSystem();
+                        cs.AttackPlayer(Player.Instance);
                     }
                     break;
-                
+
                 default:
                     break;
             }
@@ -364,9 +363,9 @@ namespace Ascension
         {
             Command CommandToExcecute = personality.AIcommand(State);
             NullCommand nC = CommandToExcecute as NullCommand;
-            if(nC == null)
+            if (nC == null)
             {
-                if(CommandToExcecute as GoCommand != null)
+                if (CommandToExcecute as GoCommand != null)
                 {
                     Random rnd = new Random();
                     int choice = rnd.Next(0, 4);
@@ -390,7 +389,7 @@ namespace Ascension
                     }
                     CommandToExcecute.Execute(this);
                 }
-                else if(CommandToExcecute as CHitCommand!= null)
+                else if (CommandToExcecute as CHitCommand != null)
                 {
                     CommandToExcecute.Execute(this);
                 }
@@ -448,7 +447,7 @@ namespace Ascension
             int damageDone = 0;
             double StrengthDamage = (double)character.aptitudeLvl.strength / 10;
             damageDone = target.TakeDamage(character, StrengthDamage);
-            return  damageDone;
+            return damageDone;
         }
     }
 
@@ -462,7 +461,7 @@ namespace Ascension
         }
         public void UnlockFloor()
         {
-            
+
             if (nextFloor != null)
             {
                 nextFloor.Unlocked = true;
