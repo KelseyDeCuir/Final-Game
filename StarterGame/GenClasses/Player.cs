@@ -142,7 +142,6 @@ namespace Ascension
                     if (World.U_hospitalCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
                     {
                         Character character = World.U_hospitalCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
-                        CombatSystem cs = new CombatSystem(this, character);
                         cs.Attack(character);
                     }
                     break;
@@ -150,7 +149,6 @@ namespace Ascension
                     if (World.U_schoolCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
                     {
                         Character character = World.U_schoolCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
-                        CombatSystem cs = new CombatSystem(this, character);
                         cs.Attack(character);
                     }
                     break;
@@ -158,7 +156,6 @@ namespace Ascension
                     if (World.U_hellCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
                     {
                         Character character = World.U_hellCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
-                        CombatSystem cs = new CombatSystem(this, character);
                         cs.Attack(character);
                     }
                     break;
@@ -168,9 +165,52 @@ namespace Ascension
             }
         }
         //TODO: Implement player fight command, look at talkto in player as reference
+        public void Fight(String name)
+        {
+            switch (Elevator.Instance.floorLvl)
+            {
+                case 1:
+                    if (World.U_hospitalCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
+                    {
+                        Character character = World.U_hospitalCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
+                        State = States.COMBAT;
+                        character.State = States.COMBAT;
+                        Console.WriteLine("Player state is being switched to " + this.State);
+                        Console.WriteLine("Character state is being switched to " + character.State);
+                        cs = new CombatSystem(this, character);
+                        character.cs = cs;
+                        cs.Attack(character);
+                    }
+                    break;
+                case 2:
+                    if (World.U_schoolCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
+                    {
+                        Character character = World.U_schoolCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
+                        State = States.COMBAT;
+                        character.State = States.COMBAT;
+                        cs = new CombatSystem(this, character);
+                        character.cs = cs;
+                        cs.Attack(character);
+                    }
+                    break;
+                case 3:
+                    if (World.U_hellCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
+                    {
+                        Character character = World.U_hellCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
+                        State = States.COMBAT;
+                        character.State = States.COMBAT;
+                        cs = new CombatSystem(this, character);
+                        character.cs = cs;
+                        cs.Attack(character);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
         public void DodgeAttack()
         {
-            CombatSystem cs = new CombatSystem();
             cs.Dodge();
         }
 
@@ -679,8 +719,6 @@ namespace Ascension
                         State = States.DIALOGUE;
                         if (character.generalDialouge != null)
                         {
-                            
-                      
                             character.State = States.DIALOGUE;
                             DialogueParser.Instance.setCurrentItems(this,character);
                             DialogueParser.Instance.readfile();

@@ -12,8 +12,8 @@ namespace Ascension
     {
         private static Command[] _commandArrayInCreation = { new CharNameCommand(),new LoadCommand()};
         private static Command[] _commandArrayInMenu = { new ReflectCommand(), new PlayCommand()};
-        private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new HitCommand(), new BackCommand(), new TalkCommand(), new TakeCommand(), new DropCommand(), new MenuCommand(), new AttackCommand()};
-        private static Command[] _commandArrayInCombat = {new AttackCommand(), new RunCommand(), new DodgeCommand(), new EnchantCommand(), new CAttackCommand()};
+        private static Command[] _commandArrayInGame = { new GoCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new HitCommand(), new BackCommand(), new TalkCommand(), new TakeCommand(), new DropCommand(), new MenuCommand(), new SaveCommand(), new LoadCommand(), new FightCommand()};
+        private static Command[] _commandArrayInCombat = {new AttackCommand(), new RunCommand(), new DodgeCommand(), new EnchantCommand()};
         private static Command[] _commandArrayInDialogue = {new ContinueDialougeCommand(), new EndDialougeCommand() }; 
         private static Command[] _commandArrayInShop = { new ShopListCommand(), new SellCommand(), new BuyCommand(),  new PlayCommand()};
         private static Command[] _commandArrayInElevator = { new GoCommand(), new SaveCommand(), new AscendCommand(), new DescendCommand(), new LookCommand(), new ReflectCommand(), new EquipCommand(), new UnequipCommand(), new LevelCommand(), new EnchantCommand(), new BackCommand(), new ShopCommand(), new MenuCommand(), new SaveCommand()};

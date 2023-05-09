@@ -11,11 +11,17 @@ namespace Ascension
     public class CPersonality
     {
         static Dictionary<Command, double> cowardCommands = new Dictionary<Command, double>() { {new GoCommand(), 0.25 } };
-        static Dictionary<Command, double> agroCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, { new CHitCommand(), 0.5 }, {new CAttackCommand(), 0.50 } };
+        static Dictionary<Command, double> agroCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, { new CHitCommand(), 0.5 } };
         static Dictionary<Command, double> kindCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 } };
-        static Dictionary<Command, double> braveCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, {new CHitCommand(), 0.65 }, {new CAttackCommand(), 0.50 } };
+        static Dictionary<Command, double> braveCommands = new Dictionary<Command, double>() { { new GoCommand(), 0.25 }, {new CHitCommand(), 0.65 } };
+       
+        static Dictionary<Command, double> cowardCombatCommands = new Dictionary<Command, double>() { { new AttackCommand(), 1.0 } };
+        static Dictionary<Command, double> agroCombatCommands = new Dictionary<Command, double>() { { new CHitCommand(), 0.5 }, { new AttackCommand(), 1.0 } };
+        static Dictionary<Command, double> kindCombatCommands = new Dictionary<Command, double>() { { new AttackCommand(), 1.0 } };
+        static Dictionary<Command, double> braveCombatCommands = new Dictionary<Command, double>() { { new CHitCommand(), 0.65 }, { new AttackCommand(), 1.0 } };
         Personality personality1;
         [Newtonsoft.Json.JsonIgnore]
+        Dictionary<Personality,Dictionary<States, Dictionary<Command, double>>> personalities = new Dictionary<Personality, Dictionary<States, Dictionary<Command, double>>>() { { Personality.COWARD, new Dictionary<States, Dictionary<Command, double>>() { { States.GAME, cowardCommands }, { States.COMBAT, cowardCombatCommands } } },{ Personality.AGRESSIVE, new Dictionary<States, Dictionary<Command, double>>() { { States.GAME, agroCommands }, { States.COMBAT, agroCombatCommands } } }, { Personality.KIND, new Dictionary<States, Dictionary<Command, double>>() { { States.GAME, kindCommands }, { States.COMBAT, kindCombatCommands } } }, { Personality.BRAVE, new Dictionary<States, Dictionary<Command, double>>() {{States.GAME, braveCommands }, { States.COMBAT, braveCombatCommands } } } };
         public Dictionary<States,Dictionary<Command, double>> _commands;
         Random rnd = new Random();
         [Newtonsoft.Json.JsonIgnore]
@@ -30,6 +36,16 @@ namespace Ascension
 
             double check = rnd.NextDouble();
             if (state == States.GAME)
+            {
+                foreach (Command command in _commands[state].Keys)
+                {
+                    if (_commands[state][command] > check)
+                    {
+                        return command;
+                    }
+                }
+            }
+            else if (state == States.COMBAT)
             {
                 foreach (Command command in _commands[state].Keys)
                 {

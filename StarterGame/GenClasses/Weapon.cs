@@ -32,7 +32,7 @@ namespace Ascension
             }
         }
 
-        public string Used(Character character, Character target)
+        public int Used(Character character, Character target)
         {
             int damageDone = 0;
             double StrengthDamage = (double)character.aptitudeLvl.strength / 10;
@@ -45,7 +45,7 @@ namespace Ascension
             {
                 damageDone = target.TakeDamage(character, StrengthDamage * damage);
             }
-            return "Damage done: " + damageDone;
+            return damageDone;
         }
         
     }
