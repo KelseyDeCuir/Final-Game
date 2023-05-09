@@ -55,6 +55,7 @@ namespace Ascension
         public string generalDialouge;
         public string combatDialouge;
         public CPersonality personality;
+        public CombatSystem cs;
         public Character(Floor floor, string name, string desc)
         {
             _currentFloor = floor;
@@ -290,7 +291,7 @@ namespace Ascension
                 case 1:
                     if (name != null)
                     {
-                        CombatSystem cs = new CombatSystem();
+
                         cs.AttackPlayer(Player.Instance);
                     }
                     break;
@@ -301,9 +302,7 @@ namespace Ascension
         }
         public void RunFromEnemy()
         {
-            CombatSystem cs = new CombatSystem();
             cs.Run();
-
         }
         public void OutputMessage(string message)
         {
@@ -373,6 +372,10 @@ namespace Ascension
                     CommandToExcecute.Execute(this);
                 }
                 else if (CommandToExcecute as CHitCommand != null)
+                {
+                    CommandToExcecute.Execute(this);
+                }
+                else if (CommandToExcecute as AttackCommand != null)
                 {
                     CommandToExcecute.Execute(this);
                 }
