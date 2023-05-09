@@ -123,7 +123,7 @@ namespace Ascension
         { //really cheap way to save ask teacher about it
             //Simpleton for now
             SaveSystem sv = new SaveSystem(this); //never actually saves just stops here
-            sv.SavePlayerinfo();
+            sv.SavePlayerinfo(); //todo: save system fix delegate look at monster dio
         }
         public void Loadinfo()
         {
@@ -175,14 +175,23 @@ namespace Ascension
 
         public void Backto()
         {
-            if (PastRooms.Count != 0)
+            if (PastRooms.Count > 1)
             {
 
                 _currentRoom = PastRooms.Pop();//gets most recent past room
+
                 NormalMessage("\n" + this.CurrentRoom.Description());
             }
+            else if (PastRooms.Count == 1) {
+                _currentRoom = PastRooms.Pop();//gets most recent past room
+
+                NormalMessage("\n" + this.CurrentRoom.Description());
+                State = States.ELEVATOR;
+            }
+
             else
             {
+                State = States.ELEVATOR;
                 ErrorMessage("\nCan't go Back!");
             }
 
@@ -191,14 +200,15 @@ namespace Ascension
 
         public void Enddialouge()
         {
-           DialogueParser.Instance.EndDialouge();
+            DialogueParser.Instance.enddialouge();
             this.State = States.GAME;
+            DialogueParser.Instance.character.State = States.GAME;
 
         }
 
         public void continuedialouge()
         {
-            DialogueParser.Instance.ContinueDialouge();
+            DialogueParser.Instance.pl.ContinueDialouge();
         }
 
         //CHANGED HERE
@@ -673,13 +683,12 @@ namespace Ascension
                             character.State = States.DIALOGUE;
                             DialogueParser.Instance.setCurrentItems(this,character);
                             DialogueParser.Instance.readfile();
-                            DialogueParser.Instance.StartDialouge();
                         }
                         else {
                             WarningMessage("NPC does not have dialouge");
                         }
                         return;
-
+                        
                     }
                     else
                     {
@@ -698,7 +707,6 @@ namespace Ascension
                             character.State = States.DIALOGUE;
                             DialogueParser.Instance.setCurrentItems(this, character);
                             DialogueParser.Instance.readfile();
-                            DialogueParser.Instance.StartDialouge();
                         }
                         else
                         {
@@ -722,7 +730,6 @@ namespace Ascension
                             character.State = States.DIALOGUE;
                             DialogueParser.Instance.setCurrentItems(this, character);
                             DialogueParser.Instance.readfile();
-                            DialogueParser.Instance.StartDialouge();
                         }
                         else
                         {

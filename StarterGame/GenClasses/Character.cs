@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Drawing;
 
 namespace Ascension
 {
@@ -51,10 +52,25 @@ namespace Ascension
         public Armor EquippedArmor { set; get; }
         public int Eyriskel { set; get; }
         public int aptPoints;
-        public BossDelegate bossDelegate;
+
+  
         public string generalDialouge;
         public string combatDialouge;
         public CPersonality personality;
+        public Floor nextFloor;
+        [Newtonsoft.Json.JsonIgnore]
+        public BossDelegate bossDelegate;
+
+        [System.Runtime.Serialization.OnDeserialized]
+
+        void OnDeserialized(System.Runtime.Serialization.StreamingContext context)
+        {
+           if(nextFloor != null)
+            {
+                var obj = new Boss(nextFloor);
+                bossDelegate = new BossDelegate(obj.UnlockFloor);
+            }
+        }
         public Character(Floor floor, string name, string desc)
         {
             _currentFloor = floor;
@@ -278,6 +294,7 @@ namespace Ascension
         }
         public void MakeBoss(Floor floor, int moneyBonus)
         {
+            this.nextFloor = floor;
             var obj = new Boss(floor);
             this.Eyriskel += moneyBonus;
             bossDelegate = new BossDelegate(obj.UnlockFloor);

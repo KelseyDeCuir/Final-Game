@@ -64,8 +64,8 @@ namespace Ascension
             //and check if player is overwriting file
             saveRoot root = new saveRoot();
             root.player = (Player)player;
-            JsonSerializerSettings settings = new JsonSerializerSettings();
-            PlayerSave = JsonConvert.SerializeObject((Player)player);
+            JsonSerializerSettings settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All };
+            PlayerSave = JsonConvert.SerializeObject((Player)player, settings); //save changes charcters to player???
             // Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
             //DirectoryInfo dInfo = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveGame"));
             //FileInfo[] files = dInfo.GetFiles("*_save.json");
@@ -85,9 +85,11 @@ namespace Ascension
             //NOTE: reader is reading object but deserliaing is problem
             //detecing empty list in item and no priting
 
-            Player newp = JsonConvert.DeserializeObject<Player>(json);
+            JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            Player newp = JsonConvert.DeserializeObject<Player>(json,settings);
+            reader.Close();
             //Player newp = nep;//.player;
-            newp.InfoMessage(newp.Name);
+      
             return newp;
           
             //turns words from json file into a list of stuff to be shoved into player

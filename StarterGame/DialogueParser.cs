@@ -13,8 +13,9 @@ namespace Ascension
 
 
         private string txtfile;
-       
+
         private Player player;
+        public PlayerOptions pl;
         private CombatDialogue cdialogue;
 
 
@@ -27,18 +28,19 @@ namespace Ascension
         private static DialogueParser _instance = null;
         public static DialogueParser Instance
         {
-        get
-        {
-        if (_instance == null)
-        {
-              _instance = new DialogueParser();
-            }
-              return _instance;
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new DialogueParser();
+                }
+                return _instance;
             }
         }
 
 
-        public void setCurrentItems(Player player, Character character) {
+        public void setCurrentItems(Player player, Character character)
+        {
             this.player = player;
             this.character = character;
             string resourceName = "MyLibrary.Resources." + character.Name + "_Dialogue.json";
@@ -48,7 +50,8 @@ namespace Ascension
 
         }
 
-        public void setnewtxtFile(string txtfile) {
+        public void setnewtxtFile(string txtfile)
+        {
             this.txtfile = "@\"./" + txtfile + ".json\"";
 
         }
@@ -65,11 +68,16 @@ namespace Ascension
             //puts everything in playeroptions //need to specfiiy lsit in jso file
 
             //check if player state is in dialouge or combat
-            if (player.State == States.DIALOGUE) {
-                _instance = JsonConvert.DeserializeObject<DialogueParser>(json);
-              
+            if (player.State == States.DIALOGUE)
+            {
+                 pl = JsonConvert.DeserializeObject<PlayerOptions>(json);
+                pl.ReadBodyTxt();
+                //reads out dialouge and deserializes object
+                //because class is a singleton when it deserializes possibly object is null??
+
             }
-            else if (player.State == States.COMBAT) {
+            else if (player.State == States.COMBAT)
+            {
                 CombatDialogue cdialogue = JsonConvert.DeserializeObject<CombatDialogue>(json);
                 //Console.Write("MY STATE CHANGED >:)");
                 //observer based on which command is called 
@@ -83,55 +91,27 @@ namespace Ascension
 
 
         }
-        public void StartDialouge() {
-            if (txtfile != null)
-            {
-                TXTnum = 0;
-                ReadBodyTxt();
-            }
-            else { Console.WriteLine("Don't talk to me"); }
-        }
 
-        public void ReadBodyTxt() {
-            if (TXTnum >= 0 && TXTnum < BodyTxt.Count)
-            {
-                Console.WriteLine(BodyTxt[TXTnum]);
-                TXTnum = TXTnum + 1;
-            }
-            else { Console.WriteLine("Cannot read anything"); }
+    
 
-        }
 
-        public void ContinueDialouge()
-        {
-            if (TXTnum >= 0 && TXTnum < BodyTxt.Count)
+        public void enddialouge() {
+
+            pl.End();
+
+            if (NewResponseTxtFile != null)
             {
-                ReadBodyTxt();
+                setnewtxtFile(NewResponseTxtFile);
+                character.generalDialouge = NewResponseTxtFile;
+                
+
             }
             else
             {
-                Console.WriteLine("I have finished my dialouge"); //insert events here :) 
-
+                Console.WriteLine("Player ended dialouge without file switch");
             }
         }
-        public void EndDialouge() {
-            Console.WriteLine(Endtxt);
-          
-                Console.WriteLine("\n" + "Player ended dialouge");
-                if (NewResponseTxtFile != null)
-                {
-                    setnewtxtFile(NewResponseTxtFile);
-                    character.generalDialouge = NewResponseTxtFile;
-
-                }
-                else
-                {
-                    Console.WriteLine("Player ended dialouge without file switch");
-                }
-          
-        }
 
     }
-
-    }
+}
   
