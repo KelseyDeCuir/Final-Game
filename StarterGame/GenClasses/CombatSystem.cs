@@ -86,6 +86,7 @@ namespace Ascension
             {
                 character.NormalMessage("You flee the battle field immediately!");
                 player.State = States.GAME;
+                character.State = States.GAME;
 
             }
             else if (character.bossDelegate != null)
