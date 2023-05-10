@@ -102,7 +102,8 @@ namespace Ascension
             NotificationCenter.Instance.AddObserver("CharactersInRoom", CharactersInRoom);
             NotificationCenter.Instance.AddObserver("SuccessfulCommand", SuccessfulCommand);
             NotificationCenter.Instance.AddObserver("DamageTaken", DamageTaken);
-            
+            NotificationCenter.Instance.AddObserver("BeatFinalBoss", BeatFinalBoss);
+
         }
 
         public void SuccessfulCommand(Notification notification)
@@ -220,6 +221,15 @@ namespace Ascension
                 character.InfoMessage(character.Name + " health: " +  character.CurrentHealth);
             }
         }
+
+        public void BeatFinalBoss (Notification notification)
+        {
+            GameWorld gw = (GameWorld)notification.Object;
+            if(gw != null)
+            {
+                Console.WriteLine("\n" + "Congratulations, you have ascended. The cycle has officially been broken.");
+            }
+        }
         private Floor CreateWorld()
         {
             Floor1Items.Add(rustyScalpel);
@@ -306,8 +316,7 @@ namespace Ascension
             Bosses.Add(Boss2);
             Bosses.Add(Servant);
 
-    
-
+            
 
 
             A_hospitalCharacters.Add(AB);

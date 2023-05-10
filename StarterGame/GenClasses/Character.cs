@@ -281,6 +281,12 @@ namespace Ascension
                 {
                     plForXp.XpUp(15);
                 }
+                if(Elevator.Instance.floorLvl == 3)
+                {
+                    Notification notification = new Notification("BeatFinalBoss", this);
+                    NotificationCenter.Instance.PostNotification(notification);
+                    Player.Instance.State = States.CHARCREATION;
+                }
             }
             else
             {
