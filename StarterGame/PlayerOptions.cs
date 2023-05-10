@@ -57,7 +57,6 @@ namespace Ascension
         public void End()
         {
             Console.WriteLine(Endtxt);
-            //todo make observer for end dailouge 
             Console.WriteLine("\n" + "Player ended dialouge");
           
 

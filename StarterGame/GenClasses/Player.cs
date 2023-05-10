@@ -123,7 +123,7 @@ namespace Ascension
         { //really cheap way to save ask teacher about it
             //Simpleton for now
             SaveSystem sv = new SaveSystem(this); //never actually saves just stops here
-            sv.SavePlayerinfo(); //todo: save system fix delegate look at monster dio
+            sv.SavePlayerinfo(); 
         }
         public void Loadinfo()
         {
@@ -164,7 +164,6 @@ namespace Ascension
                     break;
             }
         }
-        //TODO: Implement player fight command, look at talkto in player as reference
         public void Fight(String name)
         {
             switch (Elevator.Instance.floorLvl)
@@ -175,8 +174,15 @@ namespace Ascension
                         Character character = World.U_hospitalCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
                         State = States.COMBAT;
                         character.State = States.COMBAT;
-                        Console.WriteLine("Player state is being switched to " + this.State);
-                        Console.WriteLine("Character state is being switched to " + character.State);
+                        cs = new CombatSystem(this, character);
+                        character.cs = cs;
+                        cs.Attack(character);
+                    }
+                    if (World.Bosses[0].Name.ToLower() == name && World.Bosses[0].inPlayerRoom)
+                    {
+                        Character character = World.Bosses[0];
+                        State = States.COMBAT;
+                        character.State = States.COMBAT;
                         cs = new CombatSystem(this, character);
                         character.cs = cs;
                         cs.Attack(character);
@@ -186,6 +192,15 @@ namespace Ascension
                     if (World.U_schoolCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
                     {
                         Character character = World.U_schoolCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
+                        State = States.COMBAT;
+                        character.State = States.COMBAT;
+                        cs = new CombatSystem(this, character);
+                        character.cs = cs;
+                        cs.Attack(character);
+                    }
+                    if (World.Bosses[1].Name.ToLower() == name && World.Bosses[1].inPlayerRoom)
+                    {
+                        Character character = World.Bosses[1];
                         State = States.COMBAT;
                         character.State = States.COMBAT;
                         cs = new CombatSystem(this, character);
@@ -203,10 +218,27 @@ namespace Ascension
                         character.cs = cs;
                         cs.Attack(character);
                     }
+                    if (World.Bosses[2].Name.ToLower() == name && World.Bosses[1].inPlayerRoom)
+                    {
+                        Character character = World.Bosses[2];
+                        State = States.COMBAT;
+                        character.State = States.COMBAT;
+                        cs = new CombatSystem(this, character);
+                        character.cs = cs;
+                        cs.Attack(character);
+                    }
                     break;
 
                 default:
                     break;
+            }
+            if(name == ElevatorAttendant.Instance.Name && ElevatorAttendant.Instance.inPlayerRoom)
+            {
+                State = States.COMBAT;
+                ElevatorAttendant.Instance.State = States.COMBAT;
+                cs = new CombatSystem(this, ElevatorAttendant.Instance);
+                ElevatorAttendant.Instance.cs = cs;
+                cs.Attack(ElevatorAttendant.Instance);
             }
         }
         public void DodgeAttack()
@@ -572,7 +604,7 @@ namespace Ascension
         }
 
 
-        //TODO: Check if works
+        
         public void enchant(string SecondWord)
         {
             //only enchants exisitng items

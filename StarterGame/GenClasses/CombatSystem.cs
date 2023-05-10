@@ -8,7 +8,6 @@ namespace Ascension
     public class CombatSystem
     {
         //TODO: Write character dialogue 
-        //TODO: Add observer for dodge, boolean character has attacked
         private int playerDamageTaken;
         private int characterDamageTaken;
         private double damage = 0;
@@ -27,7 +26,6 @@ namespace Ascension
         }
         public void Attack(Character character)
         {
-
             Notification notification = new Notification("DamageTaken", player);
             NotificationCenter.Instance.PostNotification(notification);
             if (player.EquippedWeapon != null)
@@ -47,7 +45,6 @@ namespace Ascension
 
 
         }
-        //TODO: Make character able to attack player
         public void AttackPlayer(Player player)
         {
             if (dodgeflag == true)
@@ -77,8 +74,6 @@ namespace Ascension
                 character.State = States.GAME;
             }
         }
-
-        //TODO: Implement unescapable option
         //Player can flee battle so long as the battle is escapable
         public void Run()
         {
