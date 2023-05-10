@@ -144,6 +144,10 @@ namespace Ascension
                         Character character = World.U_hospitalCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
                         cs.Attack(character);
                     }
+                    if(World.Bosses[0].Name.ToLower() == name && World.Bosses[0].inPlayerRoom)
+                    {
+                        cs.Attack(World.Bosses[0]);
+                    }
                     break;
                 case 2:
                     if (World.U_schoolCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
@@ -151,12 +155,20 @@ namespace Ascension
                         Character character = World.U_schoolCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
                         cs.Attack(character);
                     }
+                    if (World.Bosses[1].Name.ToLower() == name && World.Bosses[0].inPlayerRoom)
+                    {
+                        cs.Attack(World.Bosses[1]);
+                    }
                     break;
                 case 3:
                     if (World.U_hellCharacters.Exists(character => character.Name.ToLower() == name && character.inPlayerRoom))
                     {
                         Character character = World.U_hellCharacters.Find(character => character.Name.ToLower() == name && character.inPlayerRoom);
                         cs.Attack(character);
+                    }
+                    if (World.Bosses[2].Name.ToLower() == name && World.Bosses[0].inPlayerRoom)
+                    {
+                        cs.Attack(World.Bosses[2]);
                     }
                     break;
 

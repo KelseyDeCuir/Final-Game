@@ -120,6 +120,13 @@ namespace Ascension
             {
                 character.AI();
             }
+            foreach (Character character in Bosses)
+            {
+                if(character.State == States.COMBAT)
+                {
+                    character.AI();
+                }
+            }
         }
         public void PlayerMovedRooms(Notification notification)
         {
@@ -271,10 +278,10 @@ namespace Ascension
             Character HI = new Character(abandonedHospital, "H", "I");
             Character IJ = new Character(abandonedHospital, "I", "J");
             Character JK = new Character(abandonedHospital, "J", "K");
-            Character Boss1 = new Character(abandonedHospital, "Hospital Boss", "Hospital boss desc");
+            Character Boss1 = new Character(abandonedHospital, "Hospital-Boss", "Hospital boss desc");
             Boss1.CurrentRoom = Boss1.CurrentFloor.FloorMap[1, 2];
             Boss1.MakeBoss(abandonedSchool, 10);
-            Character Boss2 = new Character(abandonedSchool, "School Boss", "School boss desc");
+            Character Boss2 = new Character(abandonedSchool, "School-Boss", "School boss desc");
             Boss2.CurrentRoom = Boss2.CurrentFloor.FloorMap[1, 2];
             Boss2.MakeBoss(hell, 25);
 
@@ -292,6 +299,9 @@ namespace Ascension
             Character Servant = new Character(hell, "Servant", "Servant of ▓░▒░▓▒. They look like you, except for the eyes. Please not the EYES.");
             Servant.CurrentRoom = Servant.CurrentFloor.FloorMap[1, 2];
             Servant.MakeBoss(winZone, 50);
+            Boss1.personality = new CPersonality(Personality.AGRESSIVE);
+            Boss2.personality = new CPersonality(Personality.AGRESSIVE);
+            Servant.personality = new CPersonality(Personality.AGRESSIVE);
             Bosses.Add(Boss1);
             Bosses.Add(Boss2);
             Bosses.Add(Servant);
